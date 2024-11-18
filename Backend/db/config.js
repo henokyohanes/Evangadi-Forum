@@ -1,5 +1,6 @@
 const mysql2 = require("mysql2");
 
+//db connection
 const dbconnection = mysql2.createPool({
   user: process.env.USER,
   database: process.env.DATABASE,
