@@ -1,0 +1,141 @@
+.headerContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  height: 40px;
+  margin: 0 auto;
+  font-size: 18px;
+}
+
+.logo img {
+  max-width: 150px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navLinkItem {
+  margin-left: 20px;
+}
+
+.navLinkItem a,
+.logoutButton {
+
+  text-decoration: none;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.logoutButton {
+  background-image: var(--button-color);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.signInButton {
+  background-image: var(--button-color);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.signInButton:hover {
+  background-color: #e5670a;
+}
+
+.signInButton a {
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .navLinkItem a.signInLink {
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 4px;
+  }
+}
+
+.mobileMenuIcon {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+
+.mobileDropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.mobileDropdown ul {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+}
+
+.mobileDropdown ul li {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.mobileDropdown ul li a {
+  color: #000;
+  text-decoration: none;
+}
+
+.mobileDropdown ul li a:hover {
+  background-color: #f1f1f1;
+}
+
+
+@media (max-width: 768px) {
+  .navLinks {
+    display: none;
+  }
+
+  .mobileMenuIcon {
+    display: block;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobileDropdown {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+  }
+
+}
