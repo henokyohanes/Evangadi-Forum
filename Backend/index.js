@@ -2,9 +2,9 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const app = express();
-const port = 5500;
+const port = process.env.PORT;
 const cors = require("cors");
-app.use(cors());
+app.use(cors({ origin: process.env.CLIENT_URL }));
 
 //db connection
 const dbconnection = require("./db/config");
@@ -29,6 +29,12 @@ const imageRoute = require("./routes/imageRoute");
 
 //image router middleware
 app.use("/api/images", authenticationMiddleware, imageRoute);
+
+//questions router middleware file
+const questionRoute = require("./routes/questionRoute");
+
+//questions router middleware
+app.use("/api/questions", authenticationMiddleware, questionRoute);
 
 async function start() {
     try {
