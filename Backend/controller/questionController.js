@@ -2,7 +2,7 @@ const dbConnection = require("../db/config");
 const { StatusCodes } = require("http-status-codes");
 const { v4: uuidv4 } = require("uuid"); // random question id generator
 
-// Post question 
+// function to Post question 
 async function question(req, res) {
   const { title, description } = req.body;
   if (!title || !description) {
@@ -45,7 +45,7 @@ async function question(req, res) {
   }
 }
 
-// get all question
+// function to get all question
 async function getAllQuestions(req, res) {
   try {
     const username = req.user.username; // Get the username from the auth middleware
@@ -70,7 +70,7 @@ async function getAllQuestions(req, res) {
   }
 }
 
-// Get question details
+// function to Get question details
 async function getQuestionDetail(req, res) {
   const { questionid } = req.params;
 

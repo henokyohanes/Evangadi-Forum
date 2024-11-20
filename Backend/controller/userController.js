@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const { StatusCodes } = require("http-status-codes");
 const jwt = require("jsonwebtoken");
 
-// Registering a new user
+// function to Register a new user
 async function register(req, res) {
   const { username, firstname, lastname, email, password } = req.body;
   if (!username || !firstname || !lastname || !email || !password) {
@@ -60,7 +60,7 @@ async function register(req, res) {
   }
 }
 
-// Login
+// function to Login the user
 async function login(req, res) {
   const { email, password } = req.body;
 
@@ -110,7 +110,7 @@ async function login(req, res) {
   }
 }
 
-//  Check user validity
+// function to Check user validity
 async function checkUser(req, res) {
   const username = req.user.username;
   const userid = req.user.userid;
