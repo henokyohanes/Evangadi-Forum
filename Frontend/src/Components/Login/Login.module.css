@@ -1,0 +1,111 @@
+.loginContainer {
+    width: 400px;
+    margin: 0 auto;
+    padding: 100px 40px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding-bottom: 50px;
+  }
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .createAccount {
+    color: orange;
+    text-decoration: none;
+  }
+  
+  .createAccount:hover {
+    text-decoration: underline;
+  }
+  
+  .loginForm {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .inputGroup {
+    margin-bottom: 15px;
+  }
+  
+  .label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  .input {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .forgotPassword {
+    text-align: right;
+    margin-bottom: 20px;
+  }
+  
+  .forgotPassword a {
+    color: orange;
+    text-decoration: none;
+  }
+  
+  .forgotPassword a:hover {
+    text-decoration: underline;
+  }
+  
+  .loginButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #4e68ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  input{
+    width:90%;
+  }
+  .loginButton:hover {
+    background-color: #3d57e6;
+  }
+  
+.passwordToggleIcon{
+    position: absolute;
+    right:20px;
+    top:16px;
+    cursor: pointer;
+}
+  .passwordWrapper{
+    width: 100%;
+    display: flex;
+position :relative;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 768px) {
+    .loginContainer {
+      padding: 15px;
+      max-width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .loginContainer {
+      padding: 30px;
+      box-shadow: none;
+    }
+  }
