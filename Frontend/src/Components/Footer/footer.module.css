@@ -1,0 +1,103 @@
+.footerContainer {
+  background-color: #2e3b55;
+  color: white;
+  padding: 20px;
+}
+
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.logoAndSocials {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footerLogo {
+  max-width: 150px;
+  margin-bottom: 20px;
+}
+
+.socialIcons {
+  display: flex;
+  gap: 25px;
+ 
+}
+
+.socialIcons a {
+  color: white;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+.socialIcons a:hover {
+  color: #007bff;
+}
+
+.usefulLinks ul {
+  list-style-type: none;
+  padding: 0;
+  color: gray;
+}
+
+.usefulLinks h4 {
+  margin-bottom: 10px;
+}
+
+.usefulLinks a {
+  color:rgb(193, 188, 188);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.usefulLinks a:hover {
+  color: #007bff;
+}
+
+.contactInfo h4 {
+  margin-bottom: 10px;
+}
+
+.contactInfo p {
+  margin: 5px 0;
+  color:rgb(193, 188, 188);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .footerContent {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .logoAndSocials,
+  .usefulLinks,
+  .contactInfo {
+    margin-bottom: 20px;
+  }
+}
+
+/* For very small screens (mobile portrait) */
+@media (max-width: 480px) {
+  .footerLogo {
+    max-width: 120px;
+  }
+
+  .socialIcons a {
+    font-size: 18px;
+  }
+
+  .usefulLinks a,
+  .contactInfo p {
+    font-size: 14px;
+  }
+}
