@@ -1,10 +1,10 @@
-// eslint-disable-next-line no-unused-vars
 import React from "react";
 import styles from "./HowItWorks.module.css";
+import Layout from "../Layout/Layout";
 import { Link } from "react-router-dom";
 
 const HowItWorks = () => (
-  <>
+  <Layout>
     <div className={styles.howItWorks}>
       <h1>How It Works</h1>
 
@@ -104,7 +104,7 @@ const HowItWorks = () => (
         <button>Sign Up</button>
       </Link>
     </div>
-  </>
+  </Layout>
 );
 
 export default HowItWorks;

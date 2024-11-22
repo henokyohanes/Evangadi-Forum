@@ -22,9 +22,9 @@ const Signup = ({ onToggle }) => {
   // Regular expressions for validation
   const validateForm = () => {
     const errors = {};
-    const usernameRegex = /^[a-zA-Z0-9]+$/; // alphanumeric only
-    const nameRegex = /^[a-zA-Z]+$/; // alphabets only
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // simple email regex
+    const usernameRegex = /^[a-zA-Z0-9]+$/;
+    const nameRegex = /^[a-zA-Z]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     // Validate username
     if (!usernameRegex.test(formData.username)) {
@@ -96,7 +96,7 @@ const Signup = ({ onToggle }) => {
 
     // Validate form before submitting
     if (!validateForm()) {
-      return; // Do not submit if there are validation errors
+      return;
     }
 
     try {
@@ -147,7 +147,6 @@ const Signup = ({ onToggle }) => {
 
       {/* Signup Form */}
       <form onSubmit={handleSubmit}>
-        {/* username */}
         <input
           type="text"
           name="username"
@@ -157,7 +156,6 @@ const Signup = ({ onToggle }) => {
           required
         />
         <div className={classes.name_fields}>
-          {/* First Name */}
           <input
             type="text"
             name="firstName"
@@ -166,7 +164,6 @@ const Signup = ({ onToggle }) => {
             onChange={handleChange}
             required
           />
-          {/* Last name */}
           <input
             type="text"
             name="lastName"
@@ -176,7 +173,6 @@ const Signup = ({ onToggle }) => {
             required
           />
         </div>
-        {/* email */}
         <input
           type="email"
           name="email"
@@ -185,7 +181,6 @@ const Signup = ({ onToggle }) => {
           onChange={handleChange}
           required
         />
-        {/* Password */}
         <input
           type="password"
           name="password"

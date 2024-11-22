@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import styles from "./Header.module.css";
 import logo from "../../assets/Images/logo-1.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faHome, faSignInAlt, faSignOutAlt, faBars} from "@fortawesome/free-solid-svg-icons";
-import styles from "./Header.module.css";
+import {
+  faHome,
+  faSignInAlt,
+  faSignOutAlt,
+  faBars,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const onLogoutClick = () => {
+    handleLogout();
+  };
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
@@ -14,9 +24,9 @@ const Header = () => {
   return (
     <header className={styles.headerContainer}>
       <div className={styles.logo}>
-        <a>
+        <Link to="">
           <img src={logo} alt="Evangadi logo" />
-        </a>
+        </Link>
       </div>
 
       {/* Desktop Navigation */}
@@ -24,25 +34,25 @@ const Header = () => {
         <ul className={styles.navLinks}>
             <>
               <li className={styles.navLinkItem}>
-                <a>Home</a>
+                <Link to="/">Home</Link>
               </li>
               <li className={styles.navLinkItem}>
-                <a>How it works</a>
+                <Link to="/how-it-works">How it works</Link>
               </li>
               <li className={styles.navLinkItem}>
-                <button className={styles.logoutButton}>
+                <button className={styles.logoutButton} onClick={onLogoutClick}>
                   Log Out
                 </button>
               </li>
             </>
             <>
               <li className={styles.navLinkItem}>
-                <a>How it works</a>
+                <Link to="/how-it-works">How it works</Link>
               </li>
               <li className={styles.navLinkItem}>
-                <a className={styles.signInButton}>
+                <Link to="/login" className={styles.signInButton}>
                   Sign In
-                </a>
+                </Link>
               </li>
             </>
         </ul>
@@ -57,16 +67,17 @@ const Header = () => {
       {isMobileMenuOpen && (
         <div className={styles.mobileDropdown}>
           <ul>
+            {isLoggedIn ? (
               <>
                 <li onClick={() => setMobileMenuOpen(false)}>
-                  <a>
+                  <Link to="/">
                     <FontAwesomeIcon icon={faHome} /> Home
-                  </a>
+                  </Link>
                 </li>
                 <li onClick={() => setMobileMenuOpen(false)}>
-                  <>
+                  <Link to="/how-it-works">
                     <FontAwesomeIcon icon={faHome} /> How it works
-                  </>
+                  </Link>
                 </li>
                 <li
                   onClick={() => {
@@ -77,18 +88,20 @@ const Header = () => {
                   <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
                 </li>
               </>
+            ) : (
               <>
                 <li onClick={() => setMobileMenuOpen(false)}>
-                  <a>
+                  <Link to="/how-it-works">
                     <FontAwesomeIcon icon={faHome} /> How it works
-                  </a>
+                  </Link>
                 </li>
                 <li onClick={() => setMobileMenuOpen(false)}>
-                  <a>
+                  <Link to="/login">
                     <FontAwesomeIcon icon={faSignInAlt} /> Sign In
-                  </a>
+                  </Link>
                 </li>
               </>
+            )}
           </ul>
         </div>
       )}

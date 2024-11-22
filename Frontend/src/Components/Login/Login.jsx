@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import styles from "./Login.module.css";
 import { Link } from "react-router-dom";
@@ -7,13 +6,12 @@ import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// eslint-disable-next-line react/prop-types
 const Login = ({ onToggle }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,7 +35,7 @@ const Login = ({ onToggle }) => {
       return false;
     }
 
-    return true; // Form is valid
+    return true;
   };
 
   // Handler for form submission
@@ -46,7 +44,7 @@ const Login = ({ onToggle }) => {
 
     // Validate form before submitting
     if (!validateForm()) {
-      return; // Stop form submission if validation fails
+      return;
     }
 
     try {

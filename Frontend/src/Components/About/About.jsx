@@ -1,7 +1,14 @@
 import React from "react";
 import styles from "./About.module.css";
+import { useNavigate } from "react-router-dom";
 
 const About = () => {
+  const navigate = useNavigate();
+
+  const handleHowItWorksClick = () => {
+    
+    navigate("/how-it-works");
+  };
 
   return (
     <div className={styles.container}>
@@ -16,7 +23,7 @@ const About = () => {
         Whether you are willing to share your knowledge or you are just looking
         to meet mentors of your own, please start by joining the network here.
       </p>
-      <button className={styles.button}>
+      <button className={styles.button} onClick={handleHowItWorksClick}>
         HOW IT WORKS
       </button>
     </div>

@@ -1,9 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import styles from "./Footer.module.css";
 import logo from "../../assets/Images/logo.png";
 import { PiFacebookLogoLight } from "react-icons/pi";
 import { IoLogoInstagram } from "react-icons/io5";
 import { AiOutlineYoutube } from "react-icons/ai";
-import styles from "./Footer.module.css";
+
+const openExternalLink = (url) => {
+  window.open(url, "_blank", "noopener,noreferrer");
+};
 
 const Footer = () => {
   return (
@@ -13,15 +18,30 @@ const Footer = () => {
         <div className={styles.logoAndSocials}>
           <img src={logo} alt="Evangadi logo" className={styles.footerLogo} />
           <div className={styles.socialIcons}>
-            <a>
+            {/* Evangadi Facebook address Link */}
+            <Link
+              onClick={() =>
+                openExternalLink("https://www.facebook.com/evangaditech/")
+              }
+            >
               <PiFacebookLogoLight />
-            </a>
-            <a>
+            </Link>
+            {/* Evangadi Instagram Link */}
+            <Link
+              onClick={() =>
+                openExternalLink("https://www.instagram.com/evangaditech/")
+              }
+            >
               <IoLogoInstagram />
-            </a>
-            <a>
+            </Link>
+            {/* Evangadi Channel Youtube Link */}
+            <Link
+              onClick={() =>
+                openExternalLink("https://www.youtube.com/evangaditech")
+              }
+            >
               <AiOutlineYoutube />
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -30,13 +50,13 @@ const Footer = () => {
           <h4>Useful Link</h4>
           <ul>
             <li>
-              <a>How it works</a>
+              <Link to="/how-it-works">How it works</Link>
             </li>
             <li>
-              <a>Terms of Service</a>
+              <Link to="/terms-of-service">Terms of Service</Link>
             </li>
             <li>
-              <a>Privacy Policy</a>
+              <Link to="/privacy-policy">Privacy Policy</Link>
             </li>
           </ul>
         </div>
