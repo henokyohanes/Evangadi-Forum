@@ -13,8 +13,82 @@ const Signup = ({ onToggle }) => {
     password: "",
   });
 
+  const [formErrors, setFormErrors] = useState({});
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Regular expressions for validation
+  const validateForm = () => {
+    const errors = {};
+    const usernameRegex = /^[a-zA-Z0-9]+$/; // alphanumeric only
+    const nameRegex = /^[a-zA-Z]+$/; // alphabets only
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // simple email regex
+
+    // Validate username
+    if (!usernameRegex.test(formData.username)) {
+      errors.username = "Username must be alphanumeric.";
+    }
+
+    // Validate first and last name
+    if (!nameRegex.test(formData.firstName)) {
+      errors.firstName = "First name must contain only letters.";
+    }
+    if (!nameRegex.test(formData.lastName)) {
+      errors.lastName = "Last name must contain only letters.";
+    }
+
+    // Validate email
+    if (!emailRegex.test(formData.email)) {
+      errors.email = "Invalid email format.";
+    }
+
+    // Validate password (for simplicity, let's say it must be at least 6 characters)
+    if (formData.password.length < 8) {
+      errors.password = "Password must be at least 8 characters.";
+    }
+
+    setFormErrors(errors);
+
+    // If there are errors, show SweetAlert popup for each error
+    if (Object.keys(errors).length > 0) {
+      if (errors.username) {
+        Swal.fire({
+          icon: "error",
+          title: "Invalid Username",
+          text: errors.username,
+        });
+      } else if (errors.firstName) {
+        Swal.fire({
+          icon: "error",
+          title: "Invalid First Name",
+          text: errors.firstName,
+        });
+      } else if (errors.lastName) {
+        Swal.fire({
+          icon: "error",
+          title: "Invalid Last Name",
+          text: errors.lastName,
+        });
+      } else if (errors.email) {
+        Swal.fire({
+          icon: "error",
+          title: "Invalid Email",
+          text: errors.email,
+        });
+      } else if (errors.password) {
+        Swal.fire({
+          icon: "error",
+          title: "Invalid Password",
+          text: errors.password,
+        });
+      }
+
+      return false;
+    }
+
+    return true;
   };
 
   const handleSubmit = async (e) => {
@@ -70,10 +144,10 @@ const Signup = ({ onToggle }) => {
           Sign in
         </Link>
       </p>
-      
+
       {/* Signup Form */}
       <form onSubmit={handleSubmit}>
-      {/* username */}
+        {/* username */}
         <input
           type="text"
           name="username"
@@ -83,7 +157,7 @@ const Signup = ({ onToggle }) => {
           required
         />
         <div className={classes.name_fields}>
-        {/* First Name */}
+          {/* First Name */}
           <input
             type="text"
             name="firstName"
@@ -92,7 +166,7 @@ const Signup = ({ onToggle }) => {
             onChange={handleChange}
             required
           />
-        {/* Last name */}
+          {/* Last name */}
           <input
             type="text"
             name="lastName"
