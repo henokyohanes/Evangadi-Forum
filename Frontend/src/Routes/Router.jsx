@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import { createContext } from "react";
 import Question from "../pages/Question/Question";
 import Answer from "../pages/Answer/Answer";
 import Home from "../pages/Home/Home";
 import NotFound from "../components/NotFound/NotFound";
 import Auth from "../pages/Auth/Auth";
-import { createContext } from "react";
 import axiosBaseURL from "../Utility/axios";
 import HowItWorks from "../components/How it works/Howitworks";
 
 export const AppState = createContext();
 
-function RouterApp() {
-  const [user, setUser] = useState({}); // Start with an empty object
+const RouterApp = () => {
+
+  const [user, setUser] = useState({});
   const navigate = useNavigate();
 
   async function checkUser() {
@@ -22,7 +23,6 @@ function RouterApp() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      // console.log("User data:", data); // Debug log
       setUser(data);
     } catch (error) {
       console.log(error.response);
@@ -33,7 +33,7 @@ function RouterApp() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      checkUser(); // Check user only if a token exists
+      checkUser();
     }
   }, []); // This runs once on mount
 
@@ -43,13 +43,13 @@ function RouterApp() {
 
   const handleLogin = async (userData) => {
     localStorage.setItem("token", userData.token);
-    await checkUser(); // Refresh user state after login
+    await checkUser();
   };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setUser({}); // Reset user state
-    navigate("/login"); // Redirect to login
+    setUser({});
+    navigate("/login");
   };
 
   const isLoggedIn = !!localStorage.getItem("token");

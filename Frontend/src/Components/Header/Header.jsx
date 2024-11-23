@@ -1,16 +1,14 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-import logo from "../../assets/Images/logo-1.png";
+import logo from "../../assets/Images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHome,
-  faSignInAlt,
-  faSignOutAlt,
-  faBars,
-} from "@fortawesome/free-solid-svg-icons";
+import {faHome, faSignInAlt, faSignOutAlt, faBars} from "@fortawesome/free-solid-svg-icons";
+import { AppState } from "../../Routes/Router";
+import ProfileImage from "../../pages/Home/ProfileImage";
 
 const Header = () => {
+  const { isLoggedIn, handleLogout } = useContext(AppState);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const onLogoutClick = () => {
@@ -32,6 +30,7 @@ const Header = () => {
       {/* Desktop Navigation */}
       <nav className={styles.nav}>
         <ul className={styles.navLinks}>
+          {isLoggedIn ? (
             <>
               <li className={styles.navLinkItem}>
                 <Link to="/">Home</Link>
@@ -45,6 +44,7 @@ const Header = () => {
                 </button>
               </li>
             </>
+          ) : (
             <>
               <li className={styles.navLinkItem}>
                 <Link to="/how-it-works">How it works</Link>
@@ -55,6 +55,7 @@ const Header = () => {
                 </Link>
               </li>
             </>
+          )}
         </ul>
       </nav>
 
@@ -103,6 +104,7 @@ const Header = () => {
               </>
             )}
           </ul>
+          <ProfileImage />
         </div>
       )}
     </header>
