@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-import logo from "../../assets/Images/logo.png";
+import logo from "../../assets/Images/logo-1.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faHome, faSignInAlt, faSignOutAlt, faBars} from "@fortawesome/free-solid-svg-icons";
 import { AppState } from "../../Routes/Router";

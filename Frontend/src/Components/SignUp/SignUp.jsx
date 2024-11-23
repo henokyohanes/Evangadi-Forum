@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import classes from "./SignUp.module.css";
 import { Link } from "react-router-dom";
-import axiosBaseURL from "../../Utility/ApiConfig";
+import axiosBaseURL from "../../Utility/axios";
 import Swal from "sweetalert2";
 
 const Signup = ({ onToggle }) => {
