@@ -1,0 +1,279 @@
+.mainContent {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+  overflow-x: hidden;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.askButton {
+  background-image: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.askButton:hover {
+  background-color: #e5670a;
+}
+
+.searchContainer {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.span {
+  color: #fe750b;
+  font-weight: bold;
+  font-size: 28px;
+  font-style: oblique;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.username {
+  font-size: 32px;
+}
+
+.searchInput {
+  padding: 10px 20px;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.searchInput:focus {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-color: #fe750b;
+}
+
+.questionHeader {
+  font-size: 24px;
+  margin: 20px 0;
+}
+
+.questionList {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Individual question item styles */
+.questionItem {
+  display: flex;
+  align-items: center;
+  padding: 40px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: box-shadow 0.2s;
+}
+
+.questionItem:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.questionAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.questionText {
+  flex: 1;
+}
+
+.questionInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.questionButton {
+  background: linear-gradient(to right, #fe750b, #007bff);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.loadingSpinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.spinner {
+  border: 5px solid #ccc;
+  border-top: 5px solid #fe750b;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+.parentContainer {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1em;
+}
+
+.profileImgContainer {
+  border-radius: 50%;
+  width: 4em;
+  height: 4em;
+  overflow: hidden;
+  position: relative;
+}
+
+.profileImg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profileImgCircle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.paginationButton {
+  background-color: #ff7800;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+}
+
+.paginationButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.paginationButton:hover:not(:disabled) {
+  background-color: #de7518;
+}
+
+.pagination span {
+  margin: 0 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Spinner animation keyframes */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 600px) {
+  .askButton {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .searchInput {
+    width: 90%;
+    font-size: 14px;
+  }
+}
+
+.noMatchMessage {
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+  margin: 20px 0;
+}
+
+.askButton:hover {
+  background-color: #e6640d;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .askButton {
+    font-size: 14px;
+    padding: 8px 16px;
+    width: 40%;
+  }
+}
+
+@media (max-width: 780px) {
+  .askButton {
+    font-size: 12px;
+    padding: 6px 12px;
+    width: 40%;
+  }
+  .profileImageContainer {
+    display: none;
+  }
+  .username {
+    font-size: 18px;
+  }
+  .span {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 768) {
+  .profileImageContainer {
+    position: absolute;
+    right: 100px;
+  }
+}
+
+.questionAvatar {
+  border-radius: 3px solid #e5670a;
+}
+
+.questionLink {
+  text-decoration: none;
+  color: black;
+}
