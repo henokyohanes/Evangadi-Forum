@@ -1,0 +1,147 @@
+.heading {
+  font-size: 2rem;
+  color: #333;
+  margin: 20px;
+  text-align: center;
+  font-style: italic;
+}
+
+.all {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+
+}
+
+.steps {
+  width: 100%;
+}
+
+.steps h3 {
+  font-size: 1.5rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.checklist {
+  list-style: none;
+  padding: 0;
+}
+
+.checklistItem {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.checklistItem p {
+  margin-left: 15px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.checklistItem:last-child {
+  border-bottom: none;
+}
+
+.icon {
+  color: #d97400;
+}
+
+.question {
+  width: 100%;
+}
+
+.question h3 {
+  font-size: 1.5rem;
+  color: #555;
+  margin-bottom: 10px;
+  font-style: italic;
+
+}
+
+.input1, .input2 {
+  width:97%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
+  transition: border-color 0.3s;
+}
+
+.inputholder {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.description {
+  height: 150px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  resize: none;
+  font-size: 16px;
+}
+
+.input2 {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btnholder {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.btn {
+  background-image: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.line {
+    border: none;
+    height: 4px;
+    width: 100%;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.line::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 50%;
+    background: linear-gradient(90deg, #FE750B, #FFB658);
+    animation: loading 2s backwards;
+}
+
+@keyframes loading {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+
