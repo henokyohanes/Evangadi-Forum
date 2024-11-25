@@ -4,7 +4,7 @@ import { RiAccountCircleFill } from "react-icons/ri";
 import { AppState } from "../../Routes/Router";
 import axiosBaseURL, { axiosImageURL } from "../../Utility/axios";
 import Layout from "../../components/Layout/Layout";
-import ProfileImage from "./ProfileImage";
+import ProfileImage from "../../Components/ProfileImage/ProfileImage";
 import styles from "./Home.module.css";
 
 const Home = () => {

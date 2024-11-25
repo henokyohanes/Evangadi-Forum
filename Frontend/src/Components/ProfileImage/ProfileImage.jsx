@@ -1,4 +1,5 @@
-import axiosBaseURL, { axiosImageURL } from "../../Utility/ApiConfig";
+import React, { useState, useEffect, useRef } from "react";
+import axiosBaseURL, { axiosImageURL } from "../../Utility/axios";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { toast } from "react-toastify";
 import styles from "./ProfileImage.module.css";
