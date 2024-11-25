@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import Layout from "../../components/Layout/Layout";
-import styles from "./Home.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import { RiAccountCircleFill } from "react-icons/ri";
 import { AppState } from "../../Routes/Router";
 import axiosBaseURL, { axiosImageURL } from "../../Utility/axios";
-import { RiAccountCircleFill } from "react-icons/ri";
+import Layout from "../../components/Layout/Layout";
+import ProfileImage from "./ProfileImage";
+import styles from "./Home.module.css";
 
 const Home = () => {
   const { user } = useContext(AppState);
@@ -177,6 +178,7 @@ const Home = () => {
           </div>
         </main>
         <div className={styles.profileImageContainer}></div>
+        <ProfileImage />
       </div>
     </Layout>
   );
