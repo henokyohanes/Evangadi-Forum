@@ -146,6 +146,7 @@ const ProfileImage = () => {
                         <img
                             src={`${axiosImageURL}${userresult.profileimg}`}
                             alt={userresult.profileimg}
+                            loading="lazy"
                         />
                     ) : (
                         <RiAccountCircleFill className={styles.profileIcon} />
@@ -180,7 +181,7 @@ const ProfileImage = () => {
                         onMouseUp={handleMouseUp}
                         onMouseMove={handleMouseMove}
                     >
-                        <img ref={imgRef} src={image} onLoad={handleImageLoad} />
+                        <img ref={imgRef} src={image} onLoad={handleImageLoad} loading="lazy"/>
                     </div>
                 </div>
             )}

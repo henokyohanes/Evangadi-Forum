@@ -33,6 +33,7 @@ const HowItWorks = () => (
             src="https://cdni.iconscout.com/illustration/premium/thumb/sign-up-illustration-download-in-svg-png-gif-file-formats--log-register-form-user-interface-pack-design-development-illustrations-6430773.png?f=webp"
             alt="Create Account or Log In"
             style={{ width: "400px" }}
+            loading="lazy"
           />
         </div>
       </div>
@@ -43,6 +44,7 @@ const HowItWorks = () => (
             src="https://img.freepik.com/free-vector/organic-flat-people-asking-questions_23-2148896826.jpg"
             alt="Ask a Question"
             style={{ width: "400px" }}
+            loading="lazy"
           />
         </div>
         <div className={styles.text}>
@@ -76,6 +78,7 @@ const HowItWorks = () => (
             src="https://www.shutterstock.com/image-vector/perplexed-characters-standing-huge-question-600nw-2320644731.jpg"
             alt="Answer a Question"
             style={{ width: "400px" }}
+            loading="lazy"
           />
         </div>
       </div>
@@ -85,6 +88,7 @@ const HowItWorks = () => (
           <img
             src="https://www.epicshops.com/wp-content/uploads/2019/06/website-navigation-bar-header.jpg"
             alt="Navigation"
+            loading="lazy"
           />
         </div>
         <div className={styles.text}>

@@ -16,7 +16,7 @@ const Footer = () => {
       <div className={styles.footerContent}>
         {/* Logo and Social Media Icons */}
         <div className={styles.logoAndSocials}>
-          <img src={logo} alt="Evangadi logo" className={styles.footerLogo} />
+          <img src={logo} alt="Evangadi logo" loading="lazy" className={styles.footerLogo} />
           <div className={styles.socialIcons}>
             {/* Evangadi Facebook address Link */}
             <Link

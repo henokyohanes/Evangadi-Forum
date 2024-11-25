@@ -260,6 +260,7 @@ const Answer = () => {
                       <img
                         src={`${axiosImageURL}${ans.profileimg}`}
                         alt={`${ans.username}'s profile`}
+                        loading="lazy"
                         style={{
                           width: "4em",
                           height: "4em",

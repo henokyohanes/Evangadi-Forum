@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { AppState } from "../../Routes/Router";
 import axiosBaseURL, { axiosImageURL } from "../../Utility/axios";
+import ProfileImage from "../../components/ProfileImage/ProfileImage";
 import Layout from "../../components/Layout/Layout";
-import ProfileImage from "../../Components/ProfileImage/ProfileImage";
 import styles from "./Home.module.css";
 
 const Home = () => {
@@ -123,6 +123,8 @@ const Home = () => {
                           <img
                             src={`${axiosImageURL}${q.profileimg}`}
                             className={styles.profileImg}
+                            alt="Profile"
+                            loading="lazy"
                           />
                         ) : (
                           <RiAccountCircleFill

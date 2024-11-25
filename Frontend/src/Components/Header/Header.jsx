@@ -23,7 +23,7 @@ const Header = () => {
     <header className={styles.headerContainer}>
       <div className={styles.logo}>
         <Link to="">
-          <img src={logo} alt="Evangadi logo" />
+          <img src={logo} alt="Evangadi logo" loading="lazy"/>
         </Link>
       </div>
 
