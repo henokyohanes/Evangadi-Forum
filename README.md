@@ -7,7 +7,7 @@
 - [🎯 Objectives](#-objectives)
 - [✨ Key Features](#-key-features)
 - [⚡ Access the App](#-access-the-app)
-- [🛠️ Technologies Used](#-technologies-used)
+- [🛠️ Technologies Used](#technologies-used)
 
 ---
 
