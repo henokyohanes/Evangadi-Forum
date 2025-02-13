@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./NotFound.module.css";
 import Layout from "../Layout/Layout";
+import styles from "./NotFound.module.css";
 
 const NotFound = () => {
   return (
