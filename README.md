@@ -6,7 +6,7 @@
 - [📜 Project Overview](#-project-overview)
 - [🎯 Objectives](#-objectives)
 - [✨ Key Features](#-key-features)
-- [⚡ Access the App](#-quick-start)
+- [⚡ Access the App](#-access-the-app)
 - [🛠️ Technologies Used](#-technologies-used)
 
 ---
@@ -67,7 +67,7 @@ The Evangadi Q&A Platform offers various features tailored to make learning effe
 
 The Evangadi-Forum app is live! Click the link below to access the platform:
 
-**🔗 [evangadi-forum.com](https://qa-forum.henokyohanes.com)**
+**🔗 [https://evangadi-forum.com](https://qa-forum.henokyohanes.com)**
 
 --- 
 
