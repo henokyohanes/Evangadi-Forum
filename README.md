@@ -81,6 +81,8 @@ The Evangadi-Forum app is live! Click the link below to access the platform:
 
    - **Authentication**: JWT (JSON Web Token)
 
+   - **API Handling**: Axios for making API requests
+
    - **Styling**: CSS (Bootstrap for components)
 
 ---
