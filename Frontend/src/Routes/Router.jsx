@@ -4,10 +4,10 @@ import { createContext } from "react";
 import Question from "../pages/Question/Question";
 import Answer from "../pages/Answer/Answer";
 import Home from "../pages/Home/Home";
-import NotFound from "../components/NotFound/NotFound";
+import NotFound from "../Components/NotFound/NotFound";
 import Auth from "../pages/Auth/Auth";
 import axiosBaseURL from "../Utility/axios";
-import HowItWorks from "../components/How it works/Howitworks";
+import HowItWorks from "../Components/HowItWork/HowItWork";
 
 export const AppState = createContext();
 

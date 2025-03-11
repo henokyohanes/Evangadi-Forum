@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Layout from "../../components/Layout/Layout";
-import Signup from "../../components/SignUp/SignUp";
-import Login from "../../components/Login/Login";
+import Layout from "../../Components/Layout/Layout";
+import Signup from "../../Components/SignUp/SignUp";
+import Login from "../../Components/Login/Login";
 import styles from "./Auth.module.css";
-import About from "../../components/About/About";
+import About from "../../Components/About/About";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);

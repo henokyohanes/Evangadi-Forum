@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Layout from "../../components/Layout/Layout";
+import Layout from "../../Components/Layout/Layout";
 import axiosBaseURL from "../../Utility/axios";
 import classes from "./Question.module.css";
 import { FaCircleArrowRight } from "react-icons/fa6";

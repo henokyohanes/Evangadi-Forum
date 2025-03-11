@@ -3,7 +3,7 @@ import styles from "./HowItWorks.module.css";
 import Layout from "../Layout/Layout";
 import { Link } from "react-router-dom";
 
-const HowItWorks = () => (
+const HowItWork = () => (
   <Layout>
     <div className={styles.howItWorks}>
       <h1>How It Works</h1>
@@ -111,4 +111,4 @@ const HowItWorks = () => (
   </Layout>
 );
 
-export default HowItWorks;
+export default HowItWork;
