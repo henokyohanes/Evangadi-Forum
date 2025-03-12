@@ -52,6 +52,7 @@ const Login = ({ onToggle }) => {
         email: formData.email,
         password: formData.password,
       });
+      console.log(response);
 
       // Show SweetAlert2 on successful login
       Swal.fire({
@@ -64,7 +65,7 @@ const Login = ({ onToggle }) => {
       localStorage.setItem("token", response.data.token);
       setTimeout(() => {
         window.location.href = "/";
-      }, 2000);
+      }, 1500);
     } catch (error) {
       // Handle error, show error message using SweetAlert2
       Swal.fire({

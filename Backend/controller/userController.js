@@ -95,13 +95,17 @@ async function login(req, res) {
     
     // If login is successful, return a success message (or a JWT token for authentication)
     const username = user[0].username;
+    const firstname = user[0].firstname;
+    const lastname = user[0].lastname;
+    const emailAddress = user[0].email;
+    const profileImg = user[0].profileimg
     const userid = user[0].userid;
     const token = jwt.sign({ username, userid }, process.env.JWT_SECRETKEY, {
       expiresIn: "1d",
     });
     return res
       .status(StatusCodes.OK)
-      .json({ msg: "Login successful!", token, username });
+      .json({ msg: "Login successful!", token, username, firstname, lastname, emailAddress, profileImg, userid });
   } catch (error) {
     console.error("Login error:", error.message);
     return res

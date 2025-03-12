@@ -24,6 +24,7 @@ const RouterApp = () => {
         },
       });
       setUser(data);
+      console.log("data", data);
     } catch (error) {
       console.log(error.response);
       navigate("/auth");
