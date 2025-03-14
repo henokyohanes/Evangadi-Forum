@@ -95,17 +95,13 @@ async function login(req, res) {
     
     // If login is successful, return a success message (or a JWT token for authentication)
     const username = user[0].username;
-    const firstname = user[0].firstname;
-    const lastname = user[0].lastname;
-    const emailAddress = user[0].email;
-    const profileImg = user[0].profileimg
     const userid = user[0].userid;
     const token = jwt.sign({ username, userid }, process.env.JWT_SECRETKEY, {
       expiresIn: "1d",
     });
     return res
       .status(StatusCodes.OK)
-      .json({ msg: "Login successful!", token, username, firstname, lastname, emailAddress, profileImg, userid });
+      .json({ msg: "Login successful!", token, userid });
   } catch (error) {
     console.error("Login error:", error.message);
     return res
@@ -116,9 +112,22 @@ async function login(req, res) {
 
 // function to Check user validity
 async function checkUser(req, res) {
-  const username = req.user.username;
+
+  
+  // const username = req.user.username;
   const userid = req.user.userid;
-  res.status(StatusCodes.OK).json({ msg: "Valid user", username, userid });
+
+  const [data] = await dbconnection.query(
+    "SELECT * FROM users WHERE userid = ?",
+    [userid]
+  );
+
+  const username = data[0].username;
+  const firstname = data[0].firstname;
+  const lastname = data[0].lastname;
+  const email = data[0].email;
+  const profileimg = data[0].profileimg;
+  res.status(StatusCodes.OK).json({ msg: "Valid user", username, userid, firstname, lastname, email, profileimg });
 }
 
 module.exports = { register, login, checkUser };

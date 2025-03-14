@@ -4,14 +4,33 @@ import { AppState } from "../../Routes/Router";
 import { NavDropdown } from "react-bootstrap";
 import { FaBars } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faHome, faSignInAlt, faSignOutAlt, faBars} from "@fortawesome/free-solid-svg-icons";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { RiAccountCircleFill } from "react-icons/ri";
+import { axiosImageURL } from "../../Utility/axios";
 import logo from "../../assets/Images/logo-1.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./Header.module.css";
-import ProfileImage from "../ProfileImage/ProfileImage";
+import { FaCaretDown } from "react-icons/fa";
+
+const ProfileImage = ({ user }) => {
+  return (
+      <div className={styles.profileImgContainer}>
+        {user.profileimg ? (
+          <img
+            src={`${axiosImageURL}${user.profileimg}`}
+            className={styles.profileImg}
+            alt="Profile Image"
+            loading="lazy"
+          />
+        ) : (
+          <RiAccountCircleFill className={styles.profileImgCircle} />
+        )}
+      </div>
+  );
+};
 
 const Header = () => {
-  const { isLoggedIn, handleLogout } = useContext(AppState);
+  const { user, isLoggedIn, handleLogout } = useContext(AppState);
 
   const onLogoutClick = () => {
     handleLogout();
@@ -20,7 +39,15 @@ const Header = () => {
   return (
     <header className={styles.headerContainer}>
       <div className={styles.header}>
-        <NavDropdown title={<FaBars size={35} />} className="d-md-none">
+        <Link to="/">
+          <img src={logo} alt="Evangadi logo" loading="lazy" />
+        </Link>
+        <NavDropdown
+          title={
+            isLoggedIn ? <ProfileImage user={user} /> : <FaBars size={35} />
+          }
+          className="d-sm-none"
+        >
           {isLoggedIn && (
             <NavDropdown.Item as={Link} to="/">
               Home
@@ -29,117 +56,26 @@ const Header = () => {
           <NavDropdown.Item as={Link} to="/how-it-works">
             How it works
           </NavDropdown.Item>
-        </NavDropdown>
-        <Link to="/">
-          <img src={logo} alt="Evangadi logo" loading="lazy" />
-        </Link>
-        <div className={styles.navMenu}>
-          <ul className="d-none d-md-flex">
-            {isLoggedIn && (
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-            )}
-            <li>
-              <Link to="/how-it-works">How it works</Link>
-            </li>
-          </ul>
-          <div>
-            {isLoggedIn ? (
-              <Link
-                to="/"
-                // className={styles.signInButton}
-                onClick={onLogoutClick}
-              >
-                logout
-              </Link>
-            ) : (
-              <Link to="/login" className={styles.signInButton}>
-                Sign In
-              </Link>
-            )}
-          </div>
-        </div>
-        {/* Desktop Navigation */}
-        {/* <nav className={styless.nav}>
-        <ul className={styless.navLinks}>
-          {isLoggedIn ? (
-            <>
-              <li className={styless.navLinkItem}>
-                <Link to="/">Home</Link>
-              </li>
-              <li className={styless.navLinkItem}>
-                <Link to="/how-it-works">How it works</Link>
-              </li>
-              <li className={styless.navLinkItem}>
-                <button className={styless.logoutButton} onClick={onLogoutClick}>
-                  Log Out
-                </button>
-              </li>
-            </>
-          ) : (
-            <>
-              <li className={styless.navLinkItem}>
-                <Link to="/how-it-works">How it works</Link>
-              </li>
-              <li className={styless.navLinkItem}>
-                <Link to="/login" className={styless.signInButton}>
-                  Sign In
-                </Link>
-              </li>
-            </>
+          {isLoggedIn && (
+            <NavDropdown.Item onClick={onLogoutClick}>
+              <FontAwesomeIcon icon={faSignOutAlt} />
+              Logout
+            </NavDropdown.Item>
           )}
-        </ul>
-      </nav> */}
-
-        {/* Mobile Menu Icon */}
-        {/* <div className={styless.mobileMenuIcon} onClick={toggleMobileMenu}>
-        <FontAwesomeIcon icon={faBars} />
-      </div> */}
-
-        {/* Mobile Dropdown Menu */}
-        {/* {isMobileMenuOpen && (
-        <div className={styless.mobileDropdown}>
-          <ul>
-            {isLoggedIn ? (
-              <>
-                <li onClick={() => setMobileMenuOpen(false)}>
-                  <Link to="/">
-                    <FontAwesomeIcon icon={faHome} /> Home
-                  </Link>
-                </li>
-                <li onClick={() => setMobileMenuOpen(false)}>
-                  <Link to="/how-it-works">
-                    <FontAwesomeIcon icon={faHome} /> How it works
-                  </Link>
-                </li>
-                <li
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onLogoutClick();
-                  }}
-                >
-                  <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
-                </li>
-              </>
-            ) : (
-              <>
-                <li onClick={() => setMobileMenuOpen(false)}>
-                  <Link to="/how-it-works">
-                    <FontAwesomeIcon icon={faHome} /> How it works
-                  </Link>
-                </li>
-                <li onClick={() => setMobileMenuOpen(false)}>
-                  <Link to="/login">
-                    <FontAwesomeIcon icon={faSignInAlt} /> Sign In
-                  </Link>
-                </li>
-              </>
-            )}
-          </ul>
-          <ProfileImage /> 
+        </NavDropdown>
+        <div className={`${styles.navMenu} d-none d-sm-flex`}>
+          {isLoggedIn && <Link to="/">Home</Link>}
+          <Link to="/how-it-works">How it works</Link>
+          {isLoggedIn && (
+            <NavDropdown
+              title={<ProfileImage user={user} />}
+            >
+              <NavDropdown.Item onClick={onLogoutClick}>
+                <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+              </NavDropdown.Item>
+            </NavDropdown>            
+          )}          
         </div>
-      )} */}
       </div>
     </header>
   );
