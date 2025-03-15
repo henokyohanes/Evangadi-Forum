@@ -15,3 +15,11 @@ body {
 .dropdown-toggle::after {
     content: none !important;
 }
+
+/* Remove background color change on active and focus states for dropdown items */
+.dropdown-menu .dropdown-item:focus,
+.dropdown-menu .dropdown-item:active {
+    background-color: transparent !important;
+    color: inherit !important;
+    outline: none !important;
+}

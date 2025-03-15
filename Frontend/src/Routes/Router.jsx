@@ -50,7 +50,7 @@ const RouterApp = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUser({});
-    navigate("/login");
+    navigate("/auth");
   };
 
   const isLoggedIn = !!localStorage.getItem("token");
@@ -65,7 +65,6 @@ const RouterApp = () => {
           element={<Question />}
         />
         <Route path="/getQuestions/:questionid" element={<Answer />} />
-        <Route path="/login" element={<Auth />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

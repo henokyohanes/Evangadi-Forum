@@ -180,7 +180,7 @@ const Home = () => {
           </div>
         </main>
         <div className={styles.profileImageContainer}></div>
-        <ProfileImage />
+        {/* <ProfileImage /> */}
       </div>
     </Layout>
   );
