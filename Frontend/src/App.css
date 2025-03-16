@@ -5,9 +5,8 @@
     --Text-color: linear-gradient(310deg, #000000, #e33f00);
 }
 
-body {
+* {
     font-family: 'Inter', sans-serif;
-    background: #f8f9fa;
     margin: 0;
     padding: 0;
 }
