@@ -60,12 +60,10 @@ const RouterApp = () => {
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/questions/ask" element={<Question />} />
-        <Route
-          path="/questions/getQuestions/:questionid"
-          element={<Question />}
-        />
+        <Route path="/questions/getQuestions/:questionid" element={<Question />}/>
         <Route path="/getQuestions/:questionid" element={<Answer />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
+        {/* <Route path="/account" element={<Account />} /> */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AppState.Provider>

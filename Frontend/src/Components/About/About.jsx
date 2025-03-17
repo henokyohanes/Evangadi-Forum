@@ -5,14 +5,13 @@ import { useNavigate } from "react-router-dom";
 const About = () => {
   const navigate = useNavigate();
 
-  const handleHowItWorksClick = () => {
-    
+  const handleHowItWorksClick = () => { 
     navigate("/how-it-works");
   };
 
   return (
     <div className={styles.container}>
-      <small className={styles.link}>About</small>
+      <p className={styles.link}>About</p>
       <h1 className={styles.title}>Evangadi Networks</h1>
       <p className={styles.text}>
         No matter what stage of life you are in, whether you’re just starting
