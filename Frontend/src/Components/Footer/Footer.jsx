@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { AppState } from "../../Routes/Router";
 import logo from "../../assets/Images/logo.png";
 import styles from "./Footer.module.css";
-// import "bootstrap/dist/css/bootstrap.min.css";
 
 const Footer = () => {
   const { isLoggedIn } = useContext(AppState);

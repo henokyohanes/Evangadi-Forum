@@ -3,9 +3,9 @@
   padding: 2em;
 }
 
-.title {
-  color: #5c3ac7;
-  font-size: clamp(1.5em, 3vw, 2em);
+.container h1 {
+  color: #4e68ff;
+  font-size: clamp(1.5em, 3vw, 1.8em);
   font-weight: bold;
   margin-bottom: .5em;
 }

@@ -1,51 +1,49 @@
 import React, { useState } from "react";
-import styles from "./Login.module.css";
 import { Link } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axiosBaseURL from "../../Utility/axios";
 import Swal from "sweetalert2";
-import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import styles from "./Login.module.css";
 
 const Login = ({ onToggle }) => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({email: "", password: ""});
   const [showPassword, setShowPassword] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  // Form validation using toast for errors
-  const validateForm = () => {
-    const { email, password } = formData;
-
-    if (!email) {
-      toast.error("Please provide an email address.", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      return false;
-    }
-
-    if (!password) {
-      toast.error("Please provide a password.", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      return false;
-    }
-
-    return true;
-  };
-
+  
   // Handler for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Handle client side validations here
+    let valid = true;
 
-    // Validate form before submitting
-    if (!validateForm()) {
-      return;
+    const { email, password } = formData;
+
+    // Email validation
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      setEmailError("Please enter your email address");
+      valid = false;
+    } else if (!regex.test(email)) {
+      setEmailError("Invalid email address");
+      valid = false;
+    } else {
+      setEmailError("");
     }
+
+    if (!password) {
+      setPasswordError("please enter your password");
+      valid = false;
+    } else {
+      setPasswordError("");
+    }
+    if (!validateForm()) return;
 
     try {
       const response = await axiosBaseURL.post("/users/login", {
@@ -83,9 +81,8 @@ const Login = ({ onToggle }) => {
 
   return (
     <div className={styles.loginContainer}>
-      <ToastContainer />
-      <h2 className={styles.title}>Login to your account</h2>
-      <p className={styles.subtitle}>
+      <h1>Login to your account</h1>
+      <p>
         Don’t have an account?{" "}
         <Link to="" onClick={onToggle} className={styles.createAccount}>
           Create a new account
@@ -95,34 +92,41 @@ const Login = ({ onToggle }) => {
       <form className={styles.loginForm} onSubmit={handleSubmit}>
         <div className={styles.inputGroup}>
           {/* Email input section */}
+          {emailError && (
+            <div className={styles.error} role="alert">
+              {emailError}
+            </div>
+          )}
           <input
             type="email"
             name="email"
-            className={styles.input}
-            placeholder="Email address"
+            placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            required
           />
         </div>
         <div className={styles.inputGroup}>
-          <div className={styles.passwordWrapper}>
             {/* Password input section */}
+            {passwordError && (
+              <div className={styles.error} role="alert">
+                {passwordError}
+              </div>
+            )}
+                <div className={styles.passwordWrapper}>
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              className={styles.input}
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
-              required
             />
-            <span
+            <button
+              type="button"
               className={styles.passwordToggleIcon}
               onClick={togglePasswordVisibility}
             >
-              {showPassword ? "🙊" : "🙈"} {/* Eye icon to toggle */}
-            </span>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
           </div>
         </div>
         <div className={styles.forgotPassword}>
