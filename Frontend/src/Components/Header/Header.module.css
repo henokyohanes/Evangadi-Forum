@@ -1,5 +1,5 @@
 .headerContainer {
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+  border-bottom: .1em solid #2E3B55;
 }
 
 .header {

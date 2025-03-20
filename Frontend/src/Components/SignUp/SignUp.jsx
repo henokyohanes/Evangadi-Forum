@@ -207,10 +207,10 @@ const Signup = ({ onToggle }) => {
           <FontAwesomeIcon icon={faInfoCircle} color="#0b5ed7"/>{" "}
           Passwords must be at least 8 characters.
         </span>
-        <p>
+        <div className={styles.terms}>
           I agree to the <a href="/privacy-policy">privacy policy</a> and{" "}
           <Link to="/terms">terms of service</Link>.
-        </p>
+        </div>
         <button type="submit">Agree and Join</button>
       </form>
       <p>

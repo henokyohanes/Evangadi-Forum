@@ -1,5 +1,7 @@
 .signupContainer {
   width: 100%;
+  max-width: 36em;
+  margin: 0 auto;
   padding: 3em 2em;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: .4em;
@@ -15,6 +17,12 @@
 
 .signupContainer p {
   font-size: clamp(.9em, 3vw, 1.1em);
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.terms {
+  font-size: clamp(.8em, 3vw, 1.1em);
   text-align: center;
   margin-bottom: 1em;
 }
@@ -35,8 +43,13 @@
   gap: 1em;
 }
 
+.signupForm span {
+  font-size: clamp(.8em, 3vw, 1em);
+}
+
 .name_fields {
   display: flex;
+  justify-content: space-between;
   gap: 1em;
 }
 
@@ -69,7 +82,7 @@
 
 .error {
   color: #d82323;
-  font-size: clamp(.9em, 3vw, 1.1em);
+  font-size: clamp(.8em, 3vw, 1em);
 }
 
 .signupForm button {

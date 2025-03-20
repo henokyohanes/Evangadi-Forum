@@ -1,38 +1,13 @@
 .authContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: auto;
-  padding: 20px;
-  background: url("../../assets/10001.svg");
+  padding: 5vw 0;
+  background: url("../../assets/Images/banner.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .authContent {
-  display: flex;
-  flex: 0 0 auto;
-  justify-content: space-evenly;
-  width: 80%;
-  padding: 0px;
-  max-width: 60%;
+  max-width: 75em;
   margin: 0 auto;
-  padding: 20px;
-}
-
-.about {
-  width: 40%;
-}
-
-@media (max-width: 780px) {
-  .authContainer {
-    display: block;
-    width: 85vw;
-    height: auto;
-  }
-  .authContent {
-    display: block;
-    width: 100%;
-  }
+  padding: 0 1em;
 }
