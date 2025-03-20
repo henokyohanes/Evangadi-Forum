@@ -24,14 +24,14 @@ async function register(req, res) {
     if (existingUser.length > 0) {
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ msg: "User already registered" });
+        .json({ msg: "Username or email already exists" });
     }
 
     // Check if the password length is less than 8 characters
     if (password.length < 8) {
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ msg: "Password must be at least 8 characters long" });
+        .json({ msg: "Password must be at least 8 characters." });
     }
 
     //Encrypt the password
@@ -40,7 +40,7 @@ async function register(req, res) {
 
     // Proceed to insert the new user if no existing record is found
     await dbconnection.query(
-      "INSERT INTO users (username, firstname, lastname, email, password) VALUES (?,?,?,?,?)",
+      "INSER INTO users (username, firstname, lastname, email, password) VALUES (?,?,?,?,?)",
       [username, firstname, lastname, email, hashedPassword]
     );
 
@@ -56,7 +56,7 @@ async function register(req, res) {
     // Send a more generic error message to the client
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ msg: "Something went wrong, try again later!" });
+      .json({ msg: "Something went wrong, please try again later!" });
   }
 }
 

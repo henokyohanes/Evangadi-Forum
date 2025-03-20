@@ -5,8 +5,8 @@
   border-radius: .4em;
 }
 
-.loginContainer h1 {
-  font-size: clamp(1.5em, 3vw, 1.8em);
+.loginContainer h2 {
+  font-size: clamp(1.2em, 3vw, 1.5em);
   font-weight: bold;
   color: #4e68ff;
   margin-bottom: .5em;

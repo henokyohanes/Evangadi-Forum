@@ -43,7 +43,7 @@ const Login = ({ onToggle }) => {
     } else {
       setPasswordError("");
     }
-    if (!validateForm()) return;
+    if (!valid) return;
 
     try {
       const response = await axiosBaseURL.post("/users/login", {
@@ -81,7 +81,7 @@ const Login = ({ onToggle }) => {
 
   return (
     <div className={styles.loginContainer}>
-      <h1>Login to your account</h1>
+      <h2>Login to your account</h2>
       <p>
         Don’t have an account?{" "}
         <Link to="" onClick={onToggle} className={styles.createAccount}>
@@ -100,7 +100,7 @@ const Login = ({ onToggle }) => {
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="Email *"
             value={formData.email}
             onChange={handleChange}
           />
@@ -116,7 +116,7 @@ const Login = ({ onToggle }) => {
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              placeholder="Password"
+              placeholder="Password *"
               value={formData.password}
               onChange={handleChange}
             />

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import classes from "./SignUp.module.css";
+import styles from "./SignUp.module.css";
 import { Link } from "react-router-dom";
 import axiosBaseURL from "../../Utility/axios";
 import Swal from "sweetalert2";
@@ -12,7 +12,6 @@ const Signup = ({ onToggle }) => {
     email: "",
     password: "",
   });
-
   const [formErrors, setFormErrors] = useState({});
 
   const handleChange = (e) => {
@@ -21,83 +20,65 @@ const Signup = ({ onToggle }) => {
 
   // Regular expressions for validation
   const validateForm = () => {
+    const isValid = true;
     const errors = {};
+
+    //username validation
     const usernameRegex = /^[a-zA-Z0-9]+$/;
-    const nameRegex = /^[a-zA-Z]+$/;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    // Validate username
-    if (!usernameRegex.test(formData.username)) {
+    if (!formData.username) {
+      errors.username = "Username is required.";
+      isValid = false;
+    } else if (!usernameRegex.test(formData.username)) {
       errors.username = "Username must be alphanumeric.";
+      isValid = false;
     }
 
-    // Validate first and last name
-    if (!nameRegex.test(formData.firstName)) {
-      errors.firstName = "First name must contain only letters.";
+    //name validation
+    const nameRegex = /^[A-Za-z]{2,}([ '-][A-Za-z]+)*$/;
+    if (!formData.firstName) {
+      errors.firstName = "First name is required.";
+      isValid = false;
+    } else if (!nameRegex.test(formData.firstName)) {
+      errors.firstName = "Invalid first name format.";
+      isValid = false;
     }
-    if (!nameRegex.test(formData.lastName)) {
-      errors.lastName = "Last name must contain only letters.";
+    if (!formData.lastName) {
+      errors.lastName = "Last name is required.";
+      isValid = false;
+    } else if (!nameRegex.test(formData.lastName)) {
+      errors.lastName = "Invalid last name format.";
+      isValid = false;
     }
 
-    // Validate email
-    if (!emailRegex.test(formData.email)) {
+    //email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email) {
+      errors.email = "Email is required.";
+      isValid = false;
+    } else if (!emailRegex.test(formData.email)) {
       errors.email = "Invalid email format.";
+      isValid = false;
     }
 
-    // Validate password (for simplicity, let's say it must be at least 6 characters)
-    if (formData.password.length < 8) {
+    //password validation
+    const passwordRegex = /^.{8,}$/;
+    if (!formData.password) {
+      errors.password = "Password is required.";
+      isValid = false;
+    } else if (!passwordRegex.test(formData.password)) {
       errors.password = "Password must be at least 8 characters.";
+      isValid = false;
     }
 
     setFormErrors(errors);
-
-    // If there are errors, show SweetAlert popup for each error
-    if (Object.keys(errors).length > 0) {
-      if (errors.username) {
-        Swal.fire({
-          icon: "error",
-          title: "Invalid Username",
-          text: errors.username,
-        });
-      } else if (errors.firstName) {
-        Swal.fire({
-          icon: "error",
-          title: "Invalid First Name",
-          text: errors.firstName,
-        });
-      } else if (errors.lastName) {
-        Swal.fire({
-          icon: "error",
-          title: "Invalid Last Name",
-          text: errors.lastName,
-        });
-      } else if (errors.email) {
-        Swal.fire({
-          icon: "error",
-          title: "Invalid Email",
-          text: errors.email,
-        });
-      } else if (errors.password) {
-        Swal.fire({
-          icon: "error",
-          title: "Invalid Password",
-          text: errors.password,
-        });
-      }
-
-      return false;
-    }
-
-    return true;
+    return isValid;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validate form before submitting
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
 
     try {
       const response = await axiosBaseURL.post("/users/register", {
@@ -117,11 +98,32 @@ const Signup = ({ onToggle }) => {
           // Optionally, navigate to another page after success
           window.location.href = "/";
         });
+        Swal.fire({
+          title: "Success!",
+          html:  "user registered successfully!",
+          icon: "success",
+          customClass: {
+            popup: styles.popup,
+            confirmButton: styles.confirmButton,
+            icon: styles.icon,
+            title: styles.successTitle,
+            htmlContainer: styles.text,
+          },
+        });
+
+        setTimeout(() => {navigate("/auth")}, 1500);
       } else {
         Swal.fire({
+          title: "Registration failed!",
+          html: response.data.msg || "An error occurred during registration.",
           icon: "error",
-          title: "Registration failed",
-          text: response.data.msg || "An error occurred during registration.",
+          customClass: {
+            popup: styles.popup,
+            confirmButton: styles.confirmButton,
+            icon: styles.icon,
+            title: styles.errorTitle,
+            htmlContainer: styles.text,
+          },
         });
       }
     } catch (err) {
@@ -136,11 +138,11 @@ const Signup = ({ onToggle }) => {
   };
 
   return (
-    <div className={classes.signup_container}>
+    <div className={styles.signup_container}>
       <h2>Join the network</h2>
       <p>
         Already have an account?{" "}
-        <Link to="/login" onClick={onToggle}>
+        <Link to="/auth" onClick={onToggle}>
           Sign in
         </Link>
       </p>
@@ -150,44 +152,39 @@ const Signup = ({ onToggle }) => {
         <input
           type="text"
           name="username"
-          placeholder="Username"
+          placeholder="Username *"
           value={formData.username}
           onChange={handleChange}
-          required
         />
-        <div className={classes.name_fields}>
+        <div className={styles.name_fields}>
           <input
             type="text"
             name="firstName"
-            placeholder="First name"
+            placeholder="First name *"
             value={formData.firstName}
             onChange={handleChange}
-            required
           />
           <input
             type="text"
             name="lastName"
-            placeholder="Last name"
+            placeholder="Last name *"
             value={formData.lastName}
             onChange={handleChange}
-            required
           />
         </div>
         <input
           type="email"
           name="email"
-          placeholder="Email address"
+          placeholder="Email address *"
           value={formData.email}
           onChange={handleChange}
-          required
         />
         <input
           type="password"
           name="password"
-          placeholder="Password"
+          placeholder="Password *"
           value={formData.password}
           onChange={handleChange}
-          required
         />
         <p>
           I agree to the <a href="/privacy-policy">privacy policy</a> and{" "}
