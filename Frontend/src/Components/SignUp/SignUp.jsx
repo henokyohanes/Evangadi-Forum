@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import styles from "./SignUp.module.css";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import axiosBaseURL from "../../Utility/axios";
 import Swal from "sweetalert2";
+import styles from "./SignUp.module.css";
 
 const Signup = ({ onToggle }) => {
   const [formData, setFormData] = useState({
@@ -20,7 +22,7 @@ const Signup = ({ onToggle }) => {
 
   // Regular expressions for validation
   const validateForm = () => {
-    const isValid = true;
+    let isValid = true;
     const errors = {};
 
     //username validation
@@ -138,17 +140,19 @@ const Signup = ({ onToggle }) => {
   };
 
   return (
-    <div className={styles.signup_container}>
+    <div className={styles.signupContainer}>
       <h2>Join the network</h2>
       <p>
         Already have an account?{" "}
         <Link to="/auth" onClick={onToggle}>
-          Sign in
+          Sign In
         </Link>
       </p>
 
       {/* Signup Form */}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.signupForm}>
+        <div className={styles.inputGroup}>
+        {formErrors.username && <div className={styles.error} role="alert">{formErrors.username}</div>}
         <input
           type="text"
           name="username"
@@ -156,7 +160,10 @@ const Signup = ({ onToggle }) => {
           value={formData.username}
           onChange={handleChange}
         />
+        </div>
         <div className={styles.name_fields}>
+          <div className={styles.inputGroup}>
+          {formErrors.firstName && <div className={styles.error} role="alert">{formErrors.firstName}</div>}
           <input
             type="text"
             name="firstName"
@@ -164,6 +171,9 @@ const Signup = ({ onToggle }) => {
             value={formData.firstName}
             onChange={handleChange}
           />
+          </div>
+          <div className={styles.inputGroup}>
+          {formErrors.lastName && <div className={styles.error} role="alert">{formErrors.lastName}</div>}
           <input
             type="text"
             name="lastName"
@@ -171,7 +181,10 @@ const Signup = ({ onToggle }) => {
             value={formData.lastName}
             onChange={handleChange}
           />
+          </div>
         </div>
+        <div className={styles.inputGroup}>
+        {formErrors.email && <div className={styles.error} role="alert">{formErrors.email}</div>}
         <input
           type="email"
           name="email"
@@ -179,6 +192,9 @@ const Signup = ({ onToggle }) => {
           value={formData.email}
           onChange={handleChange}
         />
+        </div>
+        <div className={styles.inputGroup}>
+        {formErrors.password && <div className={styles.error} role="alert">{formErrors.password}</div>}
         <input
           type="password"
           name="password"
@@ -186,6 +202,11 @@ const Signup = ({ onToggle }) => {
           value={formData.password}
           onChange={handleChange}
         />
+        </div>
+        <span>
+          <FontAwesomeIcon icon={faInfoCircle} color="#0b5ed7"/>{" "}
+          Passwords must be at least 8 characters.
+        </span>
         <p>
           I agree to the <a href="/privacy-policy">privacy policy</a> and{" "}
           <Link to="/terms">terms of service</Link>.

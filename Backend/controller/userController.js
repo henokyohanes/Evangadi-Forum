@@ -40,7 +40,7 @@ async function register(req, res) {
 
     // Proceed to insert the new user if no existing record is found
     await dbconnection.query(
-      "INSER INTO users (username, firstname, lastname, email, password) VALUES (?,?,?,?,?)",
+      "INSERT INTO users (username, firstname, lastname, email, password) VALUES (?,?,?,?,?)",
       [username, firstname, lastname, email, hashedPassword]
     );
 

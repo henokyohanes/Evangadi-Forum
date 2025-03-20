@@ -16,15 +16,16 @@
 .loginContainer p {
   font-size: clamp(.9em, 3vw, 1.1em);
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 1em;
 }
 
-.createAccount {
+.loginContainer a {
+  font-size: clamp(.9em, 3vw, 1.1em);
   color: orange;
   text-decoration: none;
 }
 
-.createAccount:hover {
+.loginContainer a:hover {
   text-decoration: underline;
 }
 
@@ -80,15 +81,7 @@
   margin-bottom: 1em;
 }
 
-.forgotPassword a {
-  font-size: clamp(.9em, 3vw, 1.1em);
-  color: orange;
-  text-decoration: none;
-}
 
-.forgotPassword a:hover {
-  text-decoration: underline;
-}
 
 .loginButton {
   width: 100%;

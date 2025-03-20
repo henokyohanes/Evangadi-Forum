@@ -84,7 +84,7 @@ const Login = ({ onToggle }) => {
       <h2>Login to your account</h2>
       <p>
         Don’t have an account?{" "}
-        <Link to="" onClick={onToggle} className={styles.createAccount}>
+        <Link to="" onClick={onToggle}>
           Create a new account
         </Link>
       </p>
