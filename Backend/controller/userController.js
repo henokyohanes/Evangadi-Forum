@@ -24,14 +24,14 @@ async function register(req, res) {
     if (existingUser.length > 0) {
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ msg: "Username or email already exists" });
+        .json({ msg: "Username or email already exists!" });
     }
 
     // Check if the password length is less than 8 characters
     if (password.length < 8) {
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ msg: "Password must be at least 8 characters." });
+        .json({ msg: "Password must be at least 8 characters!" });
     }
 
     //Encrypt the password
@@ -47,7 +47,7 @@ async function register(req, res) {
     // Successfully created the user
     return res
       .status(StatusCodes.CREATED)
-      .json({ msg: "You have Registerd successfully" });
+      .json({ msg: "You have Registerd successfully." });
   } catch (error) {
 
     // Log the error for debugging purposes
@@ -68,7 +68,7 @@ async function login(req, res) {
   if (!email || !password) {
     return res
       .status(StatusCodes.BAD_REQUEST)
-      .json({ msg: " please enter all required fields" });
+      .json({ msg: " please enter all required fields!" });
   }
   try {
 
@@ -82,7 +82,7 @@ async function login(req, res) {
     if (user.length === 0) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ msg: "Incorrect email or password, Please try again." });
+        .json({ msg: "Incorrect email or password, Please try again!" });
     }
 
     // Check if the password is correct
@@ -90,7 +90,7 @@ async function login(req, res) {
     if (!validPassword) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ msg: "Incorrect email or password, Please try again." });
+        .json({ msg: "Incorrect email or password, Please try again!" });
     }
     
     // If login is successful, return a success message (or a JWT token for authentication)
@@ -101,7 +101,7 @@ async function login(req, res) {
     });
     return res
       .status(StatusCodes.OK)
-      .json({ msg: "Login successful!", token, userid });
+      .json({ msg: "Login successful.", token, userid });
   } catch (error) {
     console.error("Login error:", error.message);
     return res

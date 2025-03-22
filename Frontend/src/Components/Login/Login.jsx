@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ScaleLoader } from "react-spinners";
@@ -15,9 +15,16 @@ const Login = ({ onToggle, setError }) => {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+
+    // Update the input field
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Clear error messages when the user starts typing
+    if (name === "email") setEmailError("");
+    if (name === "password") setPasswordError("");
   };
-  
+
   // Handler for form submission
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
@@ -61,35 +68,36 @@ const Login = ({ onToggle, setError }) => {
 
       Swal.fire({
         title: "Success!",
-        html: "You have logged in successfully",
+        html: "You have logged in successfully.",
         icon: "success",
         customClass: {
-          popup: Styles.popup,
-          confirmButton: Styles.confirmButton,
-          icon: Styles.icon,
-          title: Styles.successTitle,
-          htmlContainer: Styles.text,
+          popup: styles.popup,
+          confirmButton: styles.confirmButton,
+          icon: styles.icon,
+          title: styles.successTitle,
+          htmlContainer: styles.text,
         },
       });
       }
 
       // Save token and navigate to another page
       localStorage.setItem("token", response.data.token);
-      // setTimeout(() => {window.location.href = "/"}, 1500);
-    } catch (error) {
-      console.log(error);
-      if (error?.response?.status === 401 || error?.response?.status === 500) {
+      setTimeout(() => {window.location.href = "/"}, 1500);
+    } catch (err) {
+      console.error("Failed to login:", err);
+      console.log(err);
+      if (err?.response?.status === 401 || err?.response?.status === 500) {
         
         Swal.fire({
           title: "Failed!",
-          text: error?.response?.data?.msg,
+          html: err?.response?.data?.msg,
           icon: "error",
           customClass: {
-            popup: Styles.popup,
-            confirmButton: Styles.confirmButton,
-            icon: Styles.icon,
-            title: Styles.errorTitle,
-            htmlContainer: Styles.text,
+            popup: styles.popup,
+            confirmButton: styles.confirmButton,
+            icon: styles.icon,
+            title: styles.errorTitle,
+            htmlContainer: styles.text,
           }
         });
       } else {
@@ -159,7 +167,7 @@ const Login = ({ onToggle, setError }) => {
           <Link to="#">Forgot password?</Link>
         </div>
         <button type="submit" className={styles.loginButton}>
-          {loading ? <ScaleLoader color="#fff" /> : "LogIn"}
+          {loading ? <ScaleLoader color="#fff" height={12} /> : "LogIn"}
         </button>
       </form>
     </div>

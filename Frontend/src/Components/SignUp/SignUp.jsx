@@ -20,8 +20,15 @@ const Signup = ({ onToggle, setError }) => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    // Update the input value
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+
+    // Remove error immediately when user starts typing
+    setFormErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
+
 
   // Regular expressions for validation
   const validateForm = () => {
@@ -114,7 +121,7 @@ const Signup = ({ onToggle, setError }) => {
         setTimeout(() => {navigate("/auth")}, 1500);
       }
     } catch (err) {
-      console.error(err);
+      console.error("Failed to register user:", err);
       console.log(err);
       if (err.response?.status === 400 || err.response?.status === 500) { 
         Swal.fire({
@@ -210,7 +217,7 @@ const Signup = ({ onToggle, setError }) => {
           <Link to="#">terms of service</Link>.
         </div>
         <button type="submit">
-          {loading ? <ScaleLoader color="#fff" /> : "Agree and Join"}
+          {loading ? <ScaleLoader color="#fff" height={12} /> : "Agree and Join"}
           </button>
       </form>
       <p>
