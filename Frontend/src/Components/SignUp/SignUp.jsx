@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ScaleLoader } from "react-spinners";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import axiosBaseURL from "../../Utility/axios";
 import Swal from "sweetalert2";
 import styles from "./SignUp.module.css";
 
-const Signup = ({ onToggle }) => {
+const Signup = ({ onToggle, setError }) => {
   const [formData, setFormData] = useState({
     username: "",
     firstName: "",
@@ -15,6 +16,8 @@ const Signup = ({ onToggle }) => {
     password: "",
   });
   const [formErrors, setFormErrors] = useState({});
+    const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -83,6 +86,10 @@ const Signup = ({ onToggle }) => {
     if (!validateForm()) return;
 
     try {
+
+      setLoading(true);
+      setError(false);
+
       const response = await axiosBaseURL.post("/users/register", {
         username: formData.username,
         firstname: formData.firstName,
@@ -93,16 +100,8 @@ const Signup = ({ onToggle }) => {
 
       if (response.status === 201) {
         Swal.fire({
-          icon: "success",
-          title: "Registration successful!",
-          text: "You have been registered successfully.",
-        }).then(() => {
-          // Optionally, navigate to another page after success
-          window.location.href = "/";
-        });
-        Swal.fire({
           title: "Success!",
-          html:  "user registered successfully!",
+          html: "user registered successfully!",
           icon: "success",
           customClass: {
             popup: styles.popup,
@@ -112,30 +111,29 @@ const Signup = ({ onToggle }) => {
             htmlContainer: styles.text,
           },
         });
-
         setTimeout(() => {navigate("/auth")}, 1500);
-      } else {
+      }
+    } catch (err) {
+      console.error(err);
+      console.log(err);
+      if (err.response?.status === 400 || err.response?.status === 500) { 
         Swal.fire({
-          title: "Registration failed!",
-          html: response.data.msg || "An error occurred during registration.",
+          title: "Failed!",
+          html: err.response?.data?.msg,
           icon: "error",
           customClass: {
             popup: styles.popup,
             confirmButton: styles.confirmButton,
             icon: styles.icon,
             title: styles.errorTitle,
-            htmlContainer: styles.text,
+            htmlContainer: styles.text
           },
         });
+      } else {
+        setError(true);
       }
-    } catch (err) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text:
-          err.response?.data?.msg ||
-          "Error submitting the form. Please try again.",
-      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -208,10 +206,12 @@ const Signup = ({ onToggle }) => {
           Passwords must be at least 8 characters.
         </span>
         <div className={styles.terms}>
-          I agree to the <a href="/privacy-policy">privacy policy</a> and{" "}
-          <Link to="/terms">terms of service</Link>.
+          I agree to the <a href="#">privacy policy</a> and{" "}
+          <Link to="#">terms of service</Link>.
         </div>
-        <button type="submit">Agree and Join</button>
+        <button type="submit">
+          {loading ? <ScaleLoader color="#fff" /> : "Agree and Join"}
+          </button>
       </form>
       <p>
         <Link to="/login" onClick={onToggle}>

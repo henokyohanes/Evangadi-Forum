@@ -82,7 +82,7 @@ async function login(req, res) {
     if (user.length === 0) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ msg: "Incorrect email or password. Please try again." });
+        .json({ msg: "Incorrect email or password, Please try again." });
     }
 
     // Check if the password is correct
@@ -90,7 +90,7 @@ async function login(req, res) {
     if (!validPassword) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ msg: "Incorrect email or password. Please try again." });
+        .json({ msg: "Incorrect email or password, Please try again." });
     }
     
     // If login is successful, return a success message (or a JWT token for authentication)

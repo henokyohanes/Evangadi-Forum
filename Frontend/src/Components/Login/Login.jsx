@@ -1,23 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { ScaleLoader } from "react-spinners";
 import axiosBaseURL from "../../Utility/axios";
 import Swal from "sweetalert2";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Login.module.css";
 
-const Login = ({ onToggle }) => {
+const Login = ({ onToggle, setError }) => {
   const [formData, setFormData] = useState({email: "", password: ""});
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   
   // Handler for form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     
     // Handle client side validations here
@@ -46,33 +48,57 @@ const Login = ({ onToggle }) => {
     if (!valid) return;
 
     try {
+
+      setLoading(true);
+      setError(false);
+
       const response = await axiosBaseURL.post("/users/login", {
         email: formData.email,
         password: formData.password,
       });
       console.log(response);
+      if (response?.status === 200) {
 
-      // Show SweetAlert2 on successful login
       Swal.fire({
-        title: "Good job!",
-        text: "Login Successful",
+        title: "Success!",
+        html: "You have logged in successfully",
         icon: "success",
+        customClass: {
+          popup: Styles.popup,
+          confirmButton: Styles.confirmButton,
+          icon: Styles.icon,
+          title: Styles.successTitle,
+          htmlContainer: Styles.text,
+        },
       });
+      }
 
       // Save token and navigate to another page
       localStorage.setItem("token", response.data.token);
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 1500);
+      // setTimeout(() => {window.location.href = "/"}, 1500);
     } catch (error) {
-      // Handle error, show error message using SweetAlert2
-      Swal.fire({
-        title: "Oops!",
-        text: error?.response?.data?.msg || "Login failed",
-        icon: "error",
-      });
+      console.log(error);
+      if (error?.response?.status === 401 || error?.response?.status === 500) {
+        
+        Swal.fire({
+          title: "Failed!",
+          text: error?.response?.data?.msg,
+          icon: "error",
+          customClass: {
+            popup: Styles.popup,
+            confirmButton: Styles.confirmButton,
+            icon: Styles.icon,
+            title: Styles.errorTitle,
+            htmlContainer: Styles.text,
+          }
+        });
+      } else {
+        setError(true);
+      }
+    } finally {
+      setLoading(false);
     }
-  };
+  }, [formData]);
 
   // Toggle password visibility
   const togglePasswordVisibility = () => {
@@ -106,13 +132,13 @@ const Login = ({ onToggle }) => {
           />
         </div>
         <div className={styles.inputGroup}>
-            {/* Password input section */}
-            {passwordError && (
-              <div className={styles.error} role="alert">
-                {passwordError}
-              </div>
-            )}
-                <div className={styles.passwordWrapper}>
+          {/* Password input section */}
+          {passwordError && (
+            <div className={styles.error} role="alert">
+              {passwordError}
+            </div>
+          )}
+          <div className={styles.passwordWrapper}>
             <input
               type={showPassword ? "text" : "password"}
               name="password"
@@ -130,10 +156,10 @@ const Login = ({ onToggle }) => {
           </div>
         </div>
         <div className={styles.forgotPassword}>
-          <a href="#">Forgot password?</a>
+          <Link to="#">Forgot password?</Link>
         </div>
         <button type="submit" className={styles.loginButton}>
-          Login
+          {loading ? <ScaleLoader color="#fff" /> : "LogIn"}
         </button>
       </form>
     </div>
