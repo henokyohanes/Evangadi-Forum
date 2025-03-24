@@ -77,34 +77,27 @@ const Home = () => {
           {/* header container */}
           <div className={styles.headerContainer}>
             <button
-              className={styles.askButton}
               onClick={handleAskQuestionClick}
             >
               Ask Question
             </button>
-            <h3 className={styles.username}>
-              <span className={styles.span}>Welcome</span>, {user.username}
-            </h3>
+            <h2>
+              <span className={styles.span}>Welcome</span> {user.username}
+            </h2>
           </div>
           {/* search bar */}
           <div className={styles.searchContainer}>
             <input
               type="text"
-              className={styles.searchInput}
               placeholder="Search for questions..."
               value={searchTerm}
               onChange={handleSearchChange}
             />
           </div>
 
-          <h3 className={styles.questionHeader}>Questions</h3>
-          <hr style={{ marginBottom: "20px" }} />
+          <h2>Questions</h2>
 
-          {loading ? (
-            <div className={styles.loadingSpinner}>
-              <div className={styles.spinner}></div>
-            </div>
-          ) : filteredQuestions.length === 0 ? (
+          {filteredQuestions.length === 0 ? (
             <div className={styles.noMatchMessage}>
               No matching questions found.
             </div>
@@ -114,7 +107,6 @@ const Home = () => {
                 <Link
                   to={`/getQuestions/${q.questionid}`}
                   key={index}
-                  className={styles.questionLink}
                 >
                   <li className={styles.questionItem}>
                     <div className={styles.listContainer}>

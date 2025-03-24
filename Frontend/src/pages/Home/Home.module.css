@@ -1,10 +1,8 @@
 .mainContent {
-  position: relative;
   width: 100%;
-  padding: 20px;
-  max-width: 900px;
-  margin: auto;
-  overflow-x: hidden;
+  max-width: 75em;
+  margin: 0 auto;
+  padding: 1em;
 }
 
 .headerContainer {
@@ -13,59 +11,65 @@
   align-items: center;
 }
 
-.askButton {
-  background-image: var(--button-color);
-  color: white;
+.headerContainer button {
+  padding: .5em 1em;
+  background-color: #4e68ff;
+  font-size: clamp(.9em, 3vw, 1.1em);
+  font-weight: bold;
+  color: #fff;
   border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
+  border-radius: .4em;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  flex-shrink: 0;
+  transition: background-color 0.2s ease-in-out;
 }
 
-.askButton:hover {
+.headerContainer button:hover {
   background-color: #e5670a;
 }
 
-.searchContainer {
-  margin: 20px 0;
-  text-align: center;
+.mainContent h2 {
+  font-size: clamp(1.2em, 3vw, 1.5em);
+  font-weight: bold;
 }
 
 .span {
   color: #fe750b;
-  font-weight: bold;
-  font-size: 28px;
   font-style: oblique;
-  margin-right: 10px;
-  margin-left: 10px;
-}
-.username {
-  font-size: 32px;
+  margin-right: .4em;
 }
 
-.searchInput {
-  padding: 10px 20px;
+.searchContainer {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.searchContainer input {
+  padding: .5em .8em;
   width: 100%;
-  max-width: 500px;
-  border-radius: 8px;
+  max-width: 40em;
+  border-radius: .4em;
   border: 1px solid #ccc;
-  font-size: 16px;
+  font-size: clamp(.9em, 3vw, 1.1em);
   outline: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
 }
 
-.searchInput:focus {
+.searchContainer input:focus {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-color: #fe750b;
 }
 
-.questionHeader {
-  font-size: 24px;
-  margin: 20px 0;
+.searchContainer input::placeholder {
+  color: #999;
+  font-style: italic;
+  font-size: clamp(.9em, 3vw, 1.1em);
+}
+
+.noMatchMessage {
+  font-size: clamp(.9em, 3vw, 1.1em);
+  margin: 1em 0;
+  color: red;
 }
 
 .questionList {
@@ -73,14 +77,19 @@
   padding: 0;
 }
 
-/* Individual question item styles */
+.questionList a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .questionItem {
+  width: 100%;
   display: flex;
   align-items: center;
-  padding: 40px;
+  padding: 1em;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 10px;
+  border-radius: .4em;
+  margin-bottom: 1em;
   transition: box-shadow 0.2s;
 }
 
@@ -88,6 +97,21 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1em;
+}
+
+.profileImgContainer {
+  border-radius: 50%;
+  width: 4em;
+  height: 4em;
+  overflow: hidden;
+  position: relative;
+}
 .questionAvatar {
   width: 50px;
   height: 50px;
@@ -115,7 +139,7 @@
   cursor: pointer;
 }
 
-.loadingSpinner {
+/* .loadingSpinner {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,7 +153,7 @@
   width: 30px;
   height: 30px;
   animation: spin 1s linear infinite;
-}
+} */
 
 .parentContainer {
   display: flex;
@@ -138,21 +162,7 @@
   z-index: 1;
 }
 
-.listContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-right: 1em;
-}
 
-.profileImgContainer {
-  border-radius: 50%;
-  width: 4em;
-  height: 4em;
-  overflow: hidden;
-  position: relative;
-}
 
 .profileImg {
   position: absolute;
@@ -210,70 +220,4 @@
   100% {
     transform: rotate(360deg);
   }
-}
-
-/* Media Queries for responsiveness */
-@media (max-width: 600px) {
-  .askButton {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .searchInput {
-    width: 90%;
-    font-size: 14px;
-  }
-}
-
-.noMatchMessage {
-  text-align: center;
-  font-size: 18px;
-  color: #555;
-  margin: 20px 0;
-}
-
-.askButton:hover {
-  background-color: #e6640d;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-  .askButton {
-    font-size: 14px;
-    padding: 8px 16px;
-    width: 40%;
-  }
-}
-
-@media (max-width: 780px) {
-  .askButton {
-    font-size: 12px;
-    padding: 6px 12px;
-    width: 40%;
-  }
-  .profileImageContainer {
-    display: none;
-  }
-  .username {
-    font-size: 18px;
-  }
-  .span {
-    font-size: 18px;
-  }
-}
-
-@media (min-width: 768) {
-  .profileImageContainer {
-    position: absolute;
-    right: 100px;
-  }
-}
-
-.questionAvatar {
-  border-radius: 3px solid #e5670a;
-}
-
-.questionLink {
-  text-decoration: none;
-  color: black;
 }
