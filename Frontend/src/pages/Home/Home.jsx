@@ -3,8 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { AppState } from "../../Routes/Router";
 import axiosBaseURL, { axiosImageURL } from "../../Utility/axios";
-import ProfileImage from "../../Components/ProfileImage/ProfileImage";
 import Layout from "../../Components/Layout/Layout";
+import NotFound from "../../Components/NotFound/NotFound";
+import Loader from "../../Components/Loader/Loader";
 import styles from "./Home.module.css";
 
 const Home = () => {
@@ -13,24 +14,31 @@ const Home = () => {
   // State to store questions
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const questionsPerPage = 8;
+  const questionsPerPage = 6;
   const navigate = useNavigate();
 
   // Fetch questions from the backend
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
+
+        setLoading(true);
+        setError(false);
+
         const response = await axiosBaseURL.get("/questions/getQuestions", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-
+        console.log(response);
         setQuestions(response.data.questions);
       } catch (err) {
+        console.log(err);
         console.error("Failed to fetch questions:", err);
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -72,8 +80,7 @@ const Home = () => {
 
   return (
     <Layout>
-      <div className={styles.parentContainer}>
-        <main className={styles.mainContent}>
+        {!loading && !error ? (<main className={styles.mainContent}>
           {/* header container */}
           <div className={styles.headerContainer}>
             <button
@@ -124,12 +131,12 @@ const Home = () => {
                           />
                         )}
                       </div>
-                      <p style={{ fontWeight: "bold" }}>{q.username}</p>
+                      <p>{q.username}</p>
                     </div>
                     {/* Question Text */}
                     <div className={styles.questionText}>
                       <strong>{q.title}</strong>
-                      <p>
+                      {/* <p> */}
                         {/* Date */}
                         <p>
                           {new Date(q.tag).toLocaleDateString("en-US", {
@@ -138,11 +145,10 @@ const Home = () => {
                             day: "numeric",
                           })}
                         </p>
-                      </p>
+                      {/* </p> */}
                     </div>
                     <button
                       onClick={() => handleQuestionClick(q.questionid)}
-                      className={styles.questionButton}
                     >
                       ➡
                     </button>
@@ -157,7 +163,6 @@ const Home = () => {
             <button
               onClick={() => paginate(currentPage - 1)}
               disabled={currentPage === 1}
-              className={styles.paginationButton}
             >
               Previous
             </button>
@@ -165,15 +170,11 @@ const Home = () => {
             <button
               onClick={() => paginate(currentPage + 1)}
               disabled={indexOfLastQuestion >= filteredQuestions.length}
-              className={styles.paginationButton}
             >
               Next
             </button>
           </div>
-        </main>
-        <div className={styles.profileImageContainer}></div>
-        {/* <ProfileImage /> */}
-      </div>
+        </main>) : error ? <NotFound /> : <Loader /> }
     </Layout>
   );
 }
