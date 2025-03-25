@@ -1,175 +1,110 @@
 .container {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  border-radius: 8px;
+  width: 100%;
+  max-width: 75em;
+  margin: 0 auto;
+  padding: 2em 1em;
+  word-break: break-word;
+}
+
+.title {
+  display: flex;
+  gap: 1em;
+}
+
+.questionIcon {
+  font-size: 3em;
+  color: #007bff;
+}
+
+.title h2 {
+  font-size: clamp(1.2em, 3vw, 1.5em);
+  font-weight: bold;
+}
+
+.container p {
+  font-size: clamp(.9em, 3vw, 1.1em);
+  padding-top: 1em;
+  margin: 0;
 }
 
 .questionSection,
 .answersSection,
 .answerForm {
-  margin-bottom: 24px;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1em;
+  padding: 1em;
+  border-radius: .4em;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.questionTitle {
-  font-size: 1.75rem;
-  margin-bottom: 12px;
-  color: var(--button-color);
-  padding-top: 18px;
-}
-
-.questionDetails,
-.answerDetails {
-  font-size: 18px;
-  padding: 18px;
-  font-style: italic;
-  color: var(--text-color);
-}
-
-.questionDescription,
-.answerText {
-  font-size: 1rem;
-  color: var(--text-color);
-  line-height: 1.6;
-}
-
-.answersSection h5 {
-  margin-bottom: 12px;
-  color: var(--primary-color);
+.answersSection h2 {
+  font-size: clamp(1.2em, 3vw, 1.5em);
+  font-weight: bold;
+  margin-bottom: 1em;
+  color: #007bff;
 }
 
 .answerItem {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 16px;
-  padding: 4px;
-  background: #f8f9fa;
-  border-radius: 8px;
-}
-
-.answerAvatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 16px;
-}
-
-.noAnswers {
-  font-size: 1rem;
-  color: var(--muted-color);
-  text-align: center;
-}
-
-.answerForm h5 {
-  font-size: 1.25rem;
-  color: var(--secondary-color);
+  margin-bottom: 1em;
+  padding: .8em;
+  background: #eff0f1;
+  border-radius: .4em;
+  gap: 1em;
 }
 
 .answerInfo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 2em;
 }
 
-.submitButton {
-  display: block;
+.profileImgContainer {
+  border-radius: 50%;
+  width: 4em;
+  height: 4em;
+  overflow: hidden;
+  position: relative;
+}
+
+.profileImg {
+  position: absolute;
   width: 100%;
-  padding: 12px;
-  margin-top: 16px;
-  border: none;
-  border-radius: 8px;
-  background: var(--primary-color);
-  color: #fff;
-  text-align: center;
-  font-size: 1rem;
-  cursor: pointer;
-  text-decoration: none;
-}
-.HomelinkButton {
-  display: block;
-  width: 20%;
-  padding: 12px;
-  margin-top: 16px;
-  border: none;
-  border-radius: 8px;
-  background: var(--primary-color);
-  color: #fff;
-  text-align: center;
-  font-size: 1rem;
-  cursor: pointer;
-  text-decoration: none;
+  height: 100%;
+  object-fit: cover;
 }
 
-.linkButton:hover,
-.submitButton:hover {
-  background: green;
-}
-
-.answerTextarea {
+.profileImgCircle {
+  position: absolute;
   width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  color: var(--text-color);
-  margin-top: 12px;
-  background: #f8f9fa;
+  height: 100%;
+  object-fit: cover;
 }
 
-.submittingMessage {
-  margin-top: 12px;
-  font-size: 1.8rem;
-  color: #057b54;
-  text-align: center;
+.answerInfo p {
+  font-weight: bold;
+  padding: 0;
 }
 
-.errorMessage {
-  margin-top: 12px;
-  font-size: 1.8rem;
-  color: #e74c3c;
-  text-align: center;
-}
+.answerContent p {
+  padding: 0;
+} 
 
-.fade-out {
-  opacity: 1;
-  transition: opacity 0.5s ease-out;
-}
-
-.fade-out.hidden {
-  opacity: 0;
-}
-.answerdescription {
-  height: 150px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  resize: none;
-  font-size: 16px;
-  width: 97%;
-  margin-top: 10px;
-}
 .reactions {
   display: flex;
-  gap: 10px;
+  gap: 1em; 
 }
 
 .likeButton,
 .dislikeButton {
+  background: none;
+  border: none;
   display: flex;
   align-items: center;
-  gap: 5px;
-  background-color: transparent;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 5px 10px;
+  gap: .2em;
   cursor: pointer;
-  font-size: 1.3rem;
-  transition: background-color 0.3s, color 0.3s, opacity 0.3s;
-  border: none;
+  font-size: clamp(.8em, 3vw, 1em);
+  transition: color 0.3s ease;
 }
 
 .likeButton:hover:not(:disabled) {
@@ -189,24 +124,95 @@
   cursor: not-allowed;
 }
 
-.answerInfoCard {
-  border-radius: "50%";
-  width: "4em";
-  height: "4em";
-  overflow: "hidden";
-  position: "relative";
+.noAnswers {
+  padding: 0 !important;
+  font-weight: bold;
+  text-align: center;
 }
 
-.Profilecircle {
-  position: "absolute";
-  width: "100%";
-  height: "100%";
-  object-fit: "cover";
-  color: "#ccc";
+.answerForm h2 {
+  font-size: clamp(1.2em, 3vw, 1.5em);
+  font-weight: bold;
+  margin-bottom: 1em;
+  color: #007bff;
 }
 
-@media (max-width: 600px) {
-  .HomelinkButton {
-    width: 55%;
-  }
+.answerForm textarea {
+  height: 8em;
+  border: 1px solid #ccc;
+  border-radius: .4em;
+  padding: .6em;
+  font-size: clamp(.9em, 3vw, 1.1em);
+  width: 100%;
+  max-width: 50em;
+}
+
+.answerForm textarea:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.answerForm textarea::placeholder {
+  color: #999;
+  font-style: italic;
+  font-size: clamp(.9em, 3vw, 1.1em);
+}
+
+.answerForm a {
+  font-size: clamp(.9em, 3vw, 1.1em);
+  text-decoration: none;
+  max-width: 50em;
+  text-align: end;
+  display: block;
+  color: #007bff;
+  margin-top: 1em;
+  cursor: pointer;
+}
+
+.answerForm a:hover {
+  text-decoration: underline;
+}
+
+.submitButton {
+  display: block;
+  width: 100%;
+  max-width: 14em;
+  padding: .5em;
+  margin: 0 auto;
+  border: none;
+  border-radius: .4em;
+  background-color: #007bff;
+  color: #fff;
+  text-align: center;
+  font-size: clamp(.9em, 3vw, 1.1em);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background: green;
+}
+
+.submittingMessage {
+  margin-top: 12px;
+  font-size: 1.8rem;
+  color: #057b54;
+  text-align: center;
+}
+
+
+.errorMessage {
+  margin-top: 12px;
+  font-size: 1.8rem;
+  color: #e74c3c;
+  text-align: center;
+}
+
+.fade-out {
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.fade-out.hidden {
+  opacity: 0;
 }

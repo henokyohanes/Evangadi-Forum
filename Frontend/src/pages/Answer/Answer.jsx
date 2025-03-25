@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axiosBaseURL, { axiosImageURL } from "../../Utility/axios";
 import Layout from "../../Components/Layout/Layout";
-import classes from "./Answer.module.css";
+import styles from "./Answer.module.css";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { TbMessageQuestion } from "react-icons/tb";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
@@ -241,46 +241,43 @@ const Answer = () => {
 
   return (
     <Layout>
-      <div className={classes.container}>
-        <h1 className={classes.questionTitle}>
-          <TbMessageQuestion /> {question.title}
-        </h1>
-        <p className={classes.questionDetails}>{question.description}</p>
+      <div className={styles.container}>
+        <div className={styles.questionSection}>
+        <div className={styles.title}>
+          <TbMessageQuestion className={styles.questionIcon} /><h2> {question.title}</h2>
+        </div>
+        <p>{question.description}</p>
+        </div>
 
         {/* Display Answers */}
-        <div className={classes.answersSection}>
-          <h5>Answers From The Community</h5>
+        <div className={styles.answersSection}>
+          <h2>Answers From The Community</h2>
 
           {answers && answers.length > 0 ? (
             answers.map((ans) => (
-              <div key={ans.id} className={classes.answerItem}>
-                <div className={classes.answerInfo}>
-                  <div className={classes.answerInfoCard}>
+              <div key={ans.id} className={styles.answerItem}>
+                <div className={styles.answerInfo}>
+                  <div className={styles.profileImgContainer}>
                     {ans.profileimg ? (
                       <img
                         src={`${axiosImageURL}${ans.profileimg}`}
                         alt={`${ans.username}'s profile`}
+                        className={styles.profileImg}
                         loading="lazy"
-                        style={{
-                          width: "4em",
-                          height: "4em",
-                          borderRadius: "50%",
-                          objectFit: "cover",
-                        }}
                       />
                     ) : (
-                      <RiAccountCircleFill className={classes.Profilecircle} />
+                      <RiAccountCircleFill className={styles.Profilecircle} />
                     )}
                   </div>
-                  <p className={classes.answerDetails}>{ans.username}</p>
+                  <p>{ans.username}</p>
                 </div>
-                <div className={classes.answerContent}>
-                  <p className={classes.answerText}>{ans.answer}</p>
-                  <div className={classes.reactions}>
+                <div className={styles.answerContent}>
+                  <p>{ans.answer}</p>
+                  <div className={styles.reactions}>
                     <button
-                      className={`${classes.likeButton} ${
+                      className={`${styles.likeButton} ${
                         userReactions[ans.id] === "liked"
-                          ? classes.activeLike
+                          ? styles.activeLike
                           : ""
                       }`}
                       onClick={() => handleLike(ans.id)}
@@ -290,9 +287,9 @@ const Answer = () => {
                       <FaThumbsUp /> {ans.likes}
                     </button>
                     <button
-                      className={`${classes.dislikeButton} ${
+                      className={`${styles.dislikeButton} ${
                         userReactions[ans.id] === "disliked"
-                          ? classes.activeDislike
+                          ? styles.activeDislike
                           : ""
                       }`}
                       onClick={() => handleDislike(ans.id)}
@@ -306,35 +303,30 @@ const Answer = () => {
               </div>
             ))
           ) : (
-            <p className={classes.noAnswers}>
+            <p className={styles.noAnswers}>
               No answers yet. Be the first to answer!
             </p>
           )}
         </div>
 
         {/* Answer Form */}
-        <div className={classes.answerForm}>
-          <h5>Answer The Top Question</h5>
-          <Link to="/" className={classes.HomelinkButton}>
-            Go to Question page
-          </Link>
+        <div className={styles.answerForm}>
+          <h2>Answer The Top Question</h2>
 
           <textarea
             placeholder="Your answer ..."
             rows={4}
-            className={classes.answerdescription}
             value={answerText}
             onChange={(e) => setAnswerText(e.target.value)}
           />
+          <Link to="/">
+            Back to Question page
+          </Link>
         </div>
         {/* Submit Button */}
-        <button onClick={handleAnswerSubmit} className={classes.submitButton}>
+        <button onClick={handleAnswerSubmit} className={styles.submitButton}>
           Post Answer
         </button>
-        {submitting && (
-          <p className={classes.submittingMessage}>{submitting}</p>
-        )}
-        {errorMessage && <p className={classes.errorMessage}>{errorMessage}</p>}
       </div>
     </Layout>
   );

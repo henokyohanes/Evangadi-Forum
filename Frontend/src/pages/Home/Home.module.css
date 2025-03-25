@@ -2,7 +2,7 @@
   width: 100%;
   max-width: 75em;
   margin: 0 auto;
-  padding: 1em;
+  padding: 2em 1em;
 }
 
 .headerContainer {
@@ -85,7 +85,6 @@
 .questionItem {
   width: 100%;
   display: flex;
-  align-items: center;
   padding: 1em;
   border: 1px solid #ddd;
   border-radius: .4em;
