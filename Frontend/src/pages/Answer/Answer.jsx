@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axiosBaseURL, { axiosImageURL } from "../../Utility/axios";
-import Layout from "../../Components/Layout/Layout";
-import styles from "./Answer.module.css";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { TbMessageQuestion } from "react-icons/tb";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import { toast } from "react-toastify";
+import Layout from "../../Components/Layout/Layout";
+import Loader from "../../Components/Loader/Loader";
+import NotFound from "../../Components/NotFound/NotFound";
+import styles from "./Answer.module.css";
 
 const Answer = () => {
   const { questionid } = useParams();
   const [question, setQuestion] = useState({});
   const [answers, setAnswers] = useState([]);
-  const [answerText, setAnswerText] = useState("");
-  const [submitting, setSubmitting] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [answerText, setAnswerText] = useState("");
   const [userReactions, setUserReactions] = useState({});
-
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
 
@@ -43,11 +45,14 @@ const Answer = () => {
   }, [userReactions, questionid, userId]);
 
   // Load like and dislike counts from localStorage
-  useEffect(() => {
-    const storedCounts = localStorage.getItem(`answerCounts_${questionid}`);
-    const parsedCounts = storedCounts ? JSON.parse(storedCounts) : {};
 
-    const fetchQuestion = async () => {
+  const storedCounts = localStorage.getItem(`answerCounts_${questionid}`);
+  const parsedCounts = storedCounts ? JSON.parse(storedCounts) : {};
+  
+  const fetchQuestion = async () => {
+      setLoading(true);
+      setError(false);
+      
       try {
         const response = await axiosBaseURL.get(
           `/questions/getQuestions/${questionid}`,
@@ -68,9 +73,13 @@ const Answer = () => {
         setAnswers(initializedAnswers || []);
       } catch (error) {
         console.error("Failed to fetch question:", error);
+        setError(true);
+      } finally {
+        setLoading(false);
       }
     };
-
+    
+    useEffect(() => {
     if (questionid && token) {
       fetchQuestion();
     }
@@ -84,6 +93,9 @@ const Answer = () => {
     }
 
     try {
+      setLoading(true);
+      setError(false);
+
       const response = await axiosBaseURL.post(
         `/answers`,
         { questionid, answer: answerText.trim() },
@@ -94,17 +106,17 @@ const Answer = () => {
         }
       );
 
-      toast.success("Answer Submitted Successfully");
-      setAnswerText("");
-
       // Add the new answer to the state
       const newAnswer = {
         ...response.data,
         likes: 0,
         dislikes: 0,
-        id: response.data._id,
+        id: response.data.id || response.data._id,
       };
-      setAnswers([newAnswer, ...answers]);
+
+      fetchQuestion();
+      toast.success("Answer Submitted Successfully");
+      setAnswerText("");
 
       // Initialize counts in localStorage
       const storedCounts =
@@ -121,8 +133,16 @@ const Answer = () => {
       // Clear error message if any
       setErrorMessage("");
     } catch (error) {
-      setSubmitting("");
-      toast.error(error.response?.data?.message || "An error occurred.");
+      console.error("Failed to submit answer:", error);
+      if (error.response) {
+        toast.error(
+          error.response?.data?.message ||
+            "An error occurred. Please try again.");
+      } else {
+        setError(true);
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -241,93 +261,103 @@ const Answer = () => {
 
   return (
     <Layout>
-      <div className={styles.container}>
-        <div className={styles.questionSection}>
-        <div className={styles.title}>
-          <TbMessageQuestion className={styles.questionIcon} /><h2> {question.title}</h2>
-        </div>
-        <p>{question.description}</p>
-        </div>
+      {!loading && !error ? (
+        <div className={styles.container}>
+          <div className={styles.questionSection}>
+            <div className={styles.title}>
+              <TbMessageQuestion className={styles.questionIcon} />
+              <h2> {question.title}</h2>
+            </div>
+            <p>{question.description}</p>
+          </div>
 
-        {/* Display Answers */}
-        <div className={styles.answersSection}>
-          <h2>Answers From The Community</h2>
+          {/* Display Answers */}
+          <div className={styles.answersSection}>
+            <h2>Answers From The Community</h2>
 
-          {answers && answers.length > 0 ? (
-            answers.map((ans) => (
-              <div key={ans.id} className={styles.answerItem}>
-                <div className={styles.answerInfo}>
-                  <div className={styles.profileImgContainer}>
-                    {ans.profileimg ? (
-                      <img
-                        src={`${axiosImageURL}${ans.profileimg}`}
-                        alt={`${ans.username}'s profile`}
-                        className={styles.profileImg}
-                        loading="lazy"
-                      />
-                    ) : (
-                      <RiAccountCircleFill className={styles.Profilecircle} />
-                    )}
+            {answers && answers.length > 0 ? (
+              answers.map((ans) => (
+                <div key={ans.id} className={styles.answerItem}>
+                  <div className={styles.answerInfo}>
+                    <div className={styles.profileImgContainer}>
+                      {ans.profileimg ? (
+                        <img
+                          src={`${axiosImageURL}${ans.profileimg}`}
+                          alt={`${ans.username}'s profile`}
+                          className={styles.profileImg}
+                          loading="lazy"
+                        />
+                      ) : (
+                        <RiAccountCircleFill className={styles.Profilecircle} />
+                      )}
+                    </div>
+                    <p>{ans.username}</p>
                   </div>
-                  <p>{ans.username}</p>
-                </div>
-                <div className={styles.answerContent}>
-                  <p>{ans.answer}</p>
-                  <div className={styles.reactions}>
-                    <button
-                      className={`${styles.likeButton} ${
-                        userReactions[ans.id] === "liked"
-                          ? styles.activeLike
-                          : ""
-                      }`}
-                      onClick={() => handleLike(ans.id)}
-                      aria-label="Like"
-                      disabled={userReactions[ans.id] === "disliked"}
-                    >
-                      <FaThumbsUp /> {ans.likes}
-                    </button>
-                    <button
-                      className={`${styles.dislikeButton} ${
-                        userReactions[ans.id] === "disliked"
-                          ? styles.activeDislike
-                          : ""
-                      }`}
-                      onClick={() => handleDislike(ans.id)}
-                      aria-label="Dislike"
-                      disabled={userReactions[ans.id] === "liked"}
-                    >
-                      <FaThumbsDown /> {ans.dislikes}
-                    </button>
+                  <div className={styles.answerContent}>
+                    <p>{ans.answer}</p>
+                    <div className={styles.reactions}>
+                      <button
+                        className={`${styles.likeButton} ${
+                          userReactions[ans.id] === "liked"
+                            ? styles.activeLike
+                            : ""
+                        }`}
+                        onClick={() => handleLike(ans.id)}
+                        aria-label="Like"
+                        disabled={userReactions[ans.id] === "disliked"}
+                      >
+                        <FaThumbsUp /> {ans.likes}
+                      </button>
+                      <button
+                        className={`${styles.dislikeButton} ${
+                          userReactions[ans.id] === "disliked"
+                            ? styles.activeDislike
+                            : ""
+                        }`}
+                        onClick={() => handleDislike(ans.id)}
+                        aria-label="Dislike"
+                        disabled={userReactions[ans.id] === "liked"}
+                      >
+                        <FaThumbsDown /> {ans.dislikes}
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <p className={styles.noAnswers}>
-              No answers yet. Be the first to answer!
-            </p>
-          )}
-        </div>
+              ))
+            ) : (
+              <p className={styles.noAnswers}>
+                No answers yet. Be the first to answer!
+              </p>
+            )}
+          </div>
 
-        {/* Answer Form */}
-        <div className={styles.answerForm}>
-          <h2>Answer The Top Question</h2>
-
-          <textarea
-            placeholder="Your answer ..."
-            rows={4}
-            value={answerText}
-            onChange={(e) => setAnswerText(e.target.value)}
-          />
-          <Link to="/">
-            Back to Question page
-          </Link>
+          {/* Answer Form */}
+          <div className={styles.answerForm}>
+            <h2>Answer The Top Question</h2>
+            {errorMessage && (
+              <p className={styles.errorMessage}>{errorMessage}</p>
+            )}
+            <textarea
+              placeholder="Your answer ..."
+              rows={4}
+              value={answerText}
+              onChange={(e) => {
+                setAnswerText(e.target.value);
+                if (errorMessage) setErrorMessage("");
+              }}
+            />
+            <Link to="/">Back to Question page</Link>
+          </div>
+          {/* Submit Button */}
+          <button onClick={handleAnswerSubmit} className={styles.submitButton}>
+            Post Answer
+          </button>
         </div>
-        {/* Submit Button */}
-        <button onClick={handleAnswerSubmit} className={styles.submitButton}>
-          Post Answer
-        </button>
-      </div>
+      ) : error ? (
+        <NotFound />
+      ) : (
+        <Loader />
+      )}
     </Layout>
   );
 };

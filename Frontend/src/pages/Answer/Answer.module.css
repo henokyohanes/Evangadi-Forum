@@ -61,8 +61,8 @@
 
 .profileImgContainer {
   border-radius: 50%;
-  width: 4em;
-  height: 4em;
+  width: clamp(3em, 5vw, 4em);
+  height: clamp(3em, 5vw, 4em);
   overflow: hidden;
   position: relative;
 }
@@ -193,26 +193,8 @@
   background: green;
 }
 
-.submittingMessage {
-  margin-top: 12px;
-  font-size: 1.8rem;
-  color: #057b54;
-  text-align: center;
-}
-
-
 .errorMessage {
-  margin-top: 12px;
-  font-size: 1.8rem;
+  font-size: clamp(.9em, 3vw, 1.1em);
   color: #e74c3c;
-  text-align: center;
-}
-
-.fade-out {
-  opacity: 1;
-  transition: opacity 0.5s ease-out;
-}
-
-.fade-out.hidden {
-  opacity: 0;
+  padding: 0 !important;
 }

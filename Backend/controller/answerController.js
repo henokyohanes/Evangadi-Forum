@@ -108,7 +108,7 @@ const postAnswer = async (req, res) => {
     console.error(err);
     return res.status(500).json({
       error: "Internal Server Error",
-      message: "An unexpected error occurred.",
+      message: "An unexpected error occurred. Please try again later.",
     });
   }
 };

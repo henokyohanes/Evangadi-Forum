@@ -15,3 +15,30 @@
     color: inherit !important;
     outline: none !important;
 }
+
+.toast-container {
+    width: 100%;
+    max-width: 28em;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+
+.toast-item {
+    margin: 1em;
+    font-size: clamp(1em, 3vw, 1.2em);
+    font-weight: bold;
+    color: black !important;
+}
+
+.toast-body {
+    padding: 1em !important;
+}
+
+.toast-item .Toastify__toast-icon {
+    font-size: clamp(.9em, 3vw, 1.1em) !important;
+    width: 2em !important;
+}
