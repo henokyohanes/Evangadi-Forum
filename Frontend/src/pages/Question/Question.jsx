@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Layout from "../../Components/Layout/Layout";
 import axiosBaseURL from "../../Utility/axios";
-import classes from "./Question.module.css";
+import styles from "./Question.module.css";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { toast } from "react-toastify";
 
@@ -47,57 +47,51 @@ const Question = () => {
   return (
     <>
       <Layout>
-        <div>
-          <h1 className={classes.heading}>What Do You Want to Know?</h1>
-          <div className={classes.all}>
-            <div className={classes.steps}>
-              <h3 className={classes.heading_title}>
+        <div className={styles.container}>
+          <h1 className={styles.heading}>What Do You Want to Know?</h1>
+          <div className={styles.stepsContainer}>
+            <div className={styles.steps}>
+              <h3>
                 Steps to Write a Good Question
               </h3>
-              <hr className={classes.line} />
-              <ul className={classes.checklist}>
-                <li className={classes.checklistItem}>
-                  <FaCircleArrowRight size={30} className={classes.icon} />
-                  <p>Summarize your problem in a one-line title</p>
+              <hr className={styles.line} />
+              <ul className={styles.checkList}>
+                <li>
+                  <FaCircleArrowRight className={styles.icon} />
+                  <p>Summarize your problem in a one-line title.</p>
                 </li>
-                <li className={classes.checklistItem}>
-                  <FaCircleArrowRight size={30} className={classes.icon} />
-                  <p>Describe your problem in more detail</p>
+                <li>
+                  <FaCircleArrowRight className={styles.icon} />
+                  <p>Describe your problem in more detail.</p>
                 </li>
-                <li className={classes.checklistItem}>
-                  <FaCircleArrowRight size={30} className={classes.icon} />
-                  <p>Describe what you tried and what you expected to happen</p>
+                <li>
+                  <FaCircleArrowRight className={styles.icon} />
+                  <p>Describe what you tried and expected to happen.</p>
                 </li>
-                <li className={classes.checklistItem}>
-                  <FaCircleArrowRight size={30} className={classes.icon} />
-                  <p>Review your question and post it to the site</p>
+                <li>
+                  <FaCircleArrowRight className={styles.icon} />
+                  <p>Review your question and post it to the site.</p>
                 </li>
               </ul>
             </div>
-            {error && <div className={classes.error}>{error}</div>}
-            <div className={classes.question}>
+            {error && <div className={styles.error}>{error}</div>}
+            <div className={styles.question}>
               <h3>What’s On Your Mind? Ask Away</h3>
-              <form className={classes.box} onSubmit={handleSubmit}>
-                <div className={classes.inputholder}>
+              <form onSubmit={handleSubmit}>
                   <input
                     type="text"
-                    placeholder="Question Title..."
-                    className={classes.input1}
+                    placeholder="question title..."
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
                   <textarea
-                    placeholder="Question Description "
-                    className={classes.description}
+                    placeholder="question description..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
-                </div>
-                <div className={classes.btnholder}>
-                  <button type="submit" className={classes.btn}>
+                  <button type="submit">
                     Post Your Question
                   </button>
-                </div>
               </form>
             </div>
           </div>
