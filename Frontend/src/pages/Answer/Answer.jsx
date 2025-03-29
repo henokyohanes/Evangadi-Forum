@@ -86,7 +86,8 @@ const Answer = () => {
   }, [questionid, token]);
 
   // Handle submitting a new answer
-  const handleAnswerSubmit = async () => {
+  const handleAnswerSubmit = async (e) => {
+    e.preventDefault();
     if (answerText.trim() === "") {
       setErrorMessage("Answer cannot be empty.");
       return;
@@ -115,8 +116,11 @@ const Answer = () => {
       };
 
       fetchQuestion();
-      toast.success("Answer Submitted Successfully");
       setAnswerText("");
+      setErrorMessage("");
+      toast.success("Answer Submitted Successfully", {
+        autoClose: 1500,
+      });
 
       // Initialize counts in localStorage
       const storedCounts =
@@ -129,15 +133,15 @@ const Answer = () => {
         `answerCounts_${questionid}`,
         JSON.stringify(updatedCounts)
       );
-
-      // Clear error message if any
-      setErrorMessage("");
     } catch (error) {
       console.error("Failed to submit answer:", error);
       if (error.response) {
         toast.error(
           error.response?.data?.message ||
-            "An error occurred. Please try again.");
+            "An error occurred. Please try again.",
+          {
+            autoClose: 1500,
+          });
       } else {
         setError(true);
       }

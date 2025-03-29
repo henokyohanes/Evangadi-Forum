@@ -7,7 +7,7 @@ async function question(req, res) {
   const { title, description } = req.body;
   if (!title || !description) {
     return res.status(StatusCodes.BAD_REQUEST).json({
-      message: "Please provide all required fields",
+      msg: "Please provide all required fields",
     });
   }
   try {
@@ -23,7 +23,7 @@ async function question(req, res) {
     if (question.length > 0 && userid != 0 && description) {
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ msg: "You already created a question" });
+        .json({ msg: "You have already created this question" });
     }
     // Query to insert the question
     await dbConnection.query(
@@ -35,13 +35,13 @@ async function question(req, res) {
       [userid, title]
     );
     return res.status(StatusCodes.CREATED).json({
-      message: "Question created successfully",
+      msg: "Question created successfully",
     });
   } catch (error) {
     console.log(error.message);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ msg: "Unexpected error occured." });
+      .json({ msg: "Unexpected error occured. Please try again" });
   }
 }
 
