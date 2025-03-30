@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { AppState } from "../../Routes/Router";
 import axiosBaseURL, { axiosImageURL } from "../../Utility/axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { toast } from "react-toastify";
 import styles from "./ProfileImage.module.css";
@@ -15,31 +17,10 @@ const ProfileImage = () => {
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [croppedImageUrl, setCroppedImageUrl] = useState(null);
   const [uploadimage, setUploadimage] = useState(false);
-  const [userresult, setUserresult] = useState([]);
 
   const imgRef = useRef(null);
   const canvasRef = useRef(null);
   const croppedCanvasRef = useRef(null);
-
-  console.log(user);
-  // Fetch profile image from the backend
-  // useEffect(() => {
-  //     const fetchQuestions = async () => {
-  //         try {
-  //             const response = await axiosBaseURL.get("/questions/getQuestions", {
-  //                 headers: {
-  //                     Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //                 },
-  //             });
-
-  //             setUserresult(response.data.user);
-  //         } catch (err) {
-  //             console.error("Failed to fetch questions:", err);
-  //         }
-  //     };
-
-  //     fetchQuestions();
-  // }, []);
 
   const notify = () => toast("Wow so easy !");
   const handleImageUpload = (e) => {
@@ -85,7 +66,7 @@ const ProfileImage = () => {
 
 
 
-  // 🔥 Added Touch Event Handlers
+  // Touch Event Handlers
   const handleTouchStart = (e) => {
     e.preventDefault();
     setIsDragging(true);
@@ -185,24 +166,29 @@ const ProfileImage = () => {
 
   return (
     <div className={styles.profileContainer}>
-      {!uploadimage && (
-        <div className={styles.profileImage}>
-          {user.profileimg ? (
-            <img
-              src={`${axiosImageURL}${user.profileimg}`}
-              alt={user.profileimg}
-              loading="lazy"
-            />
-          ) : (
-            <RiAccountCircleFill className={styles.profileIcon} />
-          )}
+        {!uploadimage && (
+      <div className={styles.profileImgWrapper}>
+          <div className={styles.profileImage}>
+            {user.profileimg ? (
+              <img
+                src={`${axiosImageURL}${user.profileimg}`}
+                alt={user.profileimg}
+                loading="lazy"
+              />
+            ) : (
+              <RiAccountCircleFill className={styles.profileIcon} />
+            )}
+          </div>
+        <div className={styles.profileCamera}>
+          <FontAwesomeIcon icon={faCamera} className={styles.cameraIcon} onClick={handlePicture} />
         </div>
-      )}
-      {!uploadimage && (
+      </div>
+        )}
+      {/* {!uploadimage && (
         <button className={styles.uploadBtn} onClick={handlePicture}>
           {user.profileimg ? "Change picture" : "upload picture"}
         </button>
-      )}
+      )} */}
       {uploadimage && (
         <div className={styles.profileUpload}>
           <p onClick={notify}>Upload an Image</p>
@@ -225,9 +211,9 @@ const ProfileImage = () => {
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
             onMouseMove={handleMouseMove}
-            onTouchStart={handleTouchStart} // ✅ Mobile Support
-            onTouchMove={handleTouchMove} // ✅ Mobile Support
-            onTouchEnd={handleTouchEnd} // ✅ Mobile Support
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             <img
               ref={imgRef}

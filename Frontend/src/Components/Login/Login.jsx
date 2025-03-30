@@ -134,7 +134,7 @@ const Login = ({ onToggle, setError }) => {
           <input
             type="email"
             name="email"
-            placeholder="Email *"
+            placeholder="Email"
             value={formData.email}
             onChange={handleChange}
           />
@@ -150,7 +150,7 @@ const Login = ({ onToggle, setError }) => {
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              placeholder="Password *"
+              placeholder="Password"
               value={formData.password}
               onChange={handleChange}
             />
