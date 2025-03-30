@@ -84,6 +84,7 @@
     position: relative;
     cursor: grab;
     margin-top: 2em;
+    touch-action: none;
 }
 
 .canvasContainer img {

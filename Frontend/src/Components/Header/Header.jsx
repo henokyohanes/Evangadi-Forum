@@ -117,7 +117,7 @@ const Header = () => {
           )}
           {isLoggedIn && (
             <NavDropdown title={<ProfileImage user={user} />}>
-              <NavDropdown.Item as={Link} to="#">
+              <NavDropdown.Item as={Link} to="/Account">
                 <span className={styles.icon}>
                   <FontAwesomeIcon icon={faUser} />
                 </span>

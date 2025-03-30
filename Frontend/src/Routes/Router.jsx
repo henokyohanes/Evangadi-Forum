@@ -8,6 +8,7 @@ import NotFound from "../Components/NotFound/NotFound";
 import Auth from "../pages/Auth/Auth";
 import axiosBaseURL from "../Utility/axios";
 import HowItWorks from "../Components/HowItWork/HowItWork";
+import Account from "../pages/Account/Account";
 
 export const AppState = createContext();
 
@@ -63,7 +64,7 @@ const RouterApp = () => {
         <Route path="/questions/getQuestions/:questionid" element={<Question />}/>
         <Route path="/getQuestions/:questionid" element={<Answer />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
-        {/* <Route path="/account" element={<Account />} /> */}
+        <Route path="/account" element={<Account />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AppState.Provider>
