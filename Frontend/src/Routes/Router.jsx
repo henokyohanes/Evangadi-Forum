@@ -39,10 +39,6 @@ const RouterApp = () => {
     }
   }, []); // This runs once on mount
 
-  useEffect(() => {
-    checkUser();
-  }, []);
-
   const handleLogin = async (userData) => {
     localStorage.setItem("token", userData.token);
     await checkUser();
@@ -56,7 +52,7 @@ const RouterApp = () => {
 
   const isLoggedIn = !!localStorage.getItem("token");
   return (
-    <AppState.Provider value={{ user, isLoggedIn, handleLogout, handleLogin }}>
+    <AppState.Provider value={{ user, setUser, isLoggedIn, handleLogout, handleLogin }}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />

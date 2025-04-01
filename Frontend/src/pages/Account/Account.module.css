@@ -169,14 +169,14 @@
 }
 
 .canvasContainer {
-    border: 2px solid #007BFF;
+    border: 1px solid #007BFF;
     border-radius: 50%;
-    width: 6em;
-    height: 6em;
+    width: 250px;
+    height: 250px;
     overflow: hidden;
     position: relative;
     cursor: grab;
-    margin-top: 2em;
+    margin: 2em auto;
     touch-action: none;
 }
 
