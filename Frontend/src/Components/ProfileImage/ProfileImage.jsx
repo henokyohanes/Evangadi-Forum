@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
-import { AppState } from "../../Routes/Router";
-import axiosBaseURL, { axiosImageURL } from "../../Utility/axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCamera } from "@fortawesome/free-solid-svg-icons";
+// import React, { useState, useEffect, useContext, useRef } from "react";
+// import { AppState } from "../../Routes/Router";
+// import axiosBaseURL, { axiosImageURL } from "../../Utility/axios";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { toast } from "react-toastify";
 import styles from "./ProfileImage.module.css";
@@ -61,11 +61,6 @@ const ProfileImage = () => {
 
   const handleMouseUp = () => setIsDragging(false);
 
-
-
-
-
-
   // Touch Event Handlers
   const handleTouchStart = (e) => {
     e.preventDefault();
@@ -79,7 +74,7 @@ const ProfileImage = () => {
   const handleTouchMove = (e) => {
     if (!isDragging) return;
 
-    e.preventDefault(); // Prevent screen scrolling
+    e.preventDefault();
 
     const dx = e.touches[0].clientX - dragStart.x;
     const dy = e.touches[0].clientY - dragStart.y;
@@ -96,12 +91,6 @@ const ProfileImage = () => {
   const handleTouchEnd = () => {
     setIsDragging(false);
   };
-
-
-
-
-
-
 
   const handleImageLoad = () => {
     if (imgRef.current && canvasRef.current) {
@@ -184,11 +173,6 @@ const ProfileImage = () => {
         </div>
       </div>
         )}
-      {/* {!uploadimage && (
-        <button className={styles.uploadBtn} onClick={handlePicture}>
-          {user.profileimg ? "Change picture" : "upload picture"}
-        </button>
-      )} */}
       {uploadimage && (
         <div className={styles.profileUpload}>
           <p onClick={notify}>Upload an Image</p>
