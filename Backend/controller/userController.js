@@ -12,8 +12,8 @@ async function register(req, res) {
       .status(StatusCodes.BAD_REQUEST)
       .json({ msg: "please provide all required information!" });
   }
-  try {
 
+  try {
     // Query to check if the username or email already exists in the database
     const [existingUser] = await dbconnection.query(
       "SELECT username, userid FROM users WHERE username = ? OR email = ?",
@@ -35,7 +35,7 @@ async function register(req, res) {
     }
 
     //Encrypt the password
-    saltRounds = 10; // Higher values increase the security but take more time to compute
+    saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // Proceed to insert the new user if no existing record is found
@@ -49,8 +49,6 @@ async function register(req, res) {
       .status(StatusCodes.CREATED)
       .json({ msg: "You have Registerd successfully." });
   } catch (error) {
-
-    // Log the error for debugging purposes
     console.error("Error creating user:", error.message);
 
     // Send a more generic error message to the client
@@ -70,8 +68,8 @@ async function login(req, res) {
       .status(StatusCodes.BAD_REQUEST)
       .json({ msg: " please enter all required fields!" });
   }
-  try {
 
+  try {
     // Check if the user exists by email
     const [user] = await dbconnection.query(
       "SELECT * FROM users WHERE email = ?",
@@ -96,9 +94,8 @@ async function login(req, res) {
     // If login is successful, return a success message (or a JWT token for authentication)
     const username = user[0].username;
     const userid = user[0].userid;
-    const token = jwt.sign({ username, userid }, process.env.JWT_SECRETKEY, {
-      expiresIn: "1d",
-    });
+    const token = jwt.sign({ username, userid }, process.env.JWT_SECRETKEY, {expiresIn: "1d"});
+
     return res
       .status(StatusCodes.OK)
       .json({ msg: "Login successful.", token, userid });
@@ -113,8 +110,6 @@ async function login(req, res) {
 // function to Check user validity
 async function checkUser(req, res) {
 
-  
-  // const username = req.user.username;
   const userid = req.user.userid;
 
   const [data] = await dbconnection.query(
@@ -127,7 +122,16 @@ async function checkUser(req, res) {
   const lastname = data[0].lastname;
   const email = data[0].email;
   const profileimg = data[0].profileimg;
-  res.status(StatusCodes.OK).json({ msg: "Valid user", username, userid, firstname, lastname, email, profileimg });
+  
+  res.status(StatusCodes.OK).json({
+    msg: "Valid user",
+    username,
+    userid,
+    firstname,
+    lastname,
+    email,
+    profileimg
+  });
 }
 
 module.exports = { register, login, checkUser };

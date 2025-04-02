@@ -3,7 +3,7 @@ const path = require("path");
 
 // Set storage engine
 const storage = multer.diskStorage({
-  destination: "./images", // destination folder to store the images
+  destination: "./images",
   filename: (req, file, cb) => {
     cb(
       null,
@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 // Initialize upload
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 1000000 }, // limit file size to 1MB
+  limits: { fileSize: 1000000 },
   fileFilter: (req, file, cb) => {
     checkFileType(file, cb);
   },

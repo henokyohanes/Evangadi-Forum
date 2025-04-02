@@ -46,10 +46,10 @@ async function start() {
     try {
         const result = await dbconnection.execute("select 'test' ");
         app.listen(port);
-        console.log("database connection established!");
-        console.log(`listening on ${port}`);
+        console.log(`Database connected and server is listening on ${port}`);
     } catch (error) {
-        console.log(error.message);
+        console.error("Database connection failed:", error);
+        console.log("Database connection failed");
     }
 }
 

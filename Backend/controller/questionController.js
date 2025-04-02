@@ -10,10 +10,11 @@ async function question(req, res) {
       msg: "Please provide all required fields",
     });
   }
+
   try {
-    const userid = req.user.userid; // Getting the user id from authMiddleware
+    const userid = req.user.userid;
     const questionid = uuidv4();
-    const tag = new Date().toISOString().slice(0, 19).replace("T", " "); // to get the created date
+    const tag = new Date().toISOString().slice(0, 19).replace("T", " ");
     const [question] = await dbConnection.query(
       "select * from questions where title = ? and userid= ? and description= ?",
       [title, userid, description]
@@ -30,15 +31,17 @@ async function question(req, res) {
       "INSERT INTO questions (title,description,questionid,userid,tag) VALUES (?,?,?,?,?)",
       [title, description, questionid, userid, tag]
     );
+
     const [rows] = await dbConnection.query(
       "SELECT * FROM questions where title = ? or userid= ? ORDER BY tag DESC",
       [userid, title]
     );
+
     return res.status(StatusCodes.CREATED).json({
       msg: "Question created successfully",
     });
   } catch (error) {
-    console.log(error.message);
+    console.error(error);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ msg: "Unexpected error occured. Please try again" });
@@ -48,23 +51,26 @@ async function question(req, res) {
 // function to get all question
 async function getAllQuestions(req, res) {
   try {
-    const username = req.user.username; // Get the username from the auth middleware
+    const username = req.user.username;
 
     // Fetch the logged-in user's profile image
     const [userResult] = await dbConnection.query(
       "SELECT profileimg FROM users WHERE username = ?",
       [username]
     );
-    const profileimg = userResult[0]?.profileimg || null; // Use the first result or null if not found
 
-    const [results] = await dbConnection.query(
-      "SELECT u.username, u.profileimg, q.title ,q.questionid, q.tag FROM questions q, users u where q.userid=u.userid order by tag DESC"
-    );
+    const profileimg = userResult[0]?.profileimg || null;
+
+    const [results] = await dbConnection.query(`
+      SELECT u.username, u.profileimg, q.title ,q.questionid, q.tag
+      FROM questions q, users u where q.userid=u.userid
+      order by tag DESC
+    `);
     
     // Use await and destructure the result
     res.json({ 
       user: { username, profileimg },
-      questions: results }); // Send the result as a JSON response
+      questions: results });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -77,7 +83,7 @@ async function getQuestionDetail(req, res) {
   try {
     // Fetch question details
     const [questionResult] = await dbConnection.query(
-      "SELECT questionid,description,title FROM questions WHERE questionid = ?",
+      `SELECT questionid,description,title FROM questions WHERE questionid = ?`,
       [questionid]
     );
 
@@ -89,18 +95,18 @@ async function getQuestionDetail(req, res) {
     // Fetch answers along with the user who posted the answer
     const [answersResult] = await dbConnection.query(
       `SELECT a.answerid, a.answer, u.username, u.profileimg FROM answers a
-          LEFT JOIN users u ON a.userid = u.userid
-          WHERE a.questionid = ?`,
+        LEFT JOIN users u ON a.userid = u.userid
+        WHERE a.questionid = ?`,
       [questionid]
     );
 
     // Combine question details and answers into one response
     const response = {
-      question: questionResult[0], // The question detail
-      answers: answersResult, // List of answers with usernames
+      question: questionResult[0],
+      answers: answersResult,
     };
 
-    res.json(response); // Send the response as a JSON object
+    res.json(response);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

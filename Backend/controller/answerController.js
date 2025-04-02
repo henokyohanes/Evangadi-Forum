@@ -14,13 +14,14 @@ const allAnswers = async (req, res) => {
 
   // Query to retrieve answers for the specified questionid
   const getAnswersSql = `
-      SELECT a.answerid AS answer_id, 
+    SELECT a.answerid AS answer_id, 
             a.answer AS content, 
             u.username AS user_name 
             FROM answers a 
             JOIN users u ON a.userid = u.userid 
             WHERE a.questionid = ?
-            ORDER BY a.answerid DESC`;
+            ORDER BY a.answerid DESC
+  `;
 
   try {
     // Use async/await with the query
@@ -47,8 +48,8 @@ const allAnswers = async (req, res) => {
 
 // function to post an answer
 const postAnswer = async (req, res) => {
-  const { questionid, answer } = req.body; // Extracts question id and answer from the request body.
-  const userid = req.user.userid; // Extracts the user ID from the request object.
+  const { questionid, answer } = req.body;
+  const userid = req.user.userid;
 
   // Validate input
   if (!questionid || !answer) {
@@ -77,14 +78,14 @@ const postAnswer = async (req, res) => {
 
     // Query to check if the user has already posted the same answer for the question
     const checkDuplicateAnswerSql = `
-            SELECT * FROM answers 
-            WHERE userid = ? AND questionid = ? AND answer = ?`;
+      SELECT * FROM answers 
+      WHERE userid = ? AND questionid = ? AND answer = ?
+    `;
 
-    const [existingAnswer] = await dbconnection.query(checkDuplicateAnswerSql, [
-      userid,
-      questionid,
-      answer,
-    ]);
+    const [existingAnswer] = await dbconnection.query(
+      checkDuplicateAnswerSql,
+      [userid, questionid, answer]
+    );
 
     // If a duplicate answer exists, return a 409 Conflict response
     if (existingAnswer.length > 0) {
@@ -96,8 +97,9 @@ const postAnswer = async (req, res) => {
 
     // Insert answer into the answers table using the user ID from the request
     const insertAnswerSql = `
-            INSERT INTO answers (userid, questionid, answer) 
-            VALUES (?, ?, ?)`;
+      INSERT INTO answers (userid, questionid, answer) 
+      VALUES (?, ?, ?)
+    `;
 
     // execute the query
     await dbconnection.query(insertAnswerSql, [userid, questionid, answer]);

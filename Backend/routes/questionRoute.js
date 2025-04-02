@@ -14,4 +14,3 @@ router.get('/getQuestions',getAllQuestions);
 router.get('/getQuestions/:questionid',getQuestionDetail);
 
 module.exports = router;
-

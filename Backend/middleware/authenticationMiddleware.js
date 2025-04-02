@@ -3,7 +3,9 @@ const jwt = require("jsonwebtoken");
 
 // Check if the user is authenticated for all routes
 async function authenticationMiddleware(req, res, next) {
+
   const authHeader = req.headers.authorization;
+  
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res
       .status(StatusCodes.UNAUTHORIZED)

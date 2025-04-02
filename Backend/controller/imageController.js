@@ -1,5 +1,5 @@
 const dbconnection = require("../db/config");
-const upload = require("../profileImages/imageUploader"); // Multer config for file upload
+const upload = require("../profileImages/imageUploader");
 
 const profileImage = (req, res) => {
 
@@ -9,12 +9,12 @@ const profileImage = (req, res) => {
       return res.status(400).json({ message: err });
     }
 
-    if (!req.file) {  // Check if a file was uploaded
+    if (!req.file) {
       return res.status(400).json({ message: "No file uploaded" });
     }
 
     const profileImage = `/images/${req.file.filename}`;
-    const { userid } = req.user; // user id from auth middleware
+    const { userid } = req.user;
 
     // query to update profile image
     const query = `UPDATE users SET profileimg = ? WHERE userid = ?`;
