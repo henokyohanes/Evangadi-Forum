@@ -76,7 +76,7 @@
 }
 
 .signupForm input:focus {
-  border-color: #ff6a00;
+  border-color: orange;
   outline: none;
 }
 

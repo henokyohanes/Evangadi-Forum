@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import styles from "./SignUp.module.css";
 
 const Signup = ({ onToggle, setError }) => {
+
   const [formData, setFormData] = useState({
     username: "",
     firstName: "",
@@ -16,9 +17,10 @@ const Signup = ({ onToggle, setError }) => {
     password: "",
   });
   const [formErrors, setFormErrors] = useState({});
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Handler for input field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -28,7 +30,6 @@ const Signup = ({ onToggle, setError }) => {
     // Remove error immediately when user starts typing
     setFormErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
-
 
   // Regular expressions for validation
   const validateForm = () => {
@@ -86,10 +87,10 @@ const Signup = ({ onToggle, setError }) => {
     return isValid;
   };
 
+  // Handler for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate form before submitting
     if (!validateForm()) return;
 
     try {
@@ -118,12 +119,12 @@ const Signup = ({ onToggle, setError }) => {
             htmlContainer: styles.text,
           },
         });
-        setTimeout(() => {navigate("/auth")}, 1500);
+        setTimeout(() => { navigate("/auth") }, 1500);
       }
     } catch (err) {
       console.error("Failed to register user:", err);
-      console.log(err);
-      if (err.response?.status === 400 || err.response?.status === 500) { 
+
+      if (err.response?.status === 400 || err.response?.status === 500) {
         Swal.fire({
           title: "Failed!",
           html: err.response?.data?.msg,
@@ -149,67 +150,74 @@ const Signup = ({ onToggle, setError }) => {
       <h2>Join the network</h2>
       <p>
         Already have an account?{" "}
-        <Link to="/auth" onClick={onToggle}>
-          Sign In
-        </Link>
+        <Link to="/auth" onClick={onToggle}>Sign In</Link>
       </p>
-
       {/* Signup Form */}
       <form onSubmit={handleSubmit} className={styles.signupForm}>
         <div className={styles.inputGroup}>
-        {formErrors.username && <div className={styles.error} role="alert">{formErrors.username}</div>}
-        <input
-          type="text"
-          name="username"
-          placeholder="Username *"
-          value={formData.username}
-          onChange={handleChange}
-        />
+          {formErrors.username &&
+            <div className={styles.error} role="alert">{formErrors.username}</div>
+          }
+          <input
+            type="text"
+            name="username"
+            placeholder="Username *"
+            value={formData.username}
+            onChange={handleChange}
+          />
         </div>
         <div className={styles.name_fields}>
           <div className={styles.inputGroup}>
-          {formErrors.firstName && <div className={styles.error} role="alert">{formErrors.firstName}</div>}
-          <input
-            type="text"
-            name="firstName"
-            placeholder="First name *"
-            value={formData.firstName}
-            onChange={handleChange}
-          />
+            {formErrors.firstName &&
+              <div className={styles.error} role="alert">{formErrors.firstName}</div>
+            }
+            <input
+              type="text"
+              name="firstName"
+              placeholder="First name *"
+              value={formData.firstName}
+              onChange={handleChange}
+            />
           </div>
           <div className={styles.inputGroup}>
-          {formErrors.lastName && <div className={styles.error} role="alert">{formErrors.lastName}</div>}
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Last name *"
-            value={formData.lastName}
-            onChange={handleChange}
-          />
+            {formErrors.lastName &&
+              <div className={styles.error} role="alert">{formErrors.lastName}</div>
+            }
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Last name *"
+              value={formData.lastName}
+              onChange={handleChange}
+            />
           </div>
         </div>
         <div className={styles.inputGroup}>
-        {formErrors.email && <div className={styles.error} role="alert">{formErrors.email}</div>}
-        <input
-          type="email"
-          name="email"
-          placeholder="Email address *"
-          value={formData.email}
-          onChange={handleChange}
-        />
+          {formErrors.email &&
+            <div className={styles.error} role="alert">{formErrors.email}</div>
+          }
+          <input
+            type="email"
+            name="email"
+            placeholder="Email address *"
+            value={formData.email}
+            onChange={handleChange}
+          />
         </div>
         <div className={styles.inputGroup}>
-        {formErrors.password && <div className={styles.error} role="alert">{formErrors.password}</div>}
-        <input
-          type="password"
-          name="password"
-          placeholder="Password *"
-          value={formData.password}
-          onChange={handleChange}
-        />
+          {formErrors.password &&
+            <div className={styles.error} role="alert">{formErrors.password}</div>
+          }
+          <input
+            type="password"
+            name="password"
+            placeholder="Password *"
+            value={formData.password}
+            onChange={handleChange}
+          />
         </div>
         <span>
-          <FontAwesomeIcon icon={faInfoCircle} color="#0b5ed7"/>{" "}
+          <FontAwesomeIcon icon={faInfoCircle} color="#0b5ed7" />{" "}
           Passwords must be at least 8 characters.
         </span>
         <div className={styles.terms}>
@@ -218,7 +226,7 @@ const Signup = ({ onToggle, setError }) => {
         </div>
         <button type="submit">
           {loading ? <ScaleLoader color="#fff" height={12} /> : "Agree and Join"}
-          </button>
+        </button>
       </form>
       <p>
         <Link to="/login" onClick={onToggle}>

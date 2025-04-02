@@ -12,6 +12,7 @@ import logo from "../../assets/Images/logo-1.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./Header.module.css";
 
+// Profile Image component
 const ProfileImage = ({ user }) => {
   return (
     <div className={styles.profileImgWrapper}>
@@ -35,6 +36,7 @@ const ProfileImage = ({ user }) => {
 };
 
 const Header = () => {
+
   const { user, isLoggedIn, handleLogout } = useContext(AppState);
   const navigate = useNavigate();
   const location = useLocation();
@@ -48,6 +50,7 @@ const Header = () => {
     }
   };
 
+  // Handle logout
   const onLogoutClick = () => {
     handleLogout();
   };
@@ -58,10 +61,9 @@ const Header = () => {
         <div onClick={handleLogoClick}>
           <img src={logo} alt="Evangadi logo" loading="lazy" />
         </div>
+        {/* Dropdown menu for small screens */}
         <NavDropdown
-          title={
-            isLoggedIn ? <ProfileImage user={user} /> : <FaBars size={35} />
-          }
+          title={isLoggedIn ? <ProfileImage user={user} /> : <FaBars size={35} />}
           className="d-sm-none"
         >
           {isLoggedIn && (
@@ -72,12 +74,12 @@ const Header = () => {
               Home
             </NavDropdown.Item>
           )}
-            <NavDropdown.Item as={Link} to="/how-it-works">
-              <span className={styles.icon}>
-                <FontAwesomeIcon icon={faInfoCircle} />
-              </span>
-              How it works
-            </NavDropdown.Item>
+          <NavDropdown.Item as={Link} to="/how-it-works">
+            <span className={styles.icon}>
+              <FontAwesomeIcon icon={faInfoCircle} />
+            </span>
+            How it works
+          </NavDropdown.Item>
           {!isLoggedIn && location.pathname !== "/auth" && (
             <NavDropdown.Item as={Link} to="/auth">
               <span className={styles.icon}>
@@ -87,7 +89,7 @@ const Header = () => {
             </NavDropdown.Item>
           )}
           {isLoggedIn && (
-            <>
+            <div>
               <NavDropdown.Item as={Link} to="#">
                 <span className={styles.icon}>
                   <FontAwesomeIcon icon={faUser} />
@@ -106,15 +108,16 @@ const Header = () => {
                 </span>
                 Logout
               </NavDropdown.Item>
-            </>
+            </div>
           )}
         </NavDropdown>
         <div className={`${styles.navMenu} d-none d-sm-flex`}>
           {isLoggedIn && <Link to="/">Home</Link>}
-            <Link to="/how-it-works">How it works</Link>
+          <Link to="/how-it-works">How it works</Link>
           {!isLoggedIn && location.pathname !== "/auth" && (
             <Link to="/auth">Register | Sign in</Link>
           )}
+          {/* Dropdown menu for large screens */}
           {isLoggedIn && (
             <NavDropdown title={<ProfileImage user={user} />}>
               <NavDropdown.Item as={Link} to="/Account">

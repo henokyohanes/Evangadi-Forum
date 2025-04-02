@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ScaleLoader } from "react-spinners";
@@ -8,12 +8,14 @@ import "react-toastify/dist/ReactToastify.css";
 import styles from "./Login.module.css";
 
 const Login = ({ onToggle, setError }) => {
-  const [formData, setFormData] = useState({email: "", password: ""});
+
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Handler for input field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -28,8 +30,7 @@ const Login = ({ onToggle, setError }) => {
   // Handler for form submission
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
-    
-    // Handle client side validations here
+
     let valid = true;
 
     const { email, password } = formData;
@@ -46,6 +47,7 @@ const Login = ({ onToggle, setError }) => {
       setEmailError("");
     }
 
+    // Password validation
     if (!password) {
       setPasswordError("please enter your password");
       valid = false;
@@ -63,31 +65,28 @@ const Login = ({ onToggle, setError }) => {
         email: formData.email,
         password: formData.password,
       });
-      console.log(response);
-      if (response?.status === 200) {
 
-      Swal.fire({
-        title: "Success!",
-        html: "You have logged in successfully.",
-        icon: "success",
-        customClass: {
-          popup: styles.popup,
-          confirmButton: styles.confirmButton,
-          icon: styles.icon,
-          title: styles.successTitle,
-          htmlContainer: styles.text,
-        },
-      });
+      if (response?.status === 200) {
+        Swal.fire({
+          title: "Success!",
+          html: "You have logged in successfully.",
+          icon: "success",
+          customClass: {
+            popup: styles.popup,
+            confirmButton: styles.confirmButton,
+            icon: styles.icon,
+            title: styles.successTitle,
+            htmlContainer: styles.text,
+          },
+        });
       }
 
       // Save token and navigate to another page
       localStorage.setItem("token", response.data.token);
-      setTimeout(() => {window.location.href = "/"}, 1500);
+      setTimeout(() => { window.location.href = "/" }, 1500);
     } catch (err) {
       console.error("Failed to login:", err);
-      console.log(err);
       if (err?.response?.status === 401 || err?.response?.status === 500) {
-        
         Swal.fire({
           title: "Failed!",
           html: err?.response?.data?.msg,
@@ -118,9 +117,7 @@ const Login = ({ onToggle, setError }) => {
       <h2>Login to your account</h2>
       <p>
         Don’t have an account?{" "}
-        <Link to="" onClick={onToggle}>
-          Create a new account
-        </Link>
+        <Link to="" onClick={onToggle}>Create a new account</Link>
       </p>
       {/* Login Form */}
       <form className={styles.loginForm} onSubmit={handleSubmit}>
