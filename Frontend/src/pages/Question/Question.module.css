@@ -32,21 +32,21 @@
 }
 
 .line {
-    border: none;
-    height: .3em;
-    width: 100%;
-    background: transparent;
-    position: relative;
-    overflow: hidden;
+  border: none;
+  height: .3em;
+  width: 100%;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
 }
 
 .line::before {
-    content: '';
-    position: absolute;
-    height: 100%;
-    width: 50%;
-    background: linear-gradient(90deg, #FE750B, #FFB658);
-    animation: loading 2s backwards;
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  background: linear-gradient(90deg, #FE750B, #FFB658);
+  animation: loading 2s backwards;
 }
 
 .checkList {
@@ -63,7 +63,7 @@
 }
 
 .checkList p {
-  margin:0;
+  margin: 0;
   font-size: clamp(.9em, 3vw, 1.1em);
 }
 
@@ -119,7 +119,7 @@
   font-size: clamp(.9em, 3vw, 1.1em);
   font-style: italic;
   color: #ccc;
-} 
+}
 
 .question button {
   display: block;
@@ -145,4 +145,3 @@
   color: #d82323;
   font-size: clamp(.8em, 3vw, 1em);
 }
-

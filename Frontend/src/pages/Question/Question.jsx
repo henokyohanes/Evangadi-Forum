@@ -65,7 +65,7 @@ const Question = () => {
       setTitle("");
       setDescription("");
       toast.success("Question posted successfully!", { autoClose: 1500 });
-        setTimeout(() => {navigate("/")}, 1500);
+      setTimeout(() => { navigate("/") }, 1500);
     } catch (error) {
       console.error("Error posting question:", error);
       if (error.response) {
@@ -79,7 +79,7 @@ const Question = () => {
   };
 
   return (
-    <>
+    <div>
       <Layout>
         {!loading && !error ? (
           <div className={styles.container}>
@@ -146,13 +146,13 @@ const Question = () => {
               </div>
             </div>
           </div>
-        ) : error ? 
+        ) : error ?
           <NotFound />
-         : 
+          :
           <Loader />
         }
       </Layout>
-    </>
+    </div>
   );
 }
 

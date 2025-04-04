@@ -16,13 +16,13 @@ const Account = () => {
   const [imgX, setImgX] = useState(0);
   const [imgY, setImgY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const [isImageLoaded, setIsImageLoaded] = useState(false); // Tracks if the image is loaded
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [croppedImageUrl, setCroppedImageUrl] = useState(null);
   const [uploadimage, setUploadimage] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-  
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
 
   const imgRef = useRef(null);
   const canvasRef = useRef(null);
@@ -49,6 +49,7 @@ const Account = () => {
     draw(); // Re-draw image when imgX or imgY changes
   }, [imgX, imgY]);
 
+  // Mouse Event Handlers
   const handleMouseDown = (e) => {
     e.preventDefault();
     setIsDragging(true);
@@ -56,6 +57,32 @@ const Account = () => {
   };
 
   const handleMouseUp = () => setIsDragging(false);
+
+  const handleMouseMove = (e) => {
+    if (!isDragging || !imgRef.current || !canvasRef.current) return;
+    
+    const dx = e.clientX - dragStart.x;
+    const dy = e.clientY - dragStart.y;
+    
+    const newImgX = imgX + dx;
+    const newImgY = imgY + dy;
+    
+    // Constrain movement within canvas boundaries
+    const canvasWidth = canvasRef.current.offsetWidth;
+    const canvasHeight = canvasRef.current.offsetHeight;
+    const imgWidth = imgRef.current.width;
+    const imgHeight = imgRef.current.height;
+    
+    const minX = Math.min(0, canvasWidth - imgWidth);
+    const maxX = Math.max(0, canvasWidth - imgWidth);
+    const minY = Math.min(0, canvasHeight - imgHeight);
+    const maxY = Math.max(0, canvasHeight - imgHeight);
+    
+    setImgX(Math.min(maxX, Math.max(minX, newImgX)));
+    setImgY(Math.min(maxY, Math.max(minY, newImgY)));
+    
+    setDragStart({ x: e.clientX, y: e.clientY });
+  };
 
   // Touch Event Handlers
   const handleTouchStart = (e) => {
@@ -65,32 +92,6 @@ const Account = () => {
       x: e.touches[0].clientX,
       y: e.touches[0].clientY,
     });
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDragging || !imgRef.current || !canvasRef.current) return;
-
-    const dx = e.clientX - dragStart.x;
-    const dy = e.clientY - dragStart.y;
-
-    const newImgX = imgX + dx;
-    const newImgY = imgY + dy;
-
-    // Constrain movement within canvas boundaries
-    const canvasWidth = canvasRef.current.offsetWidth;
-    const canvasHeight = canvasRef.current.offsetHeight;
-    const imgWidth = imgRef.current.width;
-    const imgHeight = imgRef.current.height;
-
-    const minX = Math.min(0, canvasWidth - imgWidth);
-    const maxX = Math.max(0, canvasWidth - imgWidth);
-    const minY = Math.min(0, canvasHeight - imgHeight);
-    const maxY = Math.max(0, canvasHeight - imgHeight);
-
-    setImgX(Math.min(maxX, Math.max(minX, newImgX)));
-    setImgY(Math.min(maxY, Math.max(minY, newImgY)));
-
-    setDragStart({ x: e.clientX, y: e.clientY });
   };
 
   const handleTouchMove = (e) => {
@@ -123,10 +124,6 @@ const Account = () => {
     });
   };
 
-
-
-
-
   const handleTouchEnd = () => {
     setIsDragging(false);
   };
@@ -146,16 +143,16 @@ const Account = () => {
       toast.error("Please select an image before uploading.", { autoClose: 1500 });
       return;
     }
-    
+
     const croppedCanvas = document.createElement("canvas");
     const ctx = croppedCanvas.getContext("2d");
     croppedCanvas.width = 250;
     croppedCanvas.height = 250;
-    
+
     ctx.beginPath();
     ctx.arc(125, 125, 125, 0, Math.PI * 2, true);
     ctx.clip();
-    
+
     ctx.drawImage(
       imgRef.current,
       imgX,
@@ -163,40 +160,39 @@ const Account = () => {
       imgRef.current.width,
       imgRef.current.height
     );
-    
+
     croppedCanvas.toBlob(async (blob) => {
       const formData = new FormData();
       formData.append("image", blob, "croppedImage.png");
-      
+
       try {
-        
+
         setLoading(true);
         setError(false);
-        
+
         const response = await axiosBaseURL.post("/images/upload", formData, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        
+
         const result = response.data;
         if (result.profileImage) {
-          // setCroppedImageUrl(result.profileImage);
-          // Update user context immediately
           setUser((prevUser) => ({
             ...prevUser,
             profileimg: result.profileImage,
           }));
         }
+
         setUploadimage(false);
         toast.success("Image uploaded successfully", { autoClose: 1500 });
       } catch (error) {
         console.error("Error uploading image:", error);
         if (error.response) {
-                  toast.error("Error uploading image", { autoClose: 1500 });
-      } else {
+          toast.error("Error uploading image", { autoClose: 1500 });
+        } else {
           setError(true);
-      }
+        }
       } finally {
         setLoading(false);
       }
@@ -209,7 +205,7 @@ const Account = () => {
 
   const handleCancelClick = () => {
     setUploadimage(false);
-  };  
+  };
 
   const onLogoutClick = () => {
     handleLogout();
@@ -223,10 +219,7 @@ const Account = () => {
             <div className={styles.profileDetails}>
               <h2>Profile Details</h2>
               <div className={styles.profileContainer}>
-                <div
-                  className={styles.profileImgWrapper}
-                  onClick={handlePicture}
-                >
+                <div className={styles.profileImgWrapper} onClick={handlePicture}>
                   <div className={styles.profileImage}>
                     {user.profileimg ? (
                       <img
@@ -239,28 +232,13 @@ const Account = () => {
                     )}
                   </div>
                   <div className={styles.profileCamera}>
-                    <FontAwesomeIcon
-                      icon={faCamera}
-                      className={styles.cameraIcon}
-                    />
+                    <FontAwesomeIcon icon={faCamera} className={styles.cameraIcon}/>
                   </div>
                 </div>
-                
               </div>
-              <p>
-                username
-                <strong>{user.username}</strong>
-              </p>
-              <p>
-                name
-                <strong>
-                  {user.firstname} {user.lastname}
-                </strong>
-              </p>
-              <p className={styles.email}>
-                email
-                <strong>{user.email}</strong>
-              </p>
+              <p>username <strong>{user.username}</strong> </p>
+              <p>name <strong>{user.firstname} {user.lastname}</strong></p>
+              <p className={styles.email}>email<strong>{user.email}</strong></p>
               <button onClick={onLogoutClick}>
                 <span className={styles.icon}>
                   <FontAwesomeIcon icon={faSignOutAlt} />
@@ -271,7 +249,6 @@ const Account = () => {
           ) : (
             <div className={styles.profileUpload}>
               <h2>Upload an Image</h2>
-              {/* <form> */}
               <input
                 type="file"
                 id="image"
@@ -280,7 +257,6 @@ const Account = () => {
                 onChange={handleImageUpload}
                 required
               />
-              {/* </form> */}
               <div
                 className={styles.canvasContainer}
                 ref={canvasRef}

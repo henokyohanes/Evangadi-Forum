@@ -45,11 +45,11 @@ const Answer = () => {
   }, [userReactions, questionid, userId]);
 
   // Load like and dislike counts from localStorage
-
   const storedCounts = localStorage.getItem(`answerCounts_${questionid}`);
   const parsedCounts = storedCounts ? JSON.parse(storedCounts) : {};
   
   const fetchQuestion = async () => {
+
       setLoading(true);
       setError(false);
       
@@ -118,9 +118,7 @@ const Answer = () => {
       fetchQuestion();
       setAnswerText("");
       setErrorMessage("");
-      toast.success("Answer Submitted Successfully", {
-        autoClose: 1500,
-      });
+      toast.success("Answer Submitted Successfully", {autoClose: 1500});
 
       // Initialize counts in localStorage
       const storedCounts =
@@ -274,11 +272,9 @@ const Answer = () => {
             </div>
             <p>{question.description}</p>
           </div>
-
           {/* Display Answers */}
           <div className={styles.answersSection}>
             <h2>Answers From The Community</h2>
-
             {answers && answers.length > 0 ? (
               answers.map((ans) => (
                 <div key={ans.id} className={styles.answerItem}>
@@ -334,7 +330,6 @@ const Answer = () => {
               </p>
             )}
           </div>
-
           {/* Answer Form */}
           <div className={styles.answerForm}>
             <h2>Answer The Top Question</h2>

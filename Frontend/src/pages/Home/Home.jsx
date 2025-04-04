@@ -9,9 +9,8 @@ import Loader from "../../Components/Loader/Loader";
 import styles from "./Home.module.css";
 
 const Home = () => {
-  const { user } = useContext(AppState);
 
-  // State to store questions
+  const { user } = useContext(AppState);
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -33,10 +32,8 @@ const Home = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        console.log(response);
         setQuestions(response.data.questions);
       } catch (err) {
-        console.log(err);
         console.error("Failed to fetch questions:", err);
         setError(true);
       } finally {
@@ -65,10 +62,7 @@ const Home = () => {
   // Pagination logic
   const indexOfLastQuestion = currentPage * questionsPerPage;
   const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
-  const currentQuestions = filteredQuestions.slice(
-    indexOfFirstQuestion,
-    indexOfLastQuestion
-  );
+  const currentQuestions = filteredQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -83,9 +77,7 @@ const Home = () => {
         {!loading && !error ? (<main className={styles.mainContent}>
           {/* header container */}
           <div className={styles.headerContainer}>
-            <button
-              onClick={handleAskQuestionClick}
-            >
+            <button onClick={handleAskQuestionClick}>
               Ask Question
             </button>
             <h2>
@@ -101,9 +93,7 @@ const Home = () => {
               onChange={handleSearchChange}
             />
           </div>
-
           <h2>Questions</h2>
-
           {filteredQuestions.length === 0 ? (
             <div className={styles.noMatchMessage}>
               No matching questions found.
@@ -111,10 +101,7 @@ const Home = () => {
           ) : (
             <ul className={styles.questionList}>
               {currentQuestions.map((q, index) => (
-                <Link
-                  to={`/getQuestions/${q.questionid}`}
-                  key={index}
-                >
+                <Link to={`/getQuestions/${q.questionid}`} key={index}>
                   <li className={styles.questionItem}>
                     <div className={styles.listContainer}>
                       <div className={styles.profileImgContainer}>
@@ -126,9 +113,7 @@ const Home = () => {
                             loading="lazy"
                           />
                         ) : (
-                          <RiAccountCircleFill
-                            className={styles.profileImgCircle}
-                          />
+                          <RiAccountCircleFill className={styles.profileImgCircle}/>
                         )}
                       </div>
                       <p>{q.username}</p>
@@ -136,7 +121,6 @@ const Home = () => {
                     {/* Question Text */}
                     <div className={styles.questionText}>
                       <strong>{q.title}</strong>
-                      {/* <p> */}
                         {/* Date */}
                         <p>
                           {new Date(q.tag).toLocaleDateString("en-US", {
@@ -145,11 +129,8 @@ const Home = () => {
                             day: "numeric",
                           })}
                         </p>
-                      {/* </p> */}
                     </div>
-                    <button
-                      onClick={() => handleQuestionClick(q.questionid)}
-                    >
+                    <button onClick={() => handleQuestionClick(q.questionid)}>
                       ➡
                     </button>
                   </li>
@@ -157,7 +138,6 @@ const Home = () => {
               ))}
             </ul>
           )}
-
           {/* Pagination Controls */}
           <div className={styles.pagination}>
             <button

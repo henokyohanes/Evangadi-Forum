@@ -25,9 +25,8 @@ const RouterApp = () => {
         },
       });
       setUser(data);
-      console.log("data", data);
     } catch (error) {
-      console.log(error.response);
+      console.error(error);
       navigate("/auth");
     }
   }
@@ -37,7 +36,7 @@ const RouterApp = () => {
     if (token) {
       checkUser();
     }
-  }, []); // This runs once on mount
+  }, []);
 
   const handleLogin = async (userData) => {
     localStorage.setItem("token", userData.token);
@@ -51,6 +50,7 @@ const RouterApp = () => {
   };
 
   const isLoggedIn = !!localStorage.getItem("token");
+
   return (
     <AppState.Provider value={{ user, setUser, isLoggedIn, handleLogout, handleLogin }}>
       <Routes>
