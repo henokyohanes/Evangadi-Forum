@@ -19,6 +19,8 @@ const Answer = () => {
   const [userReactions, setUserReactions] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const answersPerPage = 6;
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
 
@@ -47,39 +49,38 @@ const Answer = () => {
   // Load like and dislike counts from localStorage
   const storedCounts = localStorage.getItem(`answerCounts_${questionid}`);
   const parsedCounts = storedCounts ? JSON.parse(storedCounts) : {};
-  
-  const fetchQuestion = async () => {
 
-      setLoading(true);
-      setError(false);
-      
-      try {
-        const response = await axiosBaseURL.get(
-          `/questions/getQuestions/${questionid}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setQuestion(response.data.question);
-        // Initialize each answer with likes and dislikes from localStorage
-        const initializedAnswers = response.data.answers.map((ans) => ({
-          ...ans,
-          likes: parsedCounts[ans._id]?.likes || 0,
-          dislikes: parsedCounts[ans._id]?.dislikes || 0,
-          id: ans._id,
-        }));
-        setAnswers(initializedAnswers || []);
-      } catch (error) {
-        console.error("Failed to fetch question:", error);
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    useEffect(() => {
+  const fetchQuestion = async () => {
+    setLoading(true);
+    setError(false);
+
+    try {
+      const response = await axiosBaseURL.get(
+        `/questions/getQuestions/${questionid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setQuestion(response.data.question);
+      // Initialize each answer with likes and dislikes from localStorage
+      const initializedAnswers = response.data.answers.map((ans) => ({
+        ...ans,
+        likes: parsedCounts[ans._id]?.likes || 0,
+        dislikes: parsedCounts[ans._id]?.dislikes || 0,
+        id: ans._id,
+      }));
+      setAnswers(initializedAnswers || []);
+    } catch (error) {
+      console.error("Failed to fetch question:", error);
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     if (questionid && token) {
       fetchQuestion();
     }
@@ -118,7 +119,7 @@ const Answer = () => {
       fetchQuestion();
       setAnswerText("");
       setErrorMessage("");
-      toast.success("Answer Submitted Successfully", {autoClose: 1500});
+      toast.success("Answer Submitted Successfully", { autoClose: 1500 });
 
       // Initialize counts in localStorage
       const storedCounts =
@@ -139,7 +140,8 @@ const Answer = () => {
             "An error occurred. Please try again.",
           {
             autoClose: 1500,
-          });
+          }
+        );
       } else {
         setError(true);
       }
@@ -261,6 +263,17 @@ const Answer = () => {
     }));
   };
 
+  // Pagination logic
+  const indexOfLastAnswer = currentPage * answersPerPage;
+  const indexOfFirstAnswer = indexOfLastAnswer - answersPerPage;
+  const currentAnswers = answers.slice(
+    indexOfFirstAnswer,
+    indexOfLastAnswer
+  );
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <Layout>
       {!loading && !error ? (
@@ -272,12 +285,13 @@ const Answer = () => {
             </div>
             <p>{question.description}</p>
           </div>
+
           {/* Display Answers */}
           <div className={styles.answersSection}>
             <h2>Answers From The Community</h2>
             {answers && answers.length > 0 ? (
-              answers.map((ans) => (
-                <div key={ans.id} className={styles.answerItem}>
+              currentAnswers.map((ans, index) => (
+                <div key={index} className={styles.answerItem}>
                   <div className={styles.answerInfo}>
                     <div className={styles.profileImgContainer}>
                       {ans.profileimg ? (
@@ -329,6 +343,22 @@ const Answer = () => {
                 No answers yet. Be the first to answer!
               </p>
             )}
+          </div>
+          {/* Pagination Controls */}
+          <div className={styles.pagination}>
+            <button
+              onClick={() => paginate(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            <span>Page {currentPage}</span>
+            <button
+              onClick={() => paginate(currentPage + 1)}
+              disabled={indexOfLastAnswer >= answers.length}
+            >
+              Next
+            </button>
           </div>
           {/* Answer Form */}
           <div className={styles.answerForm}>
