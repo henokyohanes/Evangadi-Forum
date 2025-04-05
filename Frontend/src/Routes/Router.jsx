@@ -7,7 +7,7 @@ import Home from "../pages/Home/Home";
 import NotFound from "../Components/NotFound/NotFound";
 import Auth from "../pages/Auth/Auth";
 import axiosBaseURL from "../Utility/axios";
-import HowItWorks from "../Components/HowItWork/HowItWork";
+import HowItWorks from "../pages/HowItWork/HowItWork";
 import Account from "../pages/Account/Account";
 
 export const AppState = createContext();

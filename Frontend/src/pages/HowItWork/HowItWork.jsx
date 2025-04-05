@@ -1,25 +1,28 @@
 import React from "react";
-import styles from "./HowItWorks.module.css";
-import Layout from "../Layout/Layout";
 import { Link } from "react-router-dom";
+import Layout from "../../Components/Layout/Layout";
+import image1 from "../../assets/Images/6430773.jpg";
+import image2 from "../../assets/Images/6430774.jpg";
+import image3 from "../../assets/Images/6430775.jpg";
+import image4 from "../../assets/Images/6430776.jpg";
+import styles from "./HowItWorks.module.css";
 
 const HowItWork = () => (
   <Layout>
     <div className={styles.howItWorks}>
       <h1>How It Works</h1>
-
       {/* First Section: Text on left, Image on right */}
-      <div className={`${styles.section} ${styles.sectionLeft}`}>
-        <div className={styles.text}>
+      <div className={`${styles.section} row`}>
+        <div className={`${styles.text} col-12 col-md-6`}>
           <h2>Create an Account or Log In</h2>
-          <p style={{ textAlign: "left" }}>
+          <p>
             To use the platform, you need to either create an account or log in
             if you already have one.
             <ul>
               <li>Click on the Sign-Up option if you&apos;re new.</li>
               <li>
                 Fill in your first name, last name, username, email, and
-                password (minimum 8 characters).
+                password.
               </li>
               <li>
                 If you already have an account, just provide your email and
@@ -28,26 +31,17 @@ const HowItWork = () => (
             </ul>
           </p>
         </div>
-        <div className={styles.image}>
-          <img
-            src="https://cdni.iconscout.com/illustration/premium/thumb/sign-up-illustration-download-in-svg-png-gif-file-formats--log-register-form-user-interface-pack-design-development-illustrations-6430773.png?f=webp"
-            alt="Create Account or Log In"
-            style={{ width: "400px" }}
-            loading="lazy"
-          />
+        <div className={`${styles.image} col-12 col-md-6`}>
+          <img src={image1} alt="Create Account" loading="lazy" />
         </div>
       </div>
+      <div className={`${styles.divider}`}></div>
       {/* Second Section: Image on left, Text on right */}
-      <div className={`${styles.section} ${styles.sectionRight}`}>
-        <div className={styles.image}>
-          <img
-            src="https://img.freepik.com/free-vector/organic-flat-people-asking-questions_23-2148896826.jpg"
-            alt="Ask a Question"
-            style={{ width: "400px" }}
-            loading="lazy"
-          />
+      <div className={`${styles.section} row`}>
+        <div className={`${styles.image} col-12 col-md-6 mb-3`}>
+          <img src={image2} alt="Ask a Question" loading="lazy" />
         </div>
-        <div className={styles.text}>
+        <div className={`${styles.text} col-12 col-md-6`}>
           <h2>Ask a Question</h2>
           <p>
             After logging in, you’ll be taken to the Questions Page where you
@@ -63,9 +57,10 @@ const HowItWork = () => (
           </p>
         </div>
       </div>
+      <div className={`${styles.divider}`}></div>
       {/* Third Section: Text on left, Image on right */}
-      <div className={`${styles.section} ${styles.sectionLeft}`}>
-        <div className={styles.text}>
+      <div className={`${styles.section} row`}>
+        <div className={`${styles.text} col-12 col-md-6`}>
           <h2>Answer a Question</h2>
           <p>
             To answer a question, click on a question’s title to view the
@@ -73,25 +68,17 @@ const HowItWork = () => (
             and click &quot;Post&quot; to submit it.
           </p>
         </div>
-        <div className={styles.image}>
-          <img
-            src="https://www.shutterstock.com/image-vector/perplexed-characters-standing-huge-question-600nw-2320644731.jpg"
-            alt="Answer a Question"
-            style={{ width: "400px" }}
-            loading="lazy"
-          />
+        <div className={`${styles.image} col-12 col-md-6`}>
+          <img src={image3} alt="Answer a Question" loading="lazy" />
         </div>
       </div>
+      <div className={`${styles.divider}`}></div>
       {/* Fourth Section: Image on left, Text on right */}
-      <div className={`${styles.section} ${styles.sectionRight}`}>
-        <div className={styles.image}>
-          <img
-            src="https://www.epicshops.com/wp-content/uploads/2019/06/website-navigation-bar-header.jpg"
-            alt="Navigation"
-            loading="lazy"
-          />
+      <div className={`${styles.section} row`}>
+        <div className={`${styles.image} col-12 col-md-6 mb-3`}>
+          <img src={image4} alt="Navigation" loading="lazy" />
         </div>
-        <div className={styles.text}>
+        <div className={`${styles.text} col-12 col-md-6`}>
           <h2>Navigation</h2>
           <p>
             You can navigate back to the homepage from any page and log out if
@@ -100,13 +87,12 @@ const HowItWork = () => (
           </p>
         </div>
       </div>
-    </div>
-
-    <div className={styles.suggestion_button}>
-      <h1>Ready to Sign Up?</h1>
-      <Link to="/auth">
-        <button>Sign Up</button>
-      </Link>
+      <div className={styles.suggestion}>
+        <h1>Ready to Sign Up?</h1>
+        <Link to="/auth">
+          <button>Sign Up</button>
+        </Link>
+      </div>
     </div>
   </Layout>
 );
