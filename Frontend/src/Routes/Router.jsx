@@ -18,6 +18,9 @@ const RouterApp = () => {
   const navigate = useNavigate();
 
   async function checkUser() {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
     try {
       const { data } = await axiosBaseURL.get("/users/check", {
         headers: {
@@ -27,7 +30,7 @@ const RouterApp = () => {
       setUser(data);
     } catch (error) {
       console.error(error);
-      navigate("/auth");
+      handleLogout();
     }
   }
 
@@ -49,7 +52,7 @@ const RouterApp = () => {
     navigate("/auth");
   };
 
-  const isLoggedIn = !!localStorage.getItem("token");
+  const isLoggedIn = !!user.userid;
 
   return (
     <AppState.Provider value={{ user, setUser, isLoggedIn, handleLogout, handleLogin }}>

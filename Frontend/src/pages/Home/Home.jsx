@@ -101,59 +101,61 @@ const Home = () => {
           ) : (
             <ul className={styles.questionList}>
               {currentQuestions.map((q, index) => (
-                <Link to={`/getQuestions/${q.questionid}`} key={index}>
-                  <li className={styles.questionItem}>
-                    <div className={styles.listContainer}>
-                      <div className={styles.profileImgContainer}>
-                        {q.profileimg ? (
-                          <img
-                            src={`${axiosImageURL}${q.profileimg}`}
-                            className={styles.profileImg}
-                            alt="Profile"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <RiAccountCircleFill className={styles.profileImgCircle}/>
-                        )}
-                      </div>
-                      <p>{q.username}</p>
+                <li
+                  className={styles.questionItem}
+                  onClick={() => handleQuestionClick(q.questionid)}
+                  key={index}
+                >
+                  <div className={styles.listContainer}>
+                    <div className={styles.profileImgContainer}>
+                      {q.profileimg ? (
+                        <img
+                          src={`${axiosImageURL}${q.profileimg}`}
+                          className={styles.profileImg}
+                          alt="Profile"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <RiAccountCircleFill className={styles.profileImgCircle} />
+                      )}
                     </div>
-                    {/* Question Text */}
-                    <div className={styles.questionText}>
-                      <strong>{q.title}</strong>
-                        {/* Date */}
-                        <p>
-                          {new Date(q.tag).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          })}
-                        </p>
-                    </div>
-                    <button onClick={() => handleQuestionClick(q.questionid)}>
-                      ➡
-                    </button>
-                  </li>
-                </Link>
+                    <p>{q.username}</p>
+                  </div>
+                  {/* Question Text */}
+                  <div className={styles.questionText}>
+                    <strong>{q.title}</strong>
+                    {/* Date */}
+                    <p>
+                      {new Date(q.tag).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </p>
+                  </div>
+                  <button>➡</button>
+                </li>
               ))}
             </ul>
           )}
           {/* Pagination Controls */}
-          <div className={styles.pagination}>
-            <button
-              onClick={() => paginate(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
-            <span>Page {currentPage}</span>
-            <button
-              onClick={() => paginate(currentPage + 1)}
-              disabled={indexOfLastQuestion >= filteredQuestions.length}
-            >
-              Next
-            </button>
-          </div>
+        <div className={styles.pagination}>
+          <button
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <span>
+            Page {currentPage} of {Math.ceil(filteredQuestions.length / questionsPerPage)}
+          </span>
+          <button
+            onClick={() => paginate(currentPage + 1)}
+            disabled={indexOfLastQuestion >= filteredQuestions.length}
+          >
+            Next
+          </button>
+        </div>
         </main>) : error ? <NotFound /> : <Loader /> }
     </Layout>
   );

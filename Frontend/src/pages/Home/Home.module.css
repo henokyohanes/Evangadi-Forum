@@ -90,6 +90,7 @@
   border-radius: .4em;
   margin-bottom: 1em;
   transition: box-shadow 0.2s;
+  cursor: pointer;
 }
 
 .questionItem:hover {

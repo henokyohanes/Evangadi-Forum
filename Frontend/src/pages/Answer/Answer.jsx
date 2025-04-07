@@ -345,21 +345,21 @@ const Answer = () => {
             )}
           </div>
           {/* Pagination Controls */}
-          <div className={styles.pagination}>
+          {answers && answers.length > 0 && <div className={styles.pagination}>
             <button
               onClick={() => paginate(currentPage - 1)}
               disabled={currentPage === 1}
             >
               Previous
             </button>
-            <span>Page {currentPage}</span>
+            <span>Page {currentPage} of {Math.ceil(answers.length / answersPerPage)}</span>
             <button
               onClick={() => paginate(currentPage + 1)}
               disabled={indexOfLastAnswer >= answers.length}
             >
               Next
             </button>
-          </div>
+          </div>}
           {/* Answer Form */}
           <div className={styles.answerForm}>
             <h2>Answer The Top Question</h2>
