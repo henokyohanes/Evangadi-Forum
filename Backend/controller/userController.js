@@ -39,15 +39,20 @@ async function register(req, res) {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // Proceed to insert the new user if no existing record is found
-    await dbconnection.query(
+    const [result] = await dbconnection.query(
       "INSERT INTO users (username, firstname, lastname, email, password) VALUES (?,?,?,?,?)",
       [username, firstname, lastname, email, hashedPassword]
     );
 
-    // Successfully created the user
+    const userid = result.insertId;
+
+    // Generate a JWT token for the new user
+    const token = jwt.sign({ username, userid }, process.env.JWT_SECRETKEY, {expiresIn: "1d"})
+
+    // Successfully created the user and sent the token
     return res
       .status(StatusCodes.CREATED)
-      .json({ msg: "You have Registerd successfully." });
+      .json({ msg: "You have Registerd successfully.", token });
   } catch (error) {
     console.error("Error creating user:", error.message);
 

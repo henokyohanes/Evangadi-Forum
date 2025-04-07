@@ -16,7 +16,7 @@ const Home = () => {
   const [error, setError] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const questionsPerPage = 6;
+  const questionsPerPage = 8;
   const navigate = useNavigate();
 
   // Fetch questions from the backend
@@ -112,7 +112,7 @@ const Home = () => {
                         <img
                           src={`${axiosImageURL}${q.profileimg}`}
                           className={styles.profileImg}
-                          alt="Profile"
+                          alt="Profile Image"
                           loading="lazy"
                         />
                       ) : (
@@ -139,7 +139,7 @@ const Home = () => {
             </ul>
           )}
           {/* Pagination Controls */}
-        <div className={styles.pagination}>
+        {filteredQuestions.length > 0 && <div className={styles.pagination}>
           <button
             onClick={() => paginate(currentPage - 1)}
             disabled={currentPage === 1}
@@ -155,7 +155,7 @@ const Home = () => {
           >
             Next
           </button>
-        </div>
+        </div>}
         </main>) : error ? <NotFound /> : <Loader /> }
     </Layout>
   );

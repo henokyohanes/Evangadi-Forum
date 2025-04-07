@@ -20,7 +20,7 @@ const Answer = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const answersPerPage = 6;
+  const answersPerPage = 8;
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
 
@@ -296,13 +296,13 @@ const Answer = () => {
                     <div className={styles.profileImgContainer}>
                       {ans.profileimg ? (
                         <img
-                          src={`${axiosImageURL}${ans.profileimg}`}
-                          alt={`${ans.username}'s profile`}
+                          src={`${axiosImageURL}${ans.profileImg}`}
+                          alt="Profile Image"
                           className={styles.profileImg}
                           loading="lazy"
                         />
                       ) : (
-                        <RiAccountCircleFill className={styles.Profilecircle} />
+                        <RiAccountCircleFill className={styles.ProfileImgCircle} />
                       )}
                     </div>
                     <p>{ans.username}</p>
