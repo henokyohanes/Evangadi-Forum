@@ -42,6 +42,12 @@ const answerRoute = require("./routes/answerRoute");
 //answers router middleware
 app.use("/api/answers", authenticationMiddleware, answerRoute);
 
+//reaction router middleware file
+const reactionRoute = require("./routes/reactionRoute");
+
+//reaction router middleware
+app.use("/api/reactions", authenticationMiddleware, reactionRoute);
+
 async function start() {
     try {
         const result = await dbconnection.execute("select 'test' ");

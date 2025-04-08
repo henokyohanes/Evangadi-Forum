@@ -63,8 +63,11 @@ const Header = () => {
         </div>
         {/* Dropdown menu for small screens */}
         <NavDropdown
-          title={isLoggedIn ? <ProfileImage user={user} /> : <FaBars size={35} />}
           className="d-sm-none"
+          title={isLoggedIn && location.pathname !== "/auth"
+            ? <ProfileImage user={user} />
+            : <FaBars size={35} />
+          }
         >
           {isLoggedIn && (
             <NavDropdown.Item as={Link} to="/">
@@ -88,7 +91,7 @@ const Header = () => {
               Register | Sign in
             </NavDropdown.Item>
           )}
-          {isLoggedIn && (
+          {isLoggedIn && location.pathname !== "/auth" && (
             <div>
               <NavDropdown.Item as={Link} to="#">
                 <span className={styles.icon}>
@@ -118,7 +121,7 @@ const Header = () => {
             <Link to="/auth">Register | Sign in</Link>
           )}
           {/* Dropdown menu for large screens */}
-          {isLoggedIn && (
+          {isLoggedIn && location.pathname !== "/auth" && (
             <NavDropdown title={<ProfileImage user={user} />}>
               <NavDropdown.Item as={Link} to="/Account">
                 <span className={styles.icon}>

@@ -45,13 +45,13 @@ const RouterApp = () => {
     localStorage.setItem("token", userData.token);
     await checkUser();
   };
-
+  
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUser({});
     navigate("/auth");
   };
-
+  
   const isLoggedIn = !!user.userid;
 
   return (
