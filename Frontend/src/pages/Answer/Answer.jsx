@@ -164,7 +164,7 @@ const Answer = () => {
                     <div className={styles.profileImgContainer}>
                       {ans.profileimg ? (
                         <img
-                          src={`${axiosImageURL}${ans.profileImg}`}
+                          src={`${axiosImageURL}${ans.profileimg}`}
                           alt="Profile Image"
                           className={styles.profileImg}
                           loading="lazy"
@@ -250,7 +250,7 @@ const Answer = () => {
                 if (errorMessage) setErrorMessage("");
               }}
             />
-            <Link to="/">Back to Question page</Link>
+            <Link to="/questions">Back to Question page</Link>
           </div>
           {/* Submit Button */}
           <button onClick={handleAnswerSubmit} className={styles.submitButton}>

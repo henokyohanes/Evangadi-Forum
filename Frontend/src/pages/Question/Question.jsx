@@ -51,21 +51,14 @@ const Question = () => {
     try {
       const response = await axiosBaseURL.post(
         "/questions/question",
-        {
-          title,
-          description,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        {title, description,},
+        {headers: {Authorization: `Bearer ${token}`,},}
       );
 
       setTitle("");
       setDescription("");
       toast.success("Question posted successfully!", { autoClose: 1500 });
-      setTimeout(() => { navigate("/") }, 1500);
+      setTimeout(() => { navigate("/questions") }, 1500);
     } catch (error) {
       console.error("Error posting question:", error);
       if (error.response) {

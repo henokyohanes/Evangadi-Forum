@@ -89,7 +89,7 @@ const HowItWork = () => (
       </div>
       <div className={styles.suggestion}>
         <h1>Ready to Sign Up?</h1>
-        <Link to="/auth">
+        <Link to="/">
           <button>Sign Up</button>
         </Link>
       </div>

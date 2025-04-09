@@ -122,7 +122,7 @@ const Signup = ({ onToggle, setError }) => {
 
         // Store the token in local storage and redirect to the home page
         localStorage.setItem("token", response.data.token);
-      setTimeout(() => { window.location.href = "/" }, 1500);
+        setTimeout(() => { window.location.href = "/questions"}, 1500);
       }
     } catch (err) {
       console.error("Failed to register user:", err);
@@ -153,7 +153,7 @@ const Signup = ({ onToggle, setError }) => {
       <h2>Join the network</h2>
       <p>
         Already have an account?{" "}
-        <Link to="/auth" onClick={onToggle}>Sign In</Link>
+        <Link to="/" onClick={onToggle}>Sign In</Link>
       </p>
       {/* Signup Form */}
       <form onSubmit={handleSubmit} className={styles.signupForm}>
@@ -232,7 +232,7 @@ const Signup = ({ onToggle, setError }) => {
         </button>
       </form>
       <p>
-        <Link to="/login" onClick={onToggle}>
+        <Link to="/" onClick={onToggle}>
           Already have an account?{" "}
         </Link>
       </p>

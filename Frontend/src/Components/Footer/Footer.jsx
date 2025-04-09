@@ -11,9 +11,9 @@ const Footer = () => {
   // Navigate based on the user's login status when logo is clicked
   const handleLogoClick = () => {
     if (isLoggedIn) {
-      navigate("/");
+      navigate("/questions");
     } else {
-      navigate("/auth");
+      navigate("/");
     }
   };
 

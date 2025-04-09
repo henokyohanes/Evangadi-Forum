@@ -44,9 +44,9 @@ const Header = () => {
   // Navigate based on the user's login status when logo is clicked
   const handleLogoClick = () => {
     if (isLoggedIn) {
-      navigate("/");
+      navigate("/questions");
     } else {
-      navigate("/auth");
+      navigate("/");
     }
   };
 
@@ -64,13 +64,13 @@ const Header = () => {
         {/* Dropdown menu for small screens */}
         <NavDropdown
           className="d-sm-none"
-          title={isLoggedIn && location.pathname !== "/auth"
+          title={isLoggedIn && location.pathname !== "/"
             ? <ProfileImage user={user} />
             : <FaBars size={35} />
           }
         >
           {isLoggedIn && (
-            <NavDropdown.Item as={Link} to="/">
+            <NavDropdown.Item as={Link} to="/questions">
               <span className={styles.icon}>
                 <FontAwesomeIcon icon={faHome} />
               </span>
@@ -83,17 +83,17 @@ const Header = () => {
             </span>
             How it works
           </NavDropdown.Item>
-          {!isLoggedIn && location.pathname !== "/auth" && (
-            <NavDropdown.Item as={Link} to="/auth">
+          {!isLoggedIn && location.pathname !== "/" && (
+            <NavDropdown.Item as={Link} to="/">
               <span className={styles.icon}>
                 <FontAwesomeIcon icon={faUser} />
               </span>
               Register | Sign in
             </NavDropdown.Item>
           )}
-          {isLoggedIn && location.pathname !== "/auth" && (
+          {isLoggedIn && location.pathname !== "/" && (
             <div>
-              <NavDropdown.Item as={Link} to="#">
+              <NavDropdown.Item as={Link} to="/Account">
                 <span className={styles.icon}>
                   <FontAwesomeIcon icon={faUser} />
                 </span>
@@ -115,13 +115,13 @@ const Header = () => {
           )}
         </NavDropdown>
         <div className={`${styles.navMenu} d-none d-sm-flex`}>
-          {isLoggedIn && <Link to="/">Home</Link>}
+          {isLoggedIn && <Link to="/questions">Home</Link>}
           <Link to="/how-it-works">How it works</Link>
-          {!isLoggedIn && location.pathname !== "/auth" && (
-            <Link to="/auth">Register | Sign in</Link>
+          {!isLoggedIn && location.pathname !== "/" && (
+            <Link to="/">Register | Sign in</Link>
           )}
           {/* Dropdown menu for large screens */}
-          {isLoggedIn && location.pathname !== "/auth" && (
+          {isLoggedIn && location.pathname !== "/" && (
             <NavDropdown title={<ProfileImage user={user} />}>
               <NavDropdown.Item as={Link} to="/Account">
                 <span className={styles.icon}>
