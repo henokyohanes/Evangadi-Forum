@@ -43,6 +43,7 @@ The Evangadi Q&A Platform offers various features tailored to make learning effe
    - **Login and Profile Management**: Registered users can log in to access personalized features, like viewing their questions and answers.
    - **Profile Picture Adjustment**: Users can upload and adjust profile pictures, allowing them to personalize their accounts and foster a sense of community. 
    - **Secure Authentication**: Unique usernames, email verification, and password standards keep user accounts safe and secure. 🔒
+   - **Automatic Logout**: Users are securely signed out after periods of inactivity to protect account privacy and prevent unauthorized access. ⏳🔒
 
 ### 2. ❓ **Question Posting**
    - **Easy Question Submission**: Users can post questions with a title and description, which helps others understand the problem and respond accurately.
@@ -60,6 +61,7 @@ The Evangadi Q&A Platform offers various features tailored to make learning effe
 ### 5. 🌐 **Community and User Engagement**
    - **User Recognition**: Every question and answer displays the contributor’s username, creating a sense of community and accountability.
    - **Encouraging Contribution**: Recognizing individual contributions to encourage active participation from students and mentors.
+   - **User Reactions on Answers**: Users can express their feedback on answers through like and dislike buttons, enabling community-driven evaluation of content.
 
 ---
 
@@ -67,7 +69,7 @@ The Evangadi Q&A Platform offers various features tailored to make learning effe
 
 The Evangadi-Forum app is live! Click the link below to access the platform:
 
-**🔗 [https://evangadi-forum.com](https://qa-forum.henokyohanes.com)**
+**🔗 [https://qa-forum.henokyohanes.com](https://qa-forum.henokyohanes.com)**
 
 --- 
 

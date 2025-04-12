@@ -106,7 +106,7 @@ const Login = ({ onToggle, setError }) => {
     } finally {
       setLoading(false);
     }
-  }, [formData]);
+  }, [formData, setError]);
 
   // Toggle password visibility
   const togglePasswordVisibility = () => {
@@ -165,7 +165,7 @@ const Login = ({ onToggle, setError }) => {
         <div className={styles.forgotPassword}>
           <Link to="#">Forgot password?</Link>
         </div>
-        <button type="submit" className={styles.loginButton}>
+        <button type="submit" className={styles.loginButton} disabled={loading}>
           {loading ? <ScaleLoader color="#fff" height={12} /> : "LogIn"}
         </button>
       </form>
