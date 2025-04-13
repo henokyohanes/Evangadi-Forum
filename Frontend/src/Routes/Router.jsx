@@ -7,7 +7,7 @@ import Auth from "../pages/Auth/Auth";
 import axiosBaseURL from "../Utility/axios";
 import HowItWorks from "../pages/HowItWork/HowItWork";
 import Account from "../pages/Account/Account";
-import ForgotPassword from "../Components/ForgotPassword/ForgotPassword";
+import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import styles from "./Router.module.css";
 
 export const AppState = createContext();

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axiosBaseURL from "../../Utility/axios";
 import Swal from "sweetalert2";
-import Layout from "../Layout/Layout";
+import Layout from "../../Components/Layout/Layout";
 import styles from "./ForgotPassword.module.css";
 
 const ForgotPassword = () => {
@@ -16,7 +16,7 @@ const ForgotPassword = () => {
 
         try {
             const response = await axiosBaseURL.post("/users/forgot-password", {
-                email,
+              email,
             });
 
             if (response.status === 200) {
