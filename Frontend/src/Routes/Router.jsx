@@ -3,11 +3,11 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Question from "../pages/Question/Question";
 import Answer from "../pages/Answer/Answer";
 import Home from "../pages/Home/Home";
-import NotFound from "../Components/NotFound/NotFound";
 import Auth from "../pages/Auth/Auth";
 import axiosBaseURL from "../Utility/axios";
 import HowItWorks from "../pages/HowItWork/HowItWork";
 import Account from "../pages/Account/Account";
+import ForgotPassword from "../Components/ForgotPassword/ForgotPassword";
 import styles from "./Router.module.css";
 
 export const AppState = createContext();
@@ -152,7 +152,7 @@ const RouterApp = () => {
         <Route path="/getQuestions/:questionid" element={<Answer />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/account" element={<Account />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </AppState.Provider>
   );
