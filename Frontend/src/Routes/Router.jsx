@@ -8,6 +8,7 @@ import axiosBaseURL from "../Utility/axios";
 import HowItWorks from "../pages/HowItWork/HowItWork";
 import Account from "../pages/Account/Account";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "../pages/ResetPassword/ResetPassword";
 import styles from "./Router.module.css";
 
 export const AppState = createContext();
@@ -153,6 +154,7 @@ const RouterApp = () => {
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/account" element={<Account />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
     </AppState.Provider>
   );
