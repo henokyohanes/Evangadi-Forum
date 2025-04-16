@@ -4,7 +4,7 @@ import { AppState } from "../../Routes/Router";
 import { NavDropdown } from "react-bootstrap";
 import { FaBars } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faInfoCircle, faUser, faCog, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faInfoCircle, faUser, faBell, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { axiosImageURL } from "../../Utility/axios";
@@ -97,13 +97,13 @@ const Header = () => {
                 <span className={styles.icon}>
                   <FontAwesomeIcon icon={faUser} />
                 </span>
-                Account
+                Account Settings
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="#">
                 <span className={styles.icon}>
-                  <FontAwesomeIcon icon={faCog} />
+                  <FontAwesomeIcon icon={faBell} />
                 </span>
-                Setting
+                Notification Settings
               </NavDropdown.Item>
               <NavDropdown.Item onClick={onLogoutClick}>
                 <span className={styles.icon}>
@@ -127,13 +127,13 @@ const Header = () => {
                 <span className={styles.icon}>
                   <FontAwesomeIcon icon={faUser} />
                 </span>
-                Account
+                Account Settings
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="#">
                 <span className={styles.icon}>
-                  <FontAwesomeIcon icon={faCog} />
+                  <FontAwesomeIcon icon={faBell} />
                 </span>
-                Setting
+                Notification Settings
               </NavDropdown.Item>
               <NavDropdown.Item onClick={onLogoutClick}>
                 <span className={styles.icon}>

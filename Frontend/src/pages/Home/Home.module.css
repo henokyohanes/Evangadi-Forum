@@ -68,6 +68,7 @@
 
 .noMatchMessage {
   font-size: clamp(.9em, 3vw, 1.1em);
+  text-align: center;
   margin: 1em 0;
   color: red;
 }

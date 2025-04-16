@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
@@ -18,7 +18,6 @@ const Signup = ({ onToggle, setError }) => {
   });
   const [formErrors, setFormErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   // Handler for input field changes
   const handleChange = (e) => {
@@ -127,7 +126,7 @@ const Signup = ({ onToggle, setError }) => {
     } catch (err) {
       console.error("Failed to register user:", err);
 
-      if (err.response?.status === 400 || err.response?.status === 500) {
+      if (err.response) {
         Swal.fire({
           title: "Failed!",
           html: err.response?.data?.msg,
