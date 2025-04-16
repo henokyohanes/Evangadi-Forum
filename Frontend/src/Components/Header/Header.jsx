@@ -4,7 +4,7 @@ import { AppState } from "../../Routes/Router";
 import { NavDropdown } from "react-bootstrap";
 import { FaBars } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faInfoCircle, faUser, faBell, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faInfoCircle, faUser, faQuestionCircle, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { axiosImageURL } from "../../Utility/axios";
@@ -64,9 +64,12 @@ const Header = () => {
         {/* Dropdown menu for small screens */}
         <NavDropdown
           className="d-sm-none"
-          title={isLoggedIn && location.pathname !== "/"
-            ? <ProfileImage user={user} />
-            : <FaBars size={35} />
+          title={
+            isLoggedIn && location.pathname !== "/" ? (
+              <ProfileImage user={user} />
+            ) : (
+              <FaBars size={35} />
+            )
           }
         >
           {isLoggedIn && (
@@ -99,11 +102,11 @@ const Header = () => {
                 </span>
                 Account Settings
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="#">
+              <NavDropdown.Item as={Link} to="/my-questions">
                 <span className={styles.icon}>
-                  <FontAwesomeIcon icon={faBell} />
+                  <FontAwesomeIcon icon={faQuestionCircle} />
                 </span>
-                Notification Settings
+                My Questions
               </NavDropdown.Item>
               <NavDropdown.Item onClick={onLogoutClick}>
                 <span className={styles.icon}>
@@ -129,11 +132,11 @@ const Header = () => {
                 </span>
                 Account Settings
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="#">
+              <NavDropdown.Item as={Link} to="/my-questions">
                 <span className={styles.icon}>
-                  <FontAwesomeIcon icon={faBell} />
+                  <FontAwesomeIcon icon={faQuestionCircle} />
                 </span>
-                Notification Settings
+                My Questions
               </NavDropdown.Item>
               <NavDropdown.Item onClick={onLogoutClick}>
                 <span className={styles.icon}>

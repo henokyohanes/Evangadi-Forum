@@ -15,6 +15,7 @@ const ResetPassword = () => {
     const [formErrors, setFormErrors] = useState({});
     const navigate = useNavigate();
 
+    //function to validate password validation
     const validateForm = () => {
         let isValid = true;
         const input = {};
@@ -33,6 +34,7 @@ const ResetPassword = () => {
         return isValid;
     };
 
+    //function to reset password
     const handleReset = async (e) => {
         e.preventDefault();
 
