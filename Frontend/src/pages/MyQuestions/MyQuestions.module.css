@@ -1,0 +1,96 @@
+.container {
+    width: 100%;
+    max-width: 75em;
+    margin: 0 auto;
+    padding: 2em 1em;
+}
+
+.container h2 {
+    font-size: clamp(1.1em, 3vw, 1.4em);
+    font-weight: bold;
+    color: #4e68ff;
+    margin-bottom: 1em;
+}
+
+.noMatchMessage {
+    font-size: clamp(.9em, 3vw, 1.1em);
+    font-weight: bold;
+    text-align: center;
+    margin: 1em 0;
+    color: red;
+}
+
+.questionList {
+    list-style-type: none;
+    padding: 0;
+}
+
+.questionItem {
+    width: 100%;
+    display: flex;
+    padding: 1em;
+    border: 1px solid #ddd;
+    border-radius: .4em;
+    margin-bottom: 1em;
+    transition: box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.questionItem:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.questionText {
+    font-size: clamp(.9em, 3vw, 1.1em);
+    word-break: break-word;
+    flex: 1;
+}
+
+.questionText p {
+    margin: 0;
+}
+
+.questionItem button {
+    background: linear-gradient(to right, #fe750b, #007bff);
+    color: white;
+    border: none;
+    padding: 1em;
+    margin-left: 1em;
+    border-radius: .4em;
+    cursor: pointer;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
+    gap: 1em;
+}
+
+.pagination button {
+    width: 6em;
+    text-align: center;
+    background-color: #ff7800;
+    font-size: clamp(.9em, 3vw, 1.1em);
+    color: white;
+    border: none;
+    border-radius: .4em;
+    padding: .2em 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+    background-color: #de7518;
+}
+
+.pagination span {
+    font-size: clamp(.9em, 3vw, 1.1em);
+    font-weight: bold;
+}

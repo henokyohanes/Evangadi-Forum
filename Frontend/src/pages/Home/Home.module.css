@@ -30,6 +30,8 @@
 .mainContent h2 {
   font-size: clamp(1.1em, 3vw, 1.4em);
   font-weight: bold;
+  color: #4e68ff;
+  margin-bottom: 1em;
 }
 
 .span {
@@ -68,6 +70,7 @@
 
 .noMatchMessage {
   font-size: clamp(.9em, 3vw, 1.1em);
+  font-weight: bold;
   text-align: center;
   margin: 1em 0;
   color: red;
@@ -76,11 +79,6 @@
 .questionList {
   list-style-type: none;
   padding: 0;
-}
-
-.questionList a {
-  text-decoration: none;
-  color: inherit;
 }
 
 .questionItem {
