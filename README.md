@@ -44,6 +44,7 @@ The Evangadi Q&A Platform offers various features tailored to make learning effe
    - **Profile Picture Adjustment**: Users can upload and adjust profile pictures, allowing them to personalize their accounts and foster a sense of community. 
    - **Secure Authentication**: Unique usernames, email verification, and password standards keep user accounts safe and secure. 🔒
    - **Automatic Logout**: Users are securely signed out after periods of inactivity to protect account privacy and prevent unauthorized access. ⏳🔒
+   - **Reset Password**: Users can securely reset their password if they forget it. A secure, step-by-step process guides them through email verification to regain access to their account without compromising security.
 
 ### 2. ❓ **Question Posting**
    - **Easy Question Submission**: Users can post questions with a title and description, which helps others understand the problem and respond accurately.

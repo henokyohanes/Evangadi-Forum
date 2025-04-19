@@ -23,14 +23,14 @@ const Footer = () => {
         <div className={`${styles.usefulLinks} col-6 col-md-4`}>
           <h3>Useful Link</h3>
           <p><Link to="/how-it-works">How it works</Link></p>
-          <p><Link to="#">Terms of Service</Link></p>
-          <p><Link to="#">Privacy Policy</Link></p>
+          <p><Link to="/terms-of-service">Terms of Service</Link></p>
+          <p><Link to="/privacy-policy">Privacy Policy</Link></p>
         </div>
         <div className={`${styles.contactInfo} col-6 col-md-4 ps-sm-5`}>
           <h3>Contact Info</h3>
-          <p><Link to="#">Evangadi Networks</Link></p>
-          <p><Link to="mailto: support@evangadi.com">support@evangadi.com</Link></p>
-          <p><Link to="tel: +1 202 386 2702">+1 202 386 2702</Link></p>
+          <p><a href="https://evangadi.com/" target="_blank">Evangadi Networks</a></p>
+          <p><a href="mailto:support@evangadi.com">support@evangadi.com</a></p>
+          <p><a href="tel: +1 202 386 2702" target="_blank">+1 202 386 2702</a></p>
         </div>
         <div className={`${styles.divider} d-md-none`}></div>
         <div className={`${styles.logoAndSocials} col-12 col-md-4`}>
@@ -38,18 +38,18 @@ const Footer = () => {
             <img src={logo} alt="Evangadi logo" loading="lazy" />
           </div>
           <div className={styles.socialMedia}>
-            <Link to="https://www.facebook.com/evangaditech/" target="_blank" aria-label="Facebook">
+            <a href="https://www.facebook.com/evangaditech/" target="_blank" aria-label="Facebook">
               <i className="fa-brands fa-facebook-f"></i>
-            </Link>
-            <Link to="https://www.instagram.com/evangaditech/" target="_blank" aria-label="Instagram">
+            </a>
+            <a href="https://www.instagram.com/evangaditech/" target="_blank" aria-label="Instagram">
               <i className="fa-brands fa-instagram"></i>
-            </Link>
-            <Link to="https://www.x.com/company/evangaditech/" target="_blank" aria-label="Twitter">
+            </a>
+            <a href="https://www.x.com/company/evangaditech/" target="_blank" aria-label="Twitter">
               <i className="fa-brands fa-x-twitter"></i>
-            </Link>
-            <Link to="https://www.youtube.com/evangaditech" target="_blank" aria-label="Youtube">
+            </a>
+            <a href="https://www.youtube.com/evangaditech" target="_blank" aria-label="Youtube">
               <i className="fa-brands fa-youtube"></i>
-            </Link>
+            </a>
           </div>
         </div>
       </div>

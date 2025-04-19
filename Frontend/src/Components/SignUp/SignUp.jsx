@@ -223,8 +223,8 @@ const Signup = ({ onToggle, setError }) => {
           Passwords must be at least 8 characters.
         </span>
         <div className={styles.terms}>
-          I agree to the <a href="#">privacy policy</a> and{" "}
-          <Link to="#">terms of service</Link>.
+          I agree to the <Link to="/privacy-policy">privacy policy</Link> and{" "}
+          <Link to="/terms-of-service">terms of service</Link>.
         </div>
         <button type="submit">
           {loading ? <ScaleLoader color="#fff" height={12} /> : "Agree and Join"}

@@ -10,6 +10,8 @@ import Account from "../pages/Account/Account";
 import MyQuestions from "../pages/MyQuestions/MyQuestions";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
+import TermsOfService from "../pages/TermsOfService/TermsOfService";
+import PrivacyPolicy from "../pages/PrivacyPolicy/PrivacyPolicy"; 
 import styles from "./Router.module.css";
 
 export const AppState = createContext();
@@ -157,6 +159,8 @@ const RouterApp = () => {
         <Route path="/my-questions" element={<MyQuestions />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
     </AppState.Provider>
   );
