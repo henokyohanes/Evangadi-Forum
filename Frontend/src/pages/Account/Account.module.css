@@ -156,15 +156,43 @@
     overflow: hidden;
     position: relative;
     cursor: grab;
-    margin: 2em auto;
+    margin: 1em auto;
     touch-action: none;
 }
 
 .canvasContainer img {
+    height: 100%;
+    object-fit: cover;
     position: absolute;
     top: 0;
     left: 0;
     cursor: move;
+}
+
+.zoomSliderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2em;
+}
+
+.zoomSliderContainer button {
+    width: 1em;
+    height: 1em;
+    margin: 0 .6em;
+    font-size: 1.4em;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 0.3em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.zoomSlider {
+    width: 10em;
 }
 
 .uploadBtn {
@@ -175,7 +203,7 @@
 
 .uploadBtn button {
     font-size: clamp(.9em, 3vw, 1.1em);
-    padding: 0.1em 1.4em;
+    padding: 0.2em 1.6em;
     background-color: #007BFF;
     color: white;
     border: none;
