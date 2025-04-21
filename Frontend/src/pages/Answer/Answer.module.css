@@ -83,11 +83,11 @@
   object-fit: cover;
 }
 
-.answerInfo p {
+.username {
   font-size: clamp(.9em, 3vw, 1.1em);
   font-weight: bold;
-  padding: 0;
-  margin: 0;
+  font-style: italic;
+  color: #a09a9a;
 }
 
 .answerContent p {

@@ -4,7 +4,19 @@ const path = require("path");
 const app = express();
 const port = process.env.PORT;
 const cors = require("cors");
-app.use(cors({ origin: process.env.CLIENT_URL }));
+
+//cors middleware
+app.use(
+    cors({
+        origin: process.env.CLIENT_URL,
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+        credentials: true,
+    })
+);
+
+//options middleware for cors
+app.options("*", cors());
 
 //db connection
 const dbconnection = require("./db/config");

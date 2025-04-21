@@ -119,7 +119,6 @@ const Home = () => {
                         <RiAccountCircleFill className={styles.profileImgCircle} />
                       )}
                     </div>
-                    <p>{q.username}</p>
                   </div>
                   {/* Question Text */}
                   <div className={styles.questionText}>
@@ -132,6 +131,7 @@ const Home = () => {
                         day: "numeric",
                       })}
                     </p>
+                    <p className={styles.username}>{q.username}</p>
                   </div>
                   <button>➡</button>
                 </li>

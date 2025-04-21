@@ -175,7 +175,6 @@ const Answer = () => {
                         />
                       )}
                     </div>
-                    <p>{ans.username}</p>
                   </div>
                   <div className={styles.answerContent}>
                     <p>{ans.answer}</p>
@@ -183,8 +182,8 @@ const Answer = () => {
                       <button
                         className={`${styles.likeButton} ${
                           userReactions[ans.answerid] === "liked"
-                            ? styles.activeLike
-                            : ""
+                          ? styles.activeLike
+                          : ""
                         }`}
                         onClick={() => handleReaction(ans.answerid, "liked")}
                         aria-label="Like"
@@ -195,8 +194,8 @@ const Answer = () => {
                       <button
                         className={`${styles.dislikeButton} ${
                           userReactions[ans.answerid] === "disliked"
-                            ? styles.activeDislike
-                            : ""
+                          ? styles.activeDislike
+                          : ""
                         }`}
                         onClick={() => handleReaction(ans.answerid, "disliked")}
                         aria-label="Dislike"
@@ -205,6 +204,7 @@ const Answer = () => {
                         <FaThumbsDown /> {ans.dislikes}
                       </button>
                     </div>
+                    <p className={styles.username}>{ans.username}</p>
                   </div>
                 </div>
               ))
