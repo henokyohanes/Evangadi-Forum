@@ -112,4 +112,27 @@ async function getQuestionDetail(req, res) {
   }
 }
 
-module.exports = { getAllQuestions, getQuestionDetail, question };
+// function to get my questions
+async function getMyQuestions(req, res) {
+  try {
+    const userid = req.user.userid;
+
+    const [questions] = await dbConnection.query(
+      `SELECT title, questionid, tag 
+        FROM questions 
+        WHERE userid = ?
+        ORDER BY tag DESC`,
+      [userid]
+    );
+
+    return res.status(200).json({
+      msg: "Fetched your questions successfully",
+      questions,
+    });
+  } catch (error) {
+    console.error("Error fetching your questions:", error);
+    return res.status(500).json({ msg: "Something went wrong" });
+  }
+}
+
+module.exports = { getAllQuestions, getQuestionDetail, question, getMyQuestions };
