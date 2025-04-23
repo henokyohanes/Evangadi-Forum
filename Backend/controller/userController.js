@@ -1,7 +1,9 @@
 //db connection
 const dbconnection = require("../db/config");
-const bcrypt = require("bcrypt");
 const { StatusCodes } = require("http-status-codes");
+const crypto = require("crypto");
+const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 
 // function to Register a new user
@@ -139,4 +141,100 @@ async function checkUser(req, res) {
   });
 }
 
-module.exports = { register, login, checkUser };
+// Send reset link
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ msg: "Please provide your email" });
+  }
+
+  try {
+    const [user] = await dbconnection.query("SELECT * FROM users WHERE email = ?", [email]);
+
+    if (user.length === 0) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ msg: "User with this email does not exist" });
+    }
+
+    const token = crypto.randomBytes(32).toString("hex");
+
+    await dbconnection.query(
+      "UPDATE users SET reset_token = ?, token_expiry = DATE_ADD(NOW(), INTERVAL 1 HOUR) WHERE email = ?",
+      [token, email]
+    );
+
+    const resetLink = `${process.env.CLIENT_URL}/reset-password/${token}`;
+
+    // Set up Nodemailer transporter
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      to: email,
+      subject: "Reset your password",
+      html: `
+        <p>Hello ${user[0].firstname},</p>
+        <p>You requested a password reset. Click the link below to reset it:</p>
+        <a href="${resetLink}">Reset Password</a>
+        <p>This link will expire in 1 hour.</p>
+      `,
+    });
+
+    res.status(StatusCodes.OK).json({ msg: "Password reset link sent to your email" });
+  } catch (err) {
+    console.error("Forgot Password Error:", err);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ msg: "Something went wrong, try again later" });
+  }
+};
+
+// Reset password
+const resetPassword = async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  if (!password || password.length < 8) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ msg: "Password must be at least 8 characters" });
+  }
+
+  try {
+    const [user] = await dbconnection.query(
+      "SELECT * FROM users WHERE reset_token = ? AND token_expiry > NOW()",
+      [token]
+    );
+
+    if (user.length === 0) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ msg: "Invalid or expired reset token!" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await dbconnection.query(
+      "UPDATE users SET password = ?, reset_token = NULL, token_expiry = NULL WHERE userid = ?",
+      [hashedPassword, user[0].userid]
+    );
+
+    res.status(StatusCodes.OK).json({ msg: "Password reset successful" });
+  } catch (err) {
+    console.error("Reset Password Error:", err);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ msg: "Something went wrong, try again later" });
+  }
+};
+
+module.exports = { register, login, checkUser, forgotPassword, resetPassword };
