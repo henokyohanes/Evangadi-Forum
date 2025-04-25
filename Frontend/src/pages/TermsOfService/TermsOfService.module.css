@@ -1,0 +1,37 @@
+.termsContainer {
+    width: 100%;
+    max-width: 75em;
+    margin: 0 auto;
+    padding: 2em 1em;
+}
+
+.termsContainer h1 {
+    font-size: clamp(1.5em, 3vw, 1.8em);
+    font-weight: bold;
+    text-align: center;
+    color: #2d8cf0;
+    margin-bottom: 1em;
+}
+
+.termsContainer p {
+    font-size: clamp(.9em, 3vw, 1.1em);
+}
+
+.termsContainer a {
+    text-decoration: none;
+    color: #fe750b;
+}
+
+.termsContainer a:hover {
+    text-decoration: underline;
+}
+
+.termsContainer h2 {
+    font-size: clamp(1.1em, 3vw, 1.4em);
+    font-weight: bold;
+    margin-bottom: .5em;
+}
+
+.contactList {
+    list-style: none;
+}
