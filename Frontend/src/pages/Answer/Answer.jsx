@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AppState } from "../../Routes/Router";
 import { useParams, Link } from "react-router-dom";
 import axiosBaseURL, { axiosImageURL } from "../../Utility/axios";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { TbMessageQuestion } from "react-icons/tb";
-import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
+import { FaThumbsUp, FaThumbsDown, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Layout from "../../Components/Layout/Layout";
 import Loader from "../../Components/Loader/Loader";
@@ -11,6 +12,8 @@ import NotFound from "../../Components/NotFound/NotFound";
 import styles from "./Answer.module.css";
 
 const Answer = () => {
+
+  const { user } = useContext(AppState);
   const { questionid } = useParams();
   const [question, setQuestion] = useState({});
   const [answers, setAnswers] = useState([]);
@@ -21,7 +24,6 @@ const Answer = () => {
   const [error, setError] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const answersPerPage = 8;
-  const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
 
   // Fetch question, answers, and reactions
@@ -134,6 +136,32 @@ const Answer = () => {
     }
   };
 
+  // Delete question
+  const handleDeleteQuestion = async (questionId) => {
+    try {
+      await axiosBaseURL.delete(`/questions/${questionId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      toast.success("Question Deleted Successfully", { autoClose: 1500 });
+      navigate("/home");
+    } catch (err) {
+      console.error("Error deleting question:", err);
+    }
+  };
+
+  // Delete answer
+  const handleDeleteAnswer = async (answerId) => {
+    try {
+      await axiosBaseURL.delete(`/answers/${answerId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      toast.success("Answer Deleted Successfully", { autoClose: 1500 });
+      fetchQuestion();
+    } catch (err) {
+      console.error("Error deleting answer:", err);
+    }
+  };
+
   // Pagination logic
   const indexOfLastAnswer = currentPage * answersPerPage;
   const indexOfFirstAnswer = indexOfLastAnswer - answersPerPage;
@@ -146,12 +174,17 @@ const Answer = () => {
     <Layout>
       {!loading && !error ? (
         <div className={styles.container}>
-          <div className={styles.questionSection}>
+          <div className={styles.questionContainer}>
+            {user.email === "admin@admin.com" && <div className={styles.deleteIcon} onClick={() => handleDeleteQuestion(question.questionid)}>
+              <FaTrash />
+            </div>}
+            <div className={styles.questionSection}>
             <div className={styles.title}>
               <TbMessageQuestion className={styles.questionIcon} />
               <h2> {question.title}</h2>
             </div>
             <p>{question.description}</p>
+            </div>
           </div>
 
           {/* Display Answers */}
@@ -159,52 +192,59 @@ const Answer = () => {
             <h2>Answers From The Community</h2>
             {answers && answers.length > 0 ? (
               currentAnswers.map((ans, index) => (
-                <div key={index} className={styles.answerItem}>
-                  <div className={styles.answerInfo}>
-                    <div className={styles.profileImgContainer}>
-                      {ans.profileimg ? (
-                        <img
-                          src={`${axiosImageURL}${ans.profileimg}`}
-                          alt="Profile Image"
-                          className={styles.profileImg}
-                          loading="lazy"
-                        />
-                      ) : (
-                        <RiAccountCircleFill
-                          className={styles.ProfileImgCircle}
-                        />
-                      )}
+                <div key={index} className={styles.answerContainer}>
+                  {user.email === "admin@admin.com" && <div className={styles.deleteIcon} onClick={() => handleDeleteAnswer(ans.answerid)}>
+                    <FaTrash />
+                  </div>}
+                  <div key={index} className={styles.answerItem}>
+                    <div className={styles.answerInfo}>
+                      <div className={styles.profileImgContainer}>
+                        {ans.profileimg ? (
+                          <img
+                            src={`${axiosImageURL}${ans.profileimg}`}
+                            alt="Profile Image"
+                            className={styles.profileImg}
+                            loading="lazy"
+                          />
+                        ) : (
+                          <RiAccountCircleFill
+                            className={styles.ProfileImgCircle}
+                          />
+                        )}
+                      </div>
                     </div>
-                  </div>
-                  <div className={styles.answerContent}>
-                    <p>{ans.answer}</p>
-                    <div className={styles.reactions}>
-                      <button
-                        className={`${styles.likeButton} ${
-                          userReactions[ans.answerid] === "liked"
-                          ? styles.activeLike
-                          : ""
-                        }`}
-                        onClick={() => handleReaction(ans.answerid, "liked")}
-                        aria-label="Like"
-                        disabled={userReactions[ans.answerid] === "disliked"}
-                      >
-                        <FaThumbsUp /> {ans.likes}
-                      </button>
-                      <button
-                        className={`${styles.dislikeButton} ${
-                          userReactions[ans.answerid] === "disliked"
-                          ? styles.activeDislike
-                          : ""
-                        }`}
-                        onClick={() => handleReaction(ans.answerid, "disliked")}
-                        aria-label="Dislike"
-                        disabled={userReactions[ans.answerid] === "liked"}
-                      >
-                        <FaThumbsDown /> {ans.dislikes}
-                      </button>
+                    <div className={styles.answerContent}>
+                      <p>{ans.answer}</p>
+                      <div className={styles.reactions}>
+                        <button
+                          className={`${styles.likeButton} ${
+                            userReactions[ans.answerid] === "liked"
+                              ? styles.activeLike
+                              : ""
+                          }`}
+                          onClick={() => handleReaction(ans.answerid, "liked")}
+                          aria-label="Like"
+                          disabled={userReactions[ans.answerid] === "disliked"}
+                        >
+                          <FaThumbsUp /> {ans.likes}
+                        </button>
+                        <button
+                          className={`${styles.dislikeButton} ${
+                            userReactions[ans.answerid] === "disliked"
+                              ? styles.activeDislike
+                              : ""
+                          }`}
+                          onClick={() =>
+                            handleReaction(ans.answerid, "disliked")
+                          }
+                          aria-label="Dislike"
+                          disabled={userReactions[ans.answerid] === "liked"}
+                        >
+                          <FaThumbsDown /> {ans.dislikes}
+                        </button>
+                      </div>
+                      <p className={styles.username}>{ans.username}</p>
                     </div>
-                    <p className={styles.username}>{ans.username}</p>
                   </div>
                 </div>
               ))
