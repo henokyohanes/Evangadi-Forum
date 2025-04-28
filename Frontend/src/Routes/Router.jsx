@@ -8,6 +8,7 @@ import axiosBaseURL from "../Utility/axios";
 import HowItWorks from "../pages/HowItWork/HowItWork";
 import Account from "../pages/Account/Account";
 import MyQuestions from "../pages/MyQuestions/MyQuestions";
+import AllUsers from "../pages/AllUsers/AllUsers";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
 import TermsOfService from "../pages/TermsOfService/TermsOfService";
@@ -157,6 +158,7 @@ const RouterApp = () => {
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/account" element={<Account />} />
         <Route path="/my-questions" element={<MyQuestions />} />
+        <Route path="/all-users" element={<AllUsers />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
