@@ -237,4 +237,17 @@ const resetPassword = async (req, res) => {
   }
 };
 
-module.exports = { register, login, checkUser, forgotPassword, resetPassword };
+// get all users
+const getAllUsers = async (req, res) => {
+  try {
+    const [users] = await dbconnection.query("SELECT * FROM users");
+    res.status(StatusCodes.OK).json({ users });
+  } catch (err) {
+    console.error("Get All Users Error:", err);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ msg: "Something went wrong, try again later" });
+  }
+};
+
+module.exports = { register, login, checkUser, forgotPassword, resetPassword, getAllUsers };

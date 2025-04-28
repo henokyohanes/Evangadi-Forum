@@ -1,0 +1,135 @@
+.container {
+  width: 100%;
+  max-width: 75em;
+  margin: 0 auto;
+  padding: 2em 1em 3em 1em;
+  word-break: break-word;
+}
+
+
+
+.container p {
+  font-size: clamp(.9em, 3vw, 1.1em);
+  padding-top: 1em;
+  margin: 0;
+}
+
+
+
+.usersSection {
+  margin-bottom: 1em;
+  padding: 1em;
+  border-radius: .4em;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.usersSection h2 {
+    font-size: clamp(1.2em, 3vw, 1.5em);
+    font-weight: bold;
+    margin-bottom: 1em;
+    color: #007bff;
+}
+
+.userContainer {
+    width: 100%;
+    margin-bottom: 1em;
+    background: #eff0f1;
+    border-radius: .4em;
+}
+
+.deleteIcon {
+  float: right;
+  color: red;
+  font-size: clamp(.9em, 3vw, 1.1em);
+  padding: .2em;
+  cursor: pointer;
+}
+
+.userItem {
+  display: flex;
+  align-items: flex-start;
+  padding: .8em;
+  gap: 1em;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profileImgContainer {
+  border-radius: 50%;
+  width: clamp(3em, 5vw, 4em);
+  height: clamp(3em, 5vw, 4em);
+  overflow: hidden;
+  position: relative;
+}
+
+.profileImg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ProfileImgCircle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.username, .email, .name {
+  font-size: clamp(.9em, 3vw, 1.1em);
+  font-weight: bold;
+  font-style: italic;
+  color: #a09a9a;
+}
+
+.userContent p {
+  padding: 0;
+}
+
+.noUsers {
+  padding: 0 !important;
+  font-weight: bold;
+  text-align: center;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em 0 2em 0;
+  gap: 1em;
+}
+
+.pagination button {
+  width: 6em;
+  text-align: center;
+  background-color: #ff7800;
+  font-size: clamp(.9em, 3vw, 1.1em);
+  color: white;
+  border: none;
+  border-radius: .4em;
+  padding: .2em 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #de7518;
+}
+
+.pagination span {
+  font-size: clamp(.9em, 3vw, 1.1em);
+  font-weight: bold;
+}
