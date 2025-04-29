@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppState } from "../../Routes/Router";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axiosBaseURL, { axiosImageURL } from "../../Utility/axios";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { TbMessageQuestion } from "react-icons/tb";
 import { FaThumbsUp, FaThumbsDown, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import Layout from "../../Components/Layout/Layout";
 import Loader from "../../Components/Loader/Loader";
 import NotFound from "../../Components/NotFound/NotFound";
@@ -25,6 +26,7 @@ const Answer = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const answersPerPage = 8;
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   // Fetch question, answers, and reactions
   const fetchQuestion = async () => {
@@ -39,8 +41,8 @@ const Answer = () => {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
-
       setQuestion(questionRes.data.question);
+      console.log(questionRes.data.answers);
       const answersWithReactions = questionRes.data.answers.map((ans) => {
         const reaction = reactionRes.data[ans.answerid] || {};
         return {
@@ -51,7 +53,7 @@ const Answer = () => {
           userReaction: reaction.reaction || null,
         };
       });
-
+      
       setAnswers(answersWithReactions);
       const userReactionMap = {};
       for (const answerId in reactionRes.data) {
@@ -105,7 +107,7 @@ const Answer = () => {
       setLoading(false);
     }
   };
-  
+
   // Handle reaction (like/dislike)
   const handleReaction = async (answerId, reactionType) => {
     const currentReaction = userReactions[answerId];
@@ -139,27 +141,79 @@ const Answer = () => {
   // Delete question
   const handleDeleteQuestion = async (questionId) => {
     try {
-      await axiosBaseURL.delete(`/questions/${questionId}`, {
+      const result = await Swal.fire({
+        title: "Are you sure you want to delete this question?",
+        html: "All related data associated with this question will be deleted!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes!",
+        customClass: {
+          popup: styles.popup,
+          confirmButton: styles.confirmButton,
+          cancelButton: styles.cancelButton,
+          icon: styles.icon,
+          title: styles.warningTitle,
+          htmlContainer: styles.text,
+        },
+      });
+      if (!result.isConfirmed) return;
+      setLoading(true);
+      setError(false);
+
+      await axiosBaseURL.delete(`/questions/delete-question/${questionId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Question Deleted Successfully", { autoClose: 1500 });
-      navigate("/home");
+      navigate("/questions");
     } catch (err) {
       console.error("Error deleting question:", err);
+      if (err.response) {
+        toast.error("Failed to delete question. Please try again.", { autoClose: 1500 });
+      } else {
+        setError(true);
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   // Delete answer
   const handleDeleteAnswer = async (answerId) => {
     try {
+      const result = await Swal.fire({
+        title: "Are you sure you want to delete this answer?",
+        html: "All related data associated with this answer will be deleted!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes!",
+        customClass: {
+          popup: styles.popup,
+          confirmButton: styles.confirmButton,
+          cancelButton: styles.cancelButton,
+          icon: styles.icon,
+          title: styles.warningTitle,
+          htmlContainer: styles.text,
+        },
+      });
+      if (!result.isConfirmed) return;
+      setLoading(true);
+      setError(false);
+
       await axiosBaseURL.delete(`/answers/${answerId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Answer Deleted Successfully", { autoClose: 1500 });
-      fetchQuestion();
+      setAnswers(answers.filter((answer) => answer.id !== answerId));
     } catch (err) {
       console.error("Error deleting answer:", err);
-    }
+      if (err.response) {
+        toast.error("Error deleting answer. Please try again.", { autoClose: 1500 });
+      } else {
+        setError(true);
+      }
+    } finally {
+      setLoading(false);
+    } 
   };
 
   // Pagination logic
@@ -179,11 +233,11 @@ const Answer = () => {
               <FaTrash />
             </div>}
             <div className={styles.questionSection}>
-            <div className={styles.title}>
-              <TbMessageQuestion className={styles.questionIcon} />
-              <h2> {question.title}</h2>
-            </div>
-            <p>{question.description}</p>
+              <div className={styles.title}>
+                <TbMessageQuestion className={styles.questionIcon} />
+                <h2> {question.title}</h2>
+              </div>
+              <p>{question.description}</p>
             </div>
           </div>
 
@@ -217,11 +271,10 @@ const Answer = () => {
                       <p>{ans.answer}</p>
                       <div className={styles.reactions}>
                         <button
-                          className={`${styles.likeButton} ${
-                            userReactions[ans.answerid] === "liked"
+                          className={`${styles.likeButton} ${userReactions[ans.answerid] === "liked"
                               ? styles.activeLike
                               : ""
-                          }`}
+                            }`}
                           onClick={() => handleReaction(ans.answerid, "liked")}
                           aria-label="Like"
                           disabled={userReactions[ans.answerid] === "disliked"}
@@ -229,11 +282,10 @@ const Answer = () => {
                           <FaThumbsUp /> {ans.likes}
                         </button>
                         <button
-                          className={`${styles.dislikeButton} ${
-                            userReactions[ans.answerid] === "disliked"
+                          className={`${styles.dislikeButton} ${userReactions[ans.answerid] === "disliked"
                               ? styles.activeDislike
                               : ""
-                          }`}
+                            }`}
                           onClick={() =>
                             handleReaction(ans.answerid, "disliked")
                           }
