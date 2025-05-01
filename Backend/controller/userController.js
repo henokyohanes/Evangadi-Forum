@@ -240,7 +240,7 @@ const resetPassword = async (req, res) => {
 // get all users
 const getAllUsers = async (req, res) => {
   try {
-    const [users] = await dbconnection.query("SELECT * FROM users");
+    const [users] = await dbconnection.query("SELECT * FROM users WHERE email != 'admin@admin.com'");
     res.status(StatusCodes.OK).json({ users });
   } catch (err) {
     console.error("Get All Users Error:", err);
@@ -250,4 +250,48 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-module.exports = { register, login, checkUser, forgotPassword, resetPassword, getAllUsers };
+// delete user and corresponding data
+const deleteUser = async (req, res) => {
+  const connection = await dbconnection.getConnection();
+  try {
+    const { userid } = req.params;
+
+    await connection.beginTransaction();
+
+    // Delete user's reactions
+    await connection.query("DELETE FROM reactions WHERE userid = ?", [userid]);
+
+    // Delete answers for questions posted by this user
+    await connection.query(
+      `
+      DELETE a
+      FROM answers a
+      INNER JOIN questions q ON a.questionid = q.questionid
+      WHERE q.userid = ?
+    `,
+      [userid]
+    );
+
+    // Delete user's answers
+    await connection.query("DELETE FROM answers WHERE userid = ?", [userid]);
+
+    // Delete user's questions
+    await connection.query("DELETE FROM questions WHERE userid = ?", [userid]);
+
+    // Finally, delete the user from the users table
+    await connection.query("DELETE FROM users WHERE userid = ?", [userid]);
+
+    await connection.commit();
+    res
+      .status(StatusCodes.OK)
+      .json({ msg: "User and corresponding data deleted successfully" });
+  } catch (err) {
+    await connection.rollback();
+    console.error("Delete User Error:", err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Something went wrong, try again later" });
+  } finally {
+    connection.release();
+  }
+};
+
+module.exports = { register, login, checkUser, forgotPassword, resetPassword, getAllUsers, deleteUser };

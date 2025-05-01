@@ -3,7 +3,7 @@ const router = express.Router();
 const authenticationMiddleware = require("../middleware/authenticationMiddleware");
 
 //user controller
-const { register, login, checkUser, forgotPassword, resetPassword, getAllUsers } = require("../controller/userController");
+const { register, login, checkUser, forgotPassword, resetPassword, getAllUsers, deleteUser } = require("../controller/userController");
 
 //register route
 router.post("/register", register);
@@ -22,5 +22,8 @@ router.post("/reset-password/:token", resetPassword);
 
 //all users
 router.get("/all-users", authenticationMiddleware, getAllUsers);
+
+//delete user
+router.delete("/delete-user/:userid", authenticationMiddleware, deleteUser);
 
 module.exports = router;
