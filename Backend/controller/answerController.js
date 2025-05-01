@@ -16,17 +16,17 @@ const allAnswers = async (req, res) => {
   const getAnswersSql = `
     SELECT a.answerid AS answer_id, 
             a.answer AS content, 
-            u.username AS user_name 
+            u.username AS user_name,
+            a.tag AS tag
             FROM answers a 
             JOIN users u ON a.userid = u.userid 
             WHERE a.questionid = ?
-            ORDER BY a.answerid DESC
+            ORDER BY a.tag DESC
   `;
 
   try {
     // Use async/await with the query
     const [results] = await dbconnection.query(getAnswersSql, [questionid]);
-
     // Check if any answers were found
     if (results.length === 0) {
       return res.status(404).json({
@@ -34,7 +34,6 @@ const allAnswers = async (req, res) => {
         message: "The requested question could not be found.",
       });
     }
-
     // Successful response with the answers
     res.status(200).json({ answers: results });
   } catch (err) {
@@ -115,4 +114,50 @@ const postAnswer = async (req, res) => {
   }
 };
 
-module.exports = { allAnswers, postAnswer };
+// Function to delete an answer
+const deleteAnswer = async (req, res) => {
+  const { answerid } = req.params;
+
+  // Validate input
+  if (!answerid) {
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "Answer ID is required.",
+    });
+  }
+
+  // Query to check if the answer exists
+  const getAnswerSql = "SELECT * FROM answers WHERE answerid = ?";
+
+  try {
+    // Fetch the answer to ensure it exists
+    const [answerResult] = await dbconnection.query(getAnswerSql, [answerid]);
+
+    // Check if the answer exists
+    if (answerResult.length === 0) {
+      return res.status(404).json({
+        error: "Not Found",
+        message: "Answer not found",
+      });
+    }
+
+    // Delete reactions related to this answer
+    const deleteReactionsSql = "DELETE FROM reactions WHERE answerid = ?";
+    await dbconnection.query(deleteReactionsSql, [answerid]);
+
+    // Delete the answer
+    const deleteAnswerSql = "DELETE FROM answers WHERE answerid = ?";
+    await dbconnection.query(deleteAnswerSql, [answerid]);
+
+    // Successful response
+    res.status(200).json({ message: "Answer and related reactions deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      error: "Internal Server Error",
+      message: "An unexpected error occurred. Please try again later.",
+    });
+  }
+};
+
+module.exports = { allAnswers, postAnswer, deleteAnswer };

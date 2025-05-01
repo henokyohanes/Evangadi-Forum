@@ -94,9 +94,10 @@ async function getQuestionDetail(req, res) {
 
     // Fetch answers along with the user who posted the answer
     const [answersResult] = await dbConnection.query(
-      `SELECT a.answerid, a.answer, u.username, u.profileimg FROM answers a
+      `SELECT a.answerid, a.answer, a.tag, u.username, u.profileimg FROM answers a
         LEFT JOIN users u ON a.userid = u.userid
-        WHERE a.questionid = ?`,
+        WHERE a.questionid = ?
+        ORDER BY a.tag DESC`,
       [questionid]
     );
 
@@ -135,4 +136,54 @@ async function getMyQuestions(req, res) {
   }
 }
 
-module.exports = { getAllQuestions, getQuestionDetail, question, getMyQuestions };
+// function to delete question and related data
+async function deleteQuestion(req, res) {
+  const { questionid } = req.params;
+  let connection;
+
+  try {
+    // Start a transaction
+    connection = await dbConnection.getConnection();
+    await connection.beginTransaction();
+
+    // Find all answers related to the question
+    const [answers] = await connection.query(
+      "SELECT answerid FROM answers WHERE questionid = ?",
+      [questionid]
+    );
+
+    // For each answer, delete reactions
+    for (const answer of answers) {
+      await connection.query("DELETE FROM reactions WHERE answerid = ?", [
+        answer.answerid,
+      ]);
+    }
+
+    // Delete all answers related to the question
+    await connection.query("DELETE FROM answers WHERE questionid = ?", [
+      questionid,
+    ]);
+
+    // Finally, delete the question
+    await connection.query("DELETE FROM questions WHERE questionid = ?", [
+      questionid,
+    ]);
+
+    // Commit the transaction
+    await connection.commit();
+    connection.release();
+
+    return res
+      .status(200)
+      .json({ msg: "Question, answers, and reactions deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting question:", error);
+    if (connection) {
+      await connection.rollback();
+      connection.release();
+    }
+    return res.status(500).json({ msg: "Something went wrong" });
+  }
+}
+
+module.exports = { getAllQuestions, getQuestionDetail, question, getMyQuestions, deleteQuestion };
