@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react'
 import { RiAccountCircleFill } from "react-icons/ri";
 import { FaTrash } from "react-icons/fa";
 import axiosBaseURL, { axiosImageURL } from "../../Utility/axios";
+import { toast } from "react-toastify";
+import Swal from 'sweetalert2';
 import Layout from '../../Components/Layout/Layout'
 import NotFound from '../../Components/NotFound/NotFound';
 import Loader from '../../Components/Loader/Loader';
@@ -17,42 +19,69 @@ function AllUsers() {
     const token = localStorage.getItem("token");
 
     // Fetch question, answers, and reactions
+    const fetchUsers = async () => {
+        try {
+
+            setLoading(true);
+            setError(false);
+
+            const response = await axiosBaseURL.get("/users/all-users", {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+            setUsers(response.data.users);
+        } catch (err) {
+            console.error("Failed to fetch questions:", err);
+            setError(true);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-
-                setLoading(true);
-                setError(false);
-
-                const response = await axiosBaseURL.get("/users/all-users", {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
-                    },
-                });
-                setUsers(response.data.users);
-            } catch (err) {
-                console.error("Failed to fetch questions:", err);
-                setError(true);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchUsers();
     }, []);
 
-    console.log(users);
-
     // Delete answer
-    const handleDeleteUser = async (answerId) => {
+    const handleDeleteUser = async (userid) => {
+
         try {
-            await axiosBaseURL.delete(`/answers/${answerId}`, {
+            const result = await Swal.fire({
+                title: "Are you sure you want to delete this user?",
+                html: "All related data associated with this user will be deleted!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes!",
+                customClass: {
+                    popup: styles.popup,
+                    confirmButton: styles.confirmButton,
+                    cancelButton: styles.cancelButton,
+                    icon: styles.icon,
+                    title: styles.warningTitle,
+                    htmlContainer: styles.text,
+                },
+            });
+            if (!result.isConfirmed) return;
+            setLoading(true);
+            setError(false);
+
+            await axiosBaseURL.delete(`/users/delete-user/${userid}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            toast.success("Answer Deleted Successfully", { autoClose: 1500 });
-            fetchQuestion();
+            toast.success("User Deleted Successfully", { autoClose: 1500 });
+            setUsers(users.filter((user) => user.userid !== userid));
         } catch (err) {
             console.error("Error deleting answer:", err);
+            if (err.response) {
+                toast.error("Failed to delete user. Please try again", {
+                    autoClose: 1500,
+                });
+            } else {
+                setError(true);
+            }
+        } finally {
+            setLoading(false);
         }
     };
 
