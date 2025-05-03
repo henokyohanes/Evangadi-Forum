@@ -22,7 +22,7 @@
 
 .footerContent a {
   text-decoration: none;
-  color: #b5b9c4; 
+  color: #b5b9c4;
 }
 
 .footerContent a:hover {
@@ -32,12 +32,12 @@
 .footerContent img {
   width: clamp(12em, 20vw, 16em);
   margin-bottom: 1.4em;
-  cursor: pointer;  
-} 
+  cursor: pointer;
+}
 
 .socialMedia a {
-    margin-left: 1.2em;
-    font-size: 1.6em;
+  margin-left: 1.2em;
+  font-size: 1.6em;
 }
 
 .logoAndSocials {
@@ -49,4 +49,4 @@
   height: .2em;
   background-color: #b5b9c4;
   margin: 1em 0 2em 0;
-} 
+}

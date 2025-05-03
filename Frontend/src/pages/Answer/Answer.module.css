@@ -83,8 +83,8 @@
 
 .profileImgContainer {
   border-radius: 50%;
-  width: clamp(3em, 5vw, 4em);
-  height: clamp(3em, 5vw, 4em);
+  width: 5em;
+  height: 5em;
   overflow: hidden;
   position: relative;
 }

@@ -29,7 +29,7 @@ const postReaction = async (req, res) => {
           `SELECT 
             SUM(CASE WHEN reaction_type = 'liked' THEN 1 ELSE 0 END) AS likes,
             SUM(CASE WHEN reaction_type = 'disliked' THEN 1 ELSE 0 END) AS dislikes
-           FROM reactions WHERE answerid = ?`,
+            FROM reactions WHERE answerid = ?`,
           [answerid]
         );
 
@@ -46,17 +46,17 @@ const postReaction = async (req, res) => {
     // Save or update the reaction (for a new reaction or dislike)
     await dbconnection.query(
       `INSERT INTO reactions (userid, answerid, reaction_type)
-             VALUES (?, ?, ?)
-             ON DUPLICATE KEY UPDATE reaction_type = VALUES(reaction_type)`,
+        VALUES (?, ?, ?)
+        ON DUPLICATE KEY UPDATE reaction_type = VALUES(reaction_type)`,
       [userId, answerid, reaction]
     );
 
     // Recalculate likes and dislikes
     const [counts] = await dbconnection.query(
       `SELECT 
-                SUM(CASE WHEN reaction_type = 'liked' THEN 1 ELSE 0 END) AS likes,
-                SUM(CASE WHEN reaction_type = 'disliked' THEN 1 ELSE 0 END) AS dislikes
-             FROM reactions WHERE answerid = ?`,
+        SUM(CASE WHEN reaction_type = 'liked' THEN 1 ELSE 0 END) AS likes,
+        SUM(CASE WHEN reaction_type = 'disliked' THEN 1 ELSE 0 END) AS dislikes
+        FROM reactions WHERE answerid = ?`,
       [answerid]
     );
 
@@ -98,9 +98,9 @@ const deleteReaction = async (req, res) => {
     // Recalculate likes and dislikes
     const [counts] = await dbconnection.query(
       `SELECT 
-            SUM(CASE WHEN reaction_type = 'liked' THEN 1 ELSE 0 END) AS likes,
-            SUM(CASE WHEN reaction_type = 'disliked' THEN 1 ELSE 0 END) AS dislikes
-         FROM reactions WHERE answerid = ?`,
+        SUM(CASE WHEN reaction_type = 'liked' THEN 1 ELSE 0 END) AS likes,
+        SUM(CASE WHEN reaction_type = 'disliked' THEN 1 ELSE 0 END) AS dislikes
+        FROM reactions WHERE answerid = ?`,
       [answerid]
     );
 
@@ -133,22 +133,24 @@ const getReactionsByQuestionId = async (req, res) => {
 
     const [userReactions] = await dbconnection.query(
       `SELECT answerid, reaction_type 
-             FROM reactions 
-             WHERE userid = ? AND answerid IN (?)`,
+        FROM reactions 
+        WHERE userid = ? AND answerid IN (?)`,
       [userId, answerIds]
     );
 
+    // Get reaction counts
     const [reactionCounts] = await dbconnection.query(
       `SELECT 
-                answerid, 
-                SUM(CASE WHEN reaction_type = 'liked' THEN 1 ELSE 0 END) AS likes,
-                SUM(CASE WHEN reaction_type = 'disliked' THEN 1 ELSE 0 END) AS dislikes
-             FROM reactions
-             WHERE answerid IN (?)
-             GROUP BY answerid`,
+        answerid, 
+        SUM(CASE WHEN reaction_type = 'liked' THEN 1 ELSE 0 END) AS likes,
+        SUM(CASE WHEN reaction_type = 'disliked' THEN 1 ELSE 0 END) AS dislikes
+        FROM reactions
+        WHERE answerid IN (?)
+        GROUP BY answerid`,
       [answerIds]
     );
 
+    // Create a map of answer IDs to reactions
     const reactionsMap = {};
     answerIds.forEach((id) => {
       reactionsMap[id] = {
@@ -164,6 +166,7 @@ const getReactionsByQuestionId = async (req, res) => {
       }
     });
 
+    // Update reaction counts
     reactionCounts.forEach((r) => {
       if (reactionsMap[r.answerid]) {
         reactionsMap[r.answerid].likes = r.likes || 0;

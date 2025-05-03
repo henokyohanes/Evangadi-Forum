@@ -27,6 +27,7 @@ const Account = () => {
   const canvasRef = useRef(null);
   const lastTouchDistance = useRef(null);
 
+  // Function to handle image upload
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -48,6 +49,7 @@ const Account = () => {
     draw();
   }, [imgX, imgY, scale]);
 
+  // Function to handle image drag
   const handleMouseDown = (e) => {
     e.preventDefault();
     setIsDragging(true);
@@ -66,6 +68,7 @@ const Account = () => {
     setDragStart({ x: e.clientX, y: e.clientY });
   };
 
+  // Function to update image position
   const updateImagePosition = (dx, dy) => {
     if (!imgRef.current || !canvasRef.current) return;
 
@@ -84,6 +87,7 @@ const Account = () => {
     setImgY(newImgY);
   };
 
+  // Function to handle image zoom
   const handleWheel = (e) => {
     if (!imgRef.current || !canvasRef.current) return;
     e.preventDefault();
@@ -94,8 +98,7 @@ const Account = () => {
     setScale(newScale);
   };
 
-
-
+  // Add event listeners
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -109,8 +112,7 @@ const Account = () => {
     };
   }, [handleWheel]);
 
-
-
+  // Function to handle touch events
   const handleTouchStart = (e) => {
     if (e.touches.length === 2) {
       const dist = getTouchDistance(e);
@@ -124,6 +126,7 @@ const Account = () => {
     }
   };
 
+  // Function to handle touch events
   const handleTouchMove = (e) => {
     if (e.touches.length === 2) {
       const newDist = getTouchDistance(e);
@@ -157,6 +160,7 @@ const Account = () => {
     return Math.sqrt(dx * dx + dy * dy);
   };
 
+  // Function to handle image load
   const handleImageLoad = () => {
     if (imgRef.current && canvasRef.current) {
       const canvasWidth = canvasRef.current.offsetWidth;
@@ -170,6 +174,7 @@ const Account = () => {
     }
   };
 
+  // Function to handle image upload
   const handleUploadClick = async () => {
     if (!isImageLoaded) {
       toast.error("Please select an image before uploading.", {
@@ -220,6 +225,7 @@ const Account = () => {
       croppedCanvas.height
     );
 
+    // Convert the cropped canvas to a blob
     croppedCanvas.toBlob(async (blob) => {
       const formData = new FormData();
       formData.append("image", blob, "croppedImage.png");
@@ -234,6 +240,7 @@ const Account = () => {
           },
         });
 
+        // Update the user's profile image
         const result = response.data;
         if (result.profileImage) {
           setUser((prevUser) => ({
@@ -267,8 +274,6 @@ const Account = () => {
   const handleZoomIn = () => {
     setScale((prev) => Math.min(MAX_SCALE, prev + 0.01));
   };
-
-
 
   const handlePicture = () => setUploadimage(true);
   const handleCancelClick = () => setUploadimage(false);

@@ -121,7 +121,7 @@ const Signup = ({ onToggle, setError }) => {
 
         // Store the token in local storage and redirect to the home page
         localStorage.setItem("token", response.data.token);
-        setTimeout(() => { window.location.href = "/questions"}, 1500);
+        setTimeout(() => { window.location.href = "/questions" }, 1500);
       }
     } catch (err) {
       console.error("Failed to register user:", err);

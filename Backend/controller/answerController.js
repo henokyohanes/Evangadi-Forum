@@ -15,18 +15,19 @@ const allAnswers = async (req, res) => {
   // Query to retrieve answers for the specified questionid
   const getAnswersSql = `
     SELECT a.answerid AS answer_id, 
-            a.answer AS content, 
-            u.username AS user_name,
-            a.tag AS tag
-            FROM answers a 
-            JOIN users u ON a.userid = u.userid 
-            WHERE a.questionid = ?
-            ORDER BY a.tag DESC
+      a.answer AS content, 
+      u.username AS user_name,
+      a.tag AS tag
+      FROM answers a 
+      JOIN users u ON a.userid = u.userid 
+      WHERE a.questionid = ?
+      ORDER BY a.tag DESC
   `;
 
   try {
     // Use async/await with the query
     const [results] = await dbconnection.query(getAnswersSql, [questionid]);
+
     // Check if any answers were found
     if (results.length === 0) {
       return res.status(404).json({
@@ -34,6 +35,7 @@ const allAnswers = async (req, res) => {
         message: "The requested question could not be found.",
       });
     }
+
     // Successful response with the answers
     res.status(200).json({ answers: results });
   } catch (err) {

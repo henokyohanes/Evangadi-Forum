@@ -1,6 +1,6 @@
 const dbConnection = require("../db/config");
 const { StatusCodes } = require("http-status-codes");
-const { v4: uuidv4 } = require("uuid"); // random question id generator
+const { v4: uuidv4 } = require("uuid");
 
 // function to Post question 
 async function question(req, res) {
@@ -26,6 +26,7 @@ async function question(req, res) {
         .status(StatusCodes.BAD_REQUEST)
         .json({ msg: "You have already created this question" });
     }
+    
     // Query to insert the question
     await dbConnection.query(
       "INSERT INTO questions (title,description,questionid,userid,tag) VALUES (?,?,?,?,?)",

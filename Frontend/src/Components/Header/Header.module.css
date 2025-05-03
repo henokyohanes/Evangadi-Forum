@@ -14,7 +14,7 @@
 .headerContainer img {
   width: clamp(12em, 20vw, 16em);
   margin: 1.4em 0;
-  cursor: pointer;  
+  cursor: pointer;
 }
 
 .navMenu {
@@ -32,7 +32,7 @@
 
 .navMenu a:hover {
   color: orange;
-} 
+}
 
 .profileImgWrapper {
   position: relative;
@@ -41,8 +41,8 @@
 
 .profileImgContainer {
   position: relative;
-  width: 3em;
-  height: 3em;
+  width: 4em;
+  height: 4em;
   border-radius: 50%;
   overflow: hidden;
   display: flex;
@@ -66,8 +66,8 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 1.2em;
-  height: 1.2em;
+  width: 1.3em;
+  height: 1.3em;
   background-color: white;
   border-radius: 50%;
   display: flex;
@@ -77,14 +77,14 @@
 }
 
 .arrowIcon {
-  font-size: .8em;
+  font-size: 1em;
 }
 
 .icon {
   width: 1.6em;
   height: 1.6em;
   border-radius: 50%;
-  background-color: #D6D9DD; 
+  background-color: #D6D9DD;
   display: inline-block;
   line-height: 1.6em;
   text-align: center;

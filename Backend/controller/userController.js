@@ -1,4 +1,3 @@
-//db connection
 const dbconnection = require("../db/config");
 const { StatusCodes } = require("http-status-codes");
 const crypto = require("crypto");

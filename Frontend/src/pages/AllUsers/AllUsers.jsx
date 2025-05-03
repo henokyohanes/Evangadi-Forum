@@ -126,9 +126,18 @@ function AllUsers() {
                                             </div>
                                         </div>
                                         <div className={styles.userContent}>
-                                            <p><strong>Name</strong> <span className={styles.name}>{user.firstname} {user.lastname}</span></p>
-                                            <p><strong>Username</strong> <span className={styles.username}>{user.username}</span></p>
-                                            <p><strong>Email</strong> <span className={styles.email}>{user.email}</span></p>
+                                            <p>
+                                                <strong>Name</strong>
+                                                <span className={styles.name}>{user.firstname} {user.lastname}</span>
+                                            </p>
+                                            <p>
+                                                <strong>Username</strong>
+                                                <span className={styles.username}>{user.username}</span>
+                                            </p>
+                                            <p>
+                                                <strong>Email</strong>
+                                                <span className={styles.email}>{user.email}</span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

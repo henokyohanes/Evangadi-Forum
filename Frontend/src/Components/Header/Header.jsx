@@ -108,11 +108,12 @@ const Header = () => {
                 </span>
                 My Questions
               </NavDropdown.Item>
-              {user.email === "admin@admin.com" && <NavDropdown.Item as={Link} to="/all-users">
-                <span className={styles.icon}>
-                  <FontAwesomeIcon icon={faUser} />
-                </span> All Users
-              </NavDropdown.Item>}
+              {user.email === "admin@admin.com" &&
+                <NavDropdown.Item as={Link} to="/all-users">
+                  <span className={styles.icon}>
+                    <FontAwesomeIcon icon={faUser} />
+                  </span> All Users
+                </NavDropdown.Item>}
               <NavDropdown.Item onClick={onLogoutClick}>
                 <span className={styles.icon}>
                   <FontAwesomeIcon icon={faSignOutAlt} />
@@ -143,11 +144,12 @@ const Header = () => {
                 </span>
                 My Questions
               </NavDropdown.Item>
-              {user.email === "admin@admin.com" && <NavDropdown.Item as={Link} to="/all-users">
-                <span className={styles.icon}>
-                  <FontAwesomeIcon icon={faUser} />
-                </span> All Users
-              </NavDropdown.Item>}
+              {user.email === "admin@admin.com" &&
+                <NavDropdown.Item as={Link} to="/all-users">
+                  <span className={styles.icon}>
+                    <FontAwesomeIcon icon={faUser} />
+                  </span> All Users
+                </NavDropdown.Item>}
               <NavDropdown.Item onClick={onLogoutClick}>
                 <span className={styles.icon}>
                   <FontAwesomeIcon icon={faSignOutAlt} />

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ScaleLoader } from "react-spinners";
 import axiosBaseURL from "../../Utility/axios";
@@ -14,7 +14,6 @@ const Login = ({ onToggle, setError }) => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   // Handler for input field changes
   const handleChange = (e) => {
@@ -84,7 +83,7 @@ const Login = ({ onToggle, setError }) => {
 
       // Save token and navigate to another page
       localStorage.setItem("token", response.data.token);
-      setTimeout(() => { window.location.href = "/questions"}, 1500);
+      setTimeout(() => { window.location.href = "/questions" }, 1500);
     } catch (err) {
       console.error("Failed to login:", err);
       if (err?.response) {
