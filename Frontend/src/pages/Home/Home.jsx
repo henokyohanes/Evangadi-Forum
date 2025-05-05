@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { AppState } from "../../Routes/Router";
 import axiosBaseURL, { axiosImageURL } from "../../Utility/axios";
@@ -74,14 +74,16 @@ const Home = () => {
 
   return (
     <Layout>
-        {!loading && !error ? (<main className={styles.mainContent}>
+      {!loading && !error ? (
+        <main className={styles.mainContent}>
           {/* header container */}
           <div className={styles.headerContainer}>
             <button onClick={handleAskQuestionClick}>
               Ask Question
             </button>
             <h2>
-              <span className={styles.span}>Welcome</span> {user.username}
+              <span className={styles.span}>Welcome</span>
+              {user.username}
             </h2>
           </div>
           {/* search bar */}
@@ -139,24 +141,26 @@ const Home = () => {
             </ul>
           )}
           {/* Pagination Controls */}
-        {filteredQuestions.length > 0 && <div className={styles.pagination}>
-          <button
-            onClick={() => paginate(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-          <span>
-            Page {currentPage} of {Math.ceil(filteredQuestions.length / questionsPerPage)}
-          </span>
-          <button
-            onClick={() => paginate(currentPage + 1)}
-            disabled={indexOfLastQuestion >= filteredQuestions.length}
-          >
-            Next
-          </button>
-        </div>}
-        </main>) : error ? <NotFound /> : <Loader /> }
+          {filteredQuestions.length > 0 &&
+            <div className={styles.pagination}>
+              <button
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+              <span>
+                Page {currentPage} of {Math.ceil(filteredQuestions.length / questionsPerPage)}
+              </span>
+              <button
+                onClick={() => paginate(currentPage + 1)}
+                disabled={indexOfLastQuestion >= filteredQuestions.length}
+              >
+                Next
+              </button>
+            </div>}
+        </main>
+      ) : error ? <NotFound /> : <Loader />}
     </Layout>
   );
 }

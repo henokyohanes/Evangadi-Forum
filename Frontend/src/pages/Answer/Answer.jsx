@@ -42,7 +42,6 @@ const Answer = () => {
         }),
       ]);
       setQuestion(questionRes.data.question);
-      console.log(questionRes.data.answers);
       const answersWithReactions = questionRes.data.answers.map((ans) => {
         const reaction = reactionRes.data[ans.answerid] || {};
         return {
@@ -53,7 +52,7 @@ const Answer = () => {
           userReaction: reaction.reaction || null,
         };
       });
-      
+
       setAnswers(answersWithReactions);
       const userReactionMap = {};
       for (const answerId in reactionRes.data) {
@@ -213,7 +212,7 @@ const Answer = () => {
       }
     } finally {
       setLoading(false);
-    } 
+    }
   };
 
   // Pagination logic
@@ -229,9 +228,12 @@ const Answer = () => {
       {!loading && !error ? (
         <div className={styles.container}>
           <div className={styles.questionContainer}>
-            {user.email === "admin@admin.com" && <div className={styles.deleteIcon} onClick={() => handleDeleteQuestion(question.questionid)}>
-              <FaTrash />
-            </div>}
+            {user.email === "admin@admin.com" &&
+              <div className={styles.deleteIcon}
+                onClick={() => handleDeleteQuestion(question.questionid)}
+              >
+                <FaTrash />
+              </div>}
             <div className={styles.questionSection}>
               <div className={styles.title}>
                 <TbMessageQuestion className={styles.questionIcon} />
@@ -247,9 +249,12 @@ const Answer = () => {
             {answers && answers.length > 0 ? (
               currentAnswers.map((ans, index) => (
                 <div key={index} className={styles.answerContainer}>
-                  {user.email === "admin@admin.com" && <div className={styles.deleteIcon} onClick={() => handleDeleteAnswer(ans.answerid)}>
-                    <FaTrash />
-                  </div>}
+                  {user.email === "admin@admin.com" &&
+                    <div className={styles.deleteIcon}
+                      onClick={() => handleDeleteAnswer(ans.answerid)}
+                    >
+                      <FaTrash />
+                    </div>}
                   <div key={index} className={styles.answerItem}>
                     <div className={styles.answerInfo}>
                       <div className={styles.profileImgContainer}>
@@ -271,10 +276,12 @@ const Answer = () => {
                       <p>{ans.answer}</p>
                       <div className={styles.reactions}>
                         <button
-                          className={`${styles.likeButton} ${userReactions[ans.answerid] === "liked"
+                          className={
+                            `${styles.likeButton} ${userReactions[ans.answerid] === "liked"
                               ? styles.activeLike
                               : ""
-                            }`}
+                            }`
+                          }
                           onClick={() => handleReaction(ans.answerid, "liked")}
                           aria-label="Like"
                           disabled={userReactions[ans.answerid] === "disliked"}
@@ -282,10 +289,12 @@ const Answer = () => {
                           <FaThumbsUp /> {ans.likes}
                         </button>
                         <button
-                          className={`${styles.dislikeButton} ${userReactions[ans.answerid] === "disliked"
+                          className={
+                            `${styles.dislikeButton} ${userReactions[ans.answerid] === "disliked"
                               ? styles.activeDislike
                               : ""
-                            }`}
+                            }`
+                          }
                           onClick={() =>
                             handleReaction(ans.answerid, "disliked")
                           }

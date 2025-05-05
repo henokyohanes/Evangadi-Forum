@@ -32,6 +32,7 @@ const ForgotPassword = () => {
         return isValid;
     };
 
+    //function to reset password
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) return;
